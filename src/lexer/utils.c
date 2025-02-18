@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:38:20 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/15 20:57:36 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:24:02 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ char	*read_quoted(const char *input, int *index)
 	int		start;
 	int		i;
 
+	if (!input || !index)
+		return (NULL);
 	quote = input[*index];
 	*index = *index + 1;
 	start = *index;
-	while (input[*index] != '\0')
-	{
-		if (input[*index] == quote)
-			break ;
+	while (input[*index] && input[*index] != quote)
 		*index = *index + 1;
-	}
+	if (!input[*index])
+		return (NULL);
 	i = *index;
-	if (input[*index] != '\0')
+	if (input[*index])
 		*index = *index + 1;
 	return (copy_substr(input, start, i));
 }

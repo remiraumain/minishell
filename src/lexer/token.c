@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:02:31 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/16 23:39:35 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:20:35 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,20 @@ t_token	*create_token(t_token_type type, char *value)
 	return (new_token);
 }
 
-void	add_token(t_token **head, t_token *newt)
+void	add_token(t_token **head, t_token *new_token)
 {
 	t_token	*tmp;
 
+	if (!head || !new_token)
+		return ;
 	if (!*head)
-		*head = newt;
+		*head = new_token;
 	else
 	{
 		tmp = *head;
 		while (tmp->next)
 			tmp = tmp->next;
-		tmp->next = newt;
+		tmp->next = new_token;
 	}
 }
 

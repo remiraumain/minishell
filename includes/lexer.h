@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:02:58 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/16 23:42:24 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:19:48 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int				parse_word(t_token **head, int *index, char *input);
 
 //	TOKENS
 t_token			*create_token(t_token_type type, char *value);
-void			add_token(t_token **head, t_token *newt);
+void			add_token(t_token **head, t_token *new_token);
 void			free_token_list(t_token *head);
 
 //	UTILS
