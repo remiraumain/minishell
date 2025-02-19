@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:02:58 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/18 14:19:48 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/18 23:52:40 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,6 @@ typedef struct s_token
 	char			*value;
 	struct s_token	*next;
 }	t_token;
-
-typedef enum e_redir_type
-{
-	REDIR_IN,
-	REDIR_OUT,
-	REDIR_OUT_APPEND,
-	REDIR_HEREDOC
-}	t_redir_type;
-
-typedef struct s_redir
-{
-	t_redir_type	type;
-	char			*filename;
-	struct s_redir	*next;
-}	t_redir;
 
 t_token			*lexer(char *input);
 

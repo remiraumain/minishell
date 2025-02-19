@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 08:51:33 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/19 18:17:20 by rraumain         ###   ########.fr       */
+/*   Created: 2024/10/08 10:17:55 by rraumain          #+#    #+#             */
+/*   Updated: 2024/10/30 11:20:11 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-# include "libft.h"
-
-# include "string.h"
-# include "lexer.h"
-# include "parser.h"
-
-typedef struct s_data
+/**
+ * @brief Check for a numeric character.
+ * 
+ * @param c Character (ASCII encoded) to check.
+ * @return Zero `0` if false and nonzero `2048` if correct.
+ */
+int	ft_isdigit(int c)
 {
-	char	**env;
-}	t_data;
-
-#endif
+	if (c >= '0' && c <= '9')
+		return (2048);
+	return (0);
+}

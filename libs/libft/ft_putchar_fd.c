@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 08:51:33 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/19 18:17:20 by rraumain         ###   ########.fr       */
+/*   Created: 2024/10/25 11:23:31 by rraumain          #+#    #+#             */
+/*   Updated: 2024/10/30 11:19:52 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-# include "libft.h"
-
-# include "string.h"
-# include "lexer.h"
-# include "parser.h"
-
-typedef struct s_data
+/**
+ * @brief Output the character `c` to the given file descriptor.
+ * 
+ * @param c The character to output.
+ * @param fd The file descriptor on which to write.
+ */
+void	ft_putchar_fd(char c, int fd)
 {
-	char	**env;
-}	t_data;
-
-#endif
+	write(fd, &c, 1);
+}

@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 08:51:33 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/19 18:17:20 by rraumain         ###   ########.fr       */
+/*   Created: 2024/10/08 08:15:44 by rraumain          #+#    #+#             */
+/*   Updated: 2024/10/30 11:19:44 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-# include "libft.h"
-
-# include "string.h"
-# include "lexer.h"
-# include "parser.h"
-
-typedef struct s_data
+/**
+ * @brief Calculate the length of a string.
+ *
+ * Calculates the length of the string pointed to by `s`, excluding the
+ * terminating null byte (`\0`).
+ *
+ * @param s Pointer of the string.
+ * @return The lenght of the string (number of bytes) pointed by `s`.
+ */
+size_t	ft_strlen(const char *s)
 {
-	char	**env;
-}	t_data;
+	size_t	i;
 
-#endif
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}

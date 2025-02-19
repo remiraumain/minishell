@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 08:51:33 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/19 18:17:20 by rraumain         ###   ########.fr       */
+/*   Created: 2024/10/08 10:15:29 by rraumain          #+#    #+#             */
+/*   Updated: 2024/10/30 11:20:13 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-# include "libft.h"
-
-# include "string.h"
-# include "lexer.h"
-# include "parser.h"
-
-typedef struct s_data
+/**
+ * @brief Check for an alphabetic character.
+ * 
+ * @param c Character (ASCII encoded) to check.
+ * @return Zero `0` if false and nonzero `1024` if correct.
+ */
+int	ft_isalpha(int c)
 {
-	char	**env;
-}	t_data;
-
-#endif
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1024);
+	return (0);
+}

@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 08:51:33 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/19 18:17:20 by rraumain         ###   ########.fr       */
+/*   Created: 2024/10/08 10:34:21 by rraumain          #+#    #+#             */
+/*   Updated: 2024/11/04 08:23:30 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-# include "libft.h"
-
-# include "string.h"
-# include "lexer.h"
-# include "parser.h"
-
-typedef struct s_data
+/**
+ * @brief Check for a printable character (including space).
+ * 
+ * @param c Character (ASCII encoded) to check.
+ * @return Zero `0` if false and nonzero `16384` if correct.
+ */
+int	ft_isprint(int c)
 {
-	char	**env;
-}	t_data;
-
-#endif
+	if (c >= ' ' && c <= '~')
+		return (16384);
+	return (0);
+}
