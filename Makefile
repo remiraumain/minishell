@@ -6,7 +6,7 @@
 #    By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/15 14:42:57 by rraumain          #+#    #+#              #
-#    Updated: 2025/02/19 00:26:38 by rraumain         ###   ########.fr        #
+#    Updated: 2025/02/22 12:52:35 by rraumain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,12 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
-LEXER_SRC = lexer/lexer.c lexer/token.c lexer/utils.c lexer/parse.c
-PARSER_SRC = parser/parser.c parser/utils.c
+LEXER_SRC = $(addprefix lexer/, lexer.c token.c parse.c utils.c)
+PARSER_SRC = $(addprefix parser/, parser.c utils.c)
+EXEC_SRC = $(addprefix execution/, execution.c redirection.c path.c path_utils.c utils.c)
 UTILS_SRC = utils/string.c
 
-SRC = $(addprefix src/, main.c $(LEXER_SRC) $(PARSER_SRC) $(UTILS_SRC))
+SRC = $(addprefix src/, main.c $(LEXER_SRC) $(PARSER_SRC) $(EXEC_SRC) $(UTILS_SRC))
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
