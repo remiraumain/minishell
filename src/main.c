@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:40:01 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/22 13:23:50 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/23 16:18:15 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@
 // 	}
 // }
 
-static void	process_input(char *input, char ** envp)
+static void	process_input(char *input, char **envp, int *status)
 {
 	t_token	*tokens;
 	t_cmd	*cmds;
@@ -76,6 +76,7 @@ static void	process_input(char *input, char ** envp)
 	tokens = lexer(input);
 	if (!tokens)
 		return ;
+	expand_tokens(tokens, envp, status);
 	cmds = parse_line(tokens);
 	free_token_list(tokens);
 	if (!cmds)
@@ -94,15 +95,20 @@ static void	process_input(char *input, char ** envp)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
+	int		status;	
 
 	(void)argc;
 	(void)argv;
+	status = 0;
 	while (1)
 	{
 		input = readline("minishell> ");
 		if (!input)
+		{
+			rl_clear_history();
 			return (0);
-		process_input(input, envp);
+		}
+		process_input(input, envp, &status);
 		free(input);
 	}
 	rl_clear_history();

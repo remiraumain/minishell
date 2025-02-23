@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 08:51:33 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/23 14:51:27 by rraumain         ###   ########.fr       */
+/*   Created: 2025/02/23 14:47:31 by rraumain          #+#    #+#             */
+/*   Updated: 2025/02/23 16:17:34 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef EXPAND_H
+# define EXPAND_H
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/wait.h>
+# include "minishell.h"
 
-# include "libft.h"
+//	EXPANDER
+void	expand_tokens(t_token *tokens, char **envp, int *status);
 
-# include "string.h"
-# include "lexer.h"
-# include "expand.h"
-# include "parser.h"
-# include "execution.h"
+//	VARS
+char	*get_env_value(char *varname, char **envp);
+char	*replace_var(char *token, int start, int varname_len, char *value);
 
 #endif

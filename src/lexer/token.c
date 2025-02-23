@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:02:31 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/18 14:20:35 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/23 14:31:32 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_token	*create_token(t_token_type type, char *value)
 		return (NULL);
 	new_token->type = type;
 	new_token->value = value;
+	new_token->expand = false;
 	new_token->next = NULL;
 	return (new_token);
 }

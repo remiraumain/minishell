@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:02:58 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/18 23:52:40 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/23 14:31:35 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,17 @@ typedef enum e_token_type
 	TK_EOF
 }	t_token_type;
 
+typedef enum e_bool
+{
+	true,
+	false
+}	t_bool;
+
 typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
+	t_bool			expand;
 	struct s_token	*next;
 }	t_token;
 

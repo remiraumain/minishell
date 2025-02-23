@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:46 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/22 14:04:50 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/23 08:35:09 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	**create_pipes(int cmd_count)
 	while (i < cmd_count - 1)
 	{
 		pipefd[i] = malloc(sizeof(int) * 2);
-		if (pipefd[i] == NULL)
+		if (!pipefd[i])
 		{
 			cleanup_pipes(pipefd, i);
 			perror("malloc");

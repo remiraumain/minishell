@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 23:39:03 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/22 13:39:40 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/23 13:38:34 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*search_in_paths(char **paths, char *cmd)
 		tmp = join_paths(paths[i], cmd);
 		if (!tmp)
 			return (NULL);
-		if (access(tmp, F_OK) == 0)
+		if (access(tmp, F_OK | X_OK) == 0)
 			result = tmp;
 		else
 			free(tmp);
