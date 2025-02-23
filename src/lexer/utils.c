@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:38:20 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/18 14:24:02 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/23 20:41:39 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,28 @@
 
 char	*read_word(const char *input, int *index)
 {
-	int	start;
+	int		start;
+	char	*word;
+	int		i;
 
+	i = 0;
 	start = *index;
-	while (input[*index] != '\0' && !is_whitespace(input[*index]))
+	while (input[start + i] != '\0' && !is_whitespace(input[start + i]))
 	{
 		if (input[*index] == '|'
 			|| input[*index] == '<'
 			|| input[*index] == '>')
 			break ;
-		*index = *index + 1;
+		i++;
 	}
-	return (copy_substr(input, start, *index));
+	*index += i;
+	word = ft_substr(input, start, i);
+	return (word);
 }
 
 char	*read_quoted(const char *input, int *index)
 {
+	char	*word;
 	char	quote;
 	int		start;
 	int		i;
@@ -46,7 +52,8 @@ char	*read_quoted(const char *input, int *index)
 	i = *index;
 	if (input[*index])
 		*index = *index + 1;
-	return (copy_substr(input, start, i));
+	word = ft_substr(input, start, i);
+	return (word);
 }
 
 t_token_type	check_redir(const char *input, int *index)
