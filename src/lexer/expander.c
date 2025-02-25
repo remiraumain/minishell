@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:43:49 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/23 17:00:03 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:11:10 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,24 @@ static char	*get_varname(char *token, int start, int *len)
 	return (varname);
 }
 
-static char	*get_var_value(char *varname, char **envp, int *status)
+static char	*get_var_value(char *varname, t_global_data *data)
 {
 	char	*value;
 
-	if (!varname || !envp)
+	if (!varname || !data->envp)
 		return (NULL);
 	if (varname[0] == '?' && varname[1] == '\0')
 	{
-		value = ft_itoa(*status);
+		value = ft_itoa(data->status);
 		return (value);
 	}
-	value = get_env_value(varname, envp);
+	value = get_env_value(varname, data->envp);
 	if (!value)
 		return ("");
 	return (value);
 }
 
-static char	*expand_var(char *token, int *index, char **envp, int *status)
+char	*expand_var(char *token, int *index, t_global_data *data)
 {
 	char	*varname;
 	char	*value;
@@ -62,7 +62,7 @@ static char	*expand_var(char *token, int *index, char **envp, int *status)
 	varname = get_varname(token, *index, &len);
 	if (!varname)
 		return (token);
-	value = get_var_value(varname, envp, status);
+	value = get_var_value(varname, data);
 	expanded = replace_var(token, *index, len, value);
 	if (varname[0] == '?' && value)
 		free(value);
@@ -71,32 +71,4 @@ static char	*expand_var(char *token, int *index, char **envp, int *status)
 		return (token);
 	*index += ft_strlen(value);
 	return (expanded);
-}
-
-void	expand_tokens(t_token *tokens, char **envp, int *status)
-{
-	t_token	*current;
-	char	*tmp;
-	int		i;
-
-	current = tokens;
-	while (current)
-	{
-		if (current->type == TK_WORD && current->expand == true)
-		{
-			i = 0;
-			while (current->value[i])
-			{
-				if (current->value[i] == '$')
-				{
-					tmp = expand_var(current->value, &i, envp, status);
-					free(current->value);
-					current->value = tmp;
-				}
-				else
-					i++;
-			}
-		}
-		current = current->next;
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:58:02 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/17 00:00:48 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:50:38 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	new_token(t_token **head, int *index)
 	return (1);
 }
 
-static int	parse(t_token **head, char *input, int *index)
+static int	parse(t_token **head, char *input, int *index, t_global_data *data)
 {
 	int	status;
 
@@ -32,14 +32,14 @@ static int	parse(t_token **head, char *input, int *index)
 		status = new_token(head, index);
 	else if (input[*index] == '<' || input[*index] == '>')
 		status = parse_redirect(head, index, input);
-	else if (input[*index] == '"' || input[*index] == '\'')
-		status = parse_quotes(head, index, input);
+	// else if (input[*index] == '"' || input[*index] == '\'')
+	// 	status = parse_quotes(head, index, input);
 	else
-		status = parse_word(head, index, input);
+		status = parse_word(head, index, input, data);
 	return (status);
 }
 
-t_token	*lexer(char *input)
+t_token	*lexer(char *input, t_global_data *data)
 {
 	t_token	*head;
 	int		index;
@@ -52,7 +52,7 @@ t_token	*lexer(char *input)
 			index = index + 1;
 		if (input[index] == '\0')
 			return (head);
-		if (parse(&head, input, &index) == 0)
+		if (parse(&head, input, &index, data) == 0)
 		{
 			free_token_list(head);
 			return (NULL);

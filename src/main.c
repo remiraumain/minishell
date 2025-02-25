@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:40:01 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/23 16:18:15 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:00:19 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,17 @@
 // 	}
 // }
 
-static void	process_input(char *input, char **envp, int *status)
+static void	process_input(char *input, t_global_data *data)
 {
 	t_token	*tokens;
 	t_cmd	*cmds;
 
 	if (*input)
 		add_history(input);
-	tokens = lexer(input);
+	tokens = lexer(input, data);
 	if (!tokens)
 		return ;
-	expand_tokens(tokens, envp, status);
+	// expand_tokens(tokens, envp, status);
 	cmds = parse_line(tokens);
 	free_token_list(tokens);
 	if (!cmds)
@@ -87,28 +87,33 @@ static void	process_input(char *input, char **envp, int *status)
 	else
 	{
 		// print_cmd(cmds);
-		execute_cmds(cmds, envp);
+		execute_cmds(cmds, data->envp);
 		free_cmd_list(cmds);
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
-	int		status;	
+	char			*input;
+	t_global_data	*data;
 
 	(void)argc;
 	(void)argv;
-	status = 0;
+	data = malloc(sizeof(t_global_data));
+	if (!data)
+		return (0);
+	data->status = 0;
 	while (1)
 	{
+		data->envp = envp;
 		input = readline("minishell> ");
 		if (!input)
 		{
+			free(data);
 			rl_clear_history();
 			return (0);
 		}
-		process_input(input, envp, &status);
+		process_input(input, data);
 		free(input);
 	}
 	rl_clear_history();

@@ -6,53 +6,95 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:38:20 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/23 20:41:39 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:30:05 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*read_word(const char *input, int *index)
+void	expand_word(char **word, t_global_data *data)
 {
-	int		start;
-	char	*word;
+	char	*tmp;
 	int		i;
 
 	i = 0;
-	start = *index;
-	while (input[start + i] != '\0' && !is_whitespace(input[start + i]))
+	while ((*word)[i])
 	{
-		if (input[*index] == '|'
-			|| input[*index] == '<'
-			|| input[*index] == '>')
-			break ;
-		i++;
+		if ((*word)[i] == '$')
+		{
+			tmp = expand_var(*word, &i, data);
+			free(*word);
+			*word = tmp;
+		}
+		else
+			i++;
 	}
-	*index += i;
-	word = ft_substr(input, start, i);
+}
+
+char	*read_word_and_expand(const char *input, int *index, t_global_data *data)
+{
+	char	*word;
+	char	*substring;
+	char	*tmp;
+	int		start;
+	char	quote;
+
+	word = ft_strdup("");
+	if (!word)
+		return (NULL);
+	while (input[*index] != '\0' && !is_whitespace(input[*index])
+		&& input[*index] != '|' && input[*index] != '<' && input[*index] != '>')
+	{
+		if (input[*index] == '\'' || input[*index] == '"')
+		{
+			quote = input[*index];
+			substring = read_quoted(input, index, quote);
+			if (!substring)
+			{
+				free(word);
+				return (NULL);
+			}
+			if (quote == '"')
+				expand_word(&substring, data);
+			tmp = ft_strjoin(word, substring);
+		}
+		else
+		{
+			start = *index;
+			while (input[*index] &&  !is_whitespace(input[*index])
+				&& input[*index] != '\''&& input[*index] != '"'
+				&& input[*index] != '|' && input[*index] != '<'
+				&& input[*index] != '>')
+				*index = *index + 1;
+			substring = ft_substr(input, start, *index - start);
+			expand_word(&substring, data);
+			tmp = ft_strjoin(word, substring);
+		}
+		free(substring);
+		free(word);
+		if (!tmp)
+			return (NULL);
+		word = tmp;
+	}
 	return (word);
 }
 
-char	*read_quoted(const char *input, int *index)
+char	*read_quoted(const char *input, int *index, char quote)
 {
-	char	*word;
-	char	quote;
 	int		start;
 	int		i;
+	char	*word;
 
-	if (!input || !index)
+	i = *index + 1;
+	start = i;
+	while (input[i] && input[i] != quote)
+		i++;
+	if (!input[i])
 		return (NULL);
-	quote = input[*index];
-	*index = *index + 1;
-	start = *index;
-	while (input[*index] && input[*index] != quote)
-		*index = *index + 1;
-	if (!input[*index])
+	word = ft_substr(input, start, i - start);
+	if (!word)
 		return (NULL);
-	i = *index;
-	if (input[*index])
-		*index = *index + 1;
-	word = ft_substr(input, start, i);
+	*index = i + 1;
 	return (word);
 }
 
