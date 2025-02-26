@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 08:51:33 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/25 15:02:40 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/26 21:26:20 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,10 @@
 
 # include "libft.h"
 
-typedef struct s_global_data
-{
-	char	**envp;
-	int		status;
-}	t_global_data;
-
+# include "types.h"
 # include "string.h"
 # include "lexer.h"
-# include "expand.h"
 # include "parser.h"
 # include "execution.h"
-
 
 #endif

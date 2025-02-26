@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:55:12 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/22 13:02:49 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/26 21:25:50 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,6 @@
 # define PARSER_H
 
 # include "minishell.h"
-
-typedef enum e_redir_type
-{
-	REDIR_IN,
-	REDIR_OUT,
-	REDIR_OUT_APPEND,
-	REDIR_HEREDOC
-}	t_redir_type;
-
-typedef struct s_redir
-{
-	t_redir_type	type;
-	char			*filename;
-	struct s_redir	*next;
-}	t_redir;
-
-typedef struct s_cmd
-{
-	char			**argv;
-	t_redir			*redir;
-	struct s_cmd	*next;
-}	t_cmd;
 
 //	UTILS
 t_cmd	*create_cmd(void);
