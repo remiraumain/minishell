@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 20:38:20 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/25 15:30:05 by rraumain         ###   ########.fr       */
+/*   Created: 2025/02/26 08:34:24 by nolecler          #+#    #+#             */
+/*   Updated: 2025/02/26 08:34:25 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minishell.h"
 

@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 17:58:02 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/25 14:50:38 by rraumain         ###   ########.fr       */
+/*   Created: 2025/02/26 08:34:05 by nolecler          #+#    #+#             */
+/*   Updated: 2025/02/26 08:34:06 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minishell.h"
 

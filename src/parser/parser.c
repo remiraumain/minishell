@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 14:57:43 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/19 18:46:00 by rraumain         ###   ########.fr       */
+/*   Created: 2025/02/26 08:34:40 by nolecler          #+#    #+#             */
+/*   Updated: 2025/02/26 08:34:41 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minishell.h"
 

@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 23:39:03 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/23 13:38:34 by rraumain         ###   ########.fr       */
+/*   Created: 2025/02/26 08:33:29 by nolecler          #+#    #+#             */
+/*   Updated: 2025/02/26 08:33:30 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minishell.h"
 

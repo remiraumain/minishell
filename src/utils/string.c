@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 20:26:50 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/23 20:31:37 by rraumain         ###   ########.fr       */
+/*   Created: 2025/02/26 08:34:56 by nolecler          #+#    #+#             */
+/*   Updated: 2025/02/26 08:34:57 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minishell.h"
 

@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.h                                           :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 08:32:04 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 08:40:30 by nolecler         ###   ########.fr       */
+/*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
+/*   Updated: 2025/02/26 09:08:40 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 
-# include "minishell.h"
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-#ifndef EXPAND_H
-# define EXPAND_H
+/* UTILS*/
+int	ft_strcmp(char *s1, char *s2);
+
+int is_builtin(t_cmd *cmd);
+int exec_builtin(t_cmd *cmd);
+int exec_echo(t_cmd *cmd);
 
 
-//	EXPANDER
-void	expand_tokens(t_token *tokens, char **envp, int *status);
 
-//	VARS
-char	*get_env_value(char *varname, char **envp);
-char	*replace_var(char *token, int start, int varname_len, char *value);
 
-#endif
+
+
+
+
+
+
+
+
+
+
+#endif 

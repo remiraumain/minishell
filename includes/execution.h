@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 10:48:53 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/22 14:04:57 by rraumain         ###   ########.fr       */
+/*   Created: 2025/02/26 08:31:55 by nolecler          #+#    #+#             */
+/*   Updated: 2025/02/26 08:40:39 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+# include "minishell.h"
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-# include "minishell.h"
 
 typedef struct s_pid_data
 {

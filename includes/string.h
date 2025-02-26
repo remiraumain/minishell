@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   string.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 20:27:28 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/23 20:29:21 by rraumain         ###   ########.fr       */
+/*   Created: 2025/02/26 08:32:33 by nolecler          #+#    #+#             */
+/*   Updated: 2025/02/26 08:32:34 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef STRING_H
 # define STRING_H

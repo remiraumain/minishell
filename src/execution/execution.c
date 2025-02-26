@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/23 08:48:55 by rraumain         ###   ########.fr       */
+/*   Created: 2025/02/26 08:33:15 by nolecler          #+#    #+#             */
+/*   Updated: 2025/02/26 08:51:37 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minishell.h"
 
@@ -67,6 +69,8 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 	}
 	if (!apply_redirections(cmd))
 		exit(EXIT_FAILURE);
+	if (is_builtin(cmd) == 1) // test
+		exec_builtin(cmd); // test
 	path = get_command_path(cmd->argv[0], pdata->envp);
 	if (!path)
 	{

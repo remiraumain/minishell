@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 20:02:58 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/25 15:11:18 by rraumain         ###   ########.fr       */
+/*   Created: 2025/02/26 08:32:11 by nolecler          #+#    #+#             */
+/*   Updated: 2025/02/26 08:32:11 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef LEXER_H
 # define LEXER_H

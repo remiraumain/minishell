@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 08:51:33 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/25 15:02:40 by rraumain         ###   ########.fr       */
+/*   Created: 2025/02/26 08:32:19 by nolecler          #+#    #+#             */
+/*   Updated: 2025/02/26 08:32:20 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H

@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 10:50:19 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/22 13:00:20 by rraumain         ###   ########.fr       */
+/*   Created: 2025/02/26 08:33:35 by nolecler          #+#    #+#             */
+/*   Updated: 2025/02/26 08:33:36 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minishell.h"
 
