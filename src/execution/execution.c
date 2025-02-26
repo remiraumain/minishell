@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:33:15 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 14:13:50 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:01:36 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,12 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 }
 
 void	execute_cmds(t_cmd *cmd, t_global_data *data)
-//void	execute_cmds(t_cmd *cmd, char **envp)
 {
 	t_pid_data	*pdata;
 
 	pdata = malloc(sizeof(t_pid_data));
 	if (!pdata)
 		return ;
-	//pdata->envp = envp;
 	pdata->nb_cmd = count_cmds(cmd);
 	if (pdata->nb_cmd == 0)
 	{
