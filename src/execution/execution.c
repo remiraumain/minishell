@@ -6,11 +6,9 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:33:15 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 08:51:37 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:13:50 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "minishell.h"
 
@@ -54,7 +52,7 @@ static void	dup_fd(t_pid_data *pdata, int index)
 	}
 }
 
-static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
+static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_global_data *data)
 {
 	int		i;
 	char	*path;
@@ -69,21 +67,24 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 	}
 	if (!apply_redirections(cmd))
 		exit(EXIT_FAILURE);
-	if (is_builtin(cmd) == 1) // test
-		exec_builtin(cmd); // test
-	path = get_command_path(cmd->argv[0], pdata->envp);
+	if (is_builtin(cmd) == 1)
+	{
+		exec_builtin(cmd, data);
+		return ;
+	}
+	path = get_command_path(cmd->argv[0], data->envp);
 	if (!path)
 	{
 		perror(cmd->argv[0]);
 		exit(127);
 	}
-	execve(path, cmd->argv, pdata->envp);
+	execve(path, cmd->argv, data->envp);
 	free(path);
 	perror(cmd->argv[0]);
 	exit(EXIT_FAILURE);
 }
 
-static void	process_cmds(t_cmd *cmd, t_pid_data *pdata)
+static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 {
 	int		i;
 	pid_t	pid;
@@ -103,7 +104,7 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata)
 			return ;
 		}
 		if (pid == 0)
-			execute_child(cmd, i, pdata);
+			execute_child(cmd, i, pdata, data);
 		pdata->pids[i] = pid;
 		i++;
 		cmd = cmd->next;
@@ -112,14 +113,15 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata)
 	free(pdata->pids);
 }
 
-void	execute_cmds(t_cmd *cmd, char **envp)
+void	execute_cmds(t_cmd *cmd, t_global_data *data)
+//void	execute_cmds(t_cmd *cmd, char **envp)
 {
 	t_pid_data	*pdata;
 
 	pdata = malloc(sizeof(t_pid_data));
 	if (!pdata)
 		return ;
-	pdata->envp = envp;
+	//pdata->envp = envp;
 	pdata->nb_cmd = count_cmds(cmd);
 	if (pdata->nb_cmd == 0)
 	{
@@ -132,7 +134,7 @@ void	execute_cmds(t_cmd *cmd, char **envp)
 		free(pdata);
 		return ;
 	}
-	process_cmds(cmd, pdata);
+	process_cmds(cmd, pdata, data);
 	cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
 	free(pdata);
 }

@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:35:03 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 08:35:04 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:17:03 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void	process_input(char *input, t_global_data *data)
 	else
 	{
 		// print_cmd(cmds);
-		execute_cmds(cmds, data->envp);
+		execute_cmds(cmds, data);
 		free_cmd_list(cmds);
 	}
 }

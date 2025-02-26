@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:32:19 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 08:32:20 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:00:39 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_global_data
 # include "lexer.h"
 # include "expand.h"
 # include "parser.h"
+# include "builtin.h"
 # include "execution.h"
 
 

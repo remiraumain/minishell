@@ -6,7 +6,7 @@
 #    By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/26 08:35:10 by nolecler          #+#    #+#              #
-#    Updated: 2025/02/26 08:35:11 by nolecler         ###   ########.fr        #
+#    Updated: 2025/02/26 11:04:37 by nolecler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,12 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
 LEXER_SRC = $(addprefix lexer/, lexer.c token.c parse.c utils.c expander.c vars.c)
-# EXPAND_SRC = $(addprefix expander/, expander.c vars.c)
 PARSER_SRC = $(addprefix parser/, parser.c utils.c)
 EXEC_SRC = $(addprefix execution/, execution.c redirection.c path.c path_utils.c utils.c)
+BUILTIN_SRC = $(addprefix builtins/, echo.c)
 UTILS_SRC = utils/string.c
 
-SRC = $(addprefix src/, main.c $(LEXER_SRC) $(PARSER_SRC) $(EXEC_SRC) $(UTILS_SRC))
+SRC = $(addprefix src/, main.c $(LEXER_SRC) $(PARSER_SRC) $(EXEC_SRC) $(BUILTIN_SRC) $(UTILS_SRC))
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

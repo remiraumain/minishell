@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:31:55 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 08:40:39 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:06:36 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 
 typedef struct s_pid_data
 {
-	char	**envp;
+	//char	**envp; // mis dans global_data 
 	int		nb_cmd;
 	int		**pipefd;
 	pid_t	*pids;
 }	t_pid_data;
 
 //	EXECUTION
-void	execute_cmds(t_cmd *cmd, char **envp);
+void	execute_cmds(t_cmd *cmd, t_global_data *data);
 
 //	REDIRECTION
 int		apply_redirections(t_cmd *cmd);
