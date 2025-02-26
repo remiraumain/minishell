@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:34:18 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 08:34:19 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:09:51 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_token	*create_token(t_token_type type, char *value)
 		return (NULL);
 	new_token->type = type;
 	new_token->value = value;
-	new_token->expand = false;
 	new_token->next = NULL;
 	return (new_token);
 }

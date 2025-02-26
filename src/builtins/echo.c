@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:13:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 09:35:32 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:08:30 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	ft_strcmp(char *s1, char *s2)
 		return (0);
 	return (1);
 }
-
 
 int is_builtin(t_cmd *cmd)
 {
