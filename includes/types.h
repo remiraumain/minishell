@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:20:03 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 20:42:46 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/27 21:41:29 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ typedef struct s_cmd
 
 typedef struct s_pid_data
 {
-	char	**envp;
-	int		nb_cmd;
-	int		**pipefd;
-	pid_t	*pids;
+	t_global_data	*gdata;
+	int				nb_cmd;
+	int				**pipefd;
+	pid_t			*pids;
 }	t_pid_data;
 
 #endif

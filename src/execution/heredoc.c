@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:49:26 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 21:08:46 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/27 21:47:18 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*create_heredoc_filename(int cmd_i, int redir_i)
 	return (filename);
 }
 
-static void	readline_loop(t_redir *redir, int fd)
+static void	readline_loop(t_redir *redir, int fd, t_global_data *data)
 {
 	char	*input;
 
@@ -67,18 +67,20 @@ static void	readline_loop(t_redir *redir, int fd)
 		input = readline("> ");
 		if (!input)
 			break ;
-		if (ft_strncmp(input, redir->filename, ft_strlen(redir->filename)) == 0)
+		if (ft_strncmp(input, redir->filename, ft_strlen(redir->filename)) == 0
+			&& ft_strlen(input) == ft_strlen(redir->filename))
 		{
 			free(input);
 			break ;
 		}
-		add_history(input);
+		expand_word(&input, data);
+		// add_history(input); History deactivated because it was annoying
 		ft_putendl_fd(input, fd);
 		free(input);
 	}
 }
 
-int	set_heredoc(t_cmd *cmd, int cmd_i)
+int	set_heredoc(t_cmd *cmd, int cmd_i, t_global_data *data)
 {
 	int		fd;
 	char	*filename;
@@ -98,7 +100,7 @@ int	set_heredoc(t_cmd *cmd, int cmd_i)
 			free(filename);
 			if (fd < 0)
 				return (0);
-			readline_loop(redir, fd);
+			readline_loop(redir, fd, data);
 			close(fd);
 			redir_i++;
 		}

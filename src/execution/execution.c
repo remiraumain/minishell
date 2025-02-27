@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 21:05:20 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/27 21:42:14 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 	}
 	if (!apply_redirections(cmd, index))
 		exit(EXIT_FAILURE);
-	path = get_command_path(cmd->argv[0], pdata->envp);
+	path = get_command_path(cmd->argv[0], pdata->gdata->envp);
 	if (!path)
 	{
 		perror(cmd->argv[0]);
 		exit(127);
 	}
-	execve(path, cmd->argv, pdata->envp);
+	execve(path, cmd->argv, pdata->gdata->envp);
 	free(path);
 	perror(cmd->argv[0]);
 	exit(EXIT_FAILURE);
@@ -65,7 +65,7 @@ static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata,
 	pid_t	pid;
 
 	if (cmd->redir && cmd->redir->type == REDIR_HEREDOC
-		&& !set_heredoc(cmd, i))
+		&& !set_heredoc(cmd, i, pdata->gdata))
 	{
 		free(pdata->pids);
 		free(pdata);
@@ -108,14 +108,14 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata)
 	free(pdata->pids);
 }
 
-void	execute_cmds(t_cmd *cmd, char **envp)
+void	execute_cmds(t_cmd *cmd, t_global_data *data)
 {
 	t_pid_data	*pdata;
 
 	pdata = malloc(sizeof(t_pid_data));
 	if (!pdata)
 		return ;
-	pdata->envp = envp;
+	pdata->gdata = data;
 	pdata->nb_cmd = count_cmds(cmd);
 	if (pdata->nb_cmd == 0)
 	{
