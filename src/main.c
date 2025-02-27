@@ -6,65 +6,11 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:40:01 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/25 15:00:19 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:46:08 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// Temporary function to print command details
-// static void	print_redirections(t_redir *redir)
-// {
-// 	while (redir)
-// 	{
-// 		printf("\n    type: ");
-// 		if (redir->type == REDIR_IN)
-// 			printf("<");
-// 		else if (redir->type == REDIR_OUT)
-// 			printf(">");
-// 		else if (redir->type == REDIR_OUT_APPEND)
-// 			printf(">>");
-// 		else if (redir->type == REDIR_HEREDOC)
-// 			printf("<<");
-// 		printf(" file: [%s]", redir->filename);
-// 		redir = redir->next;
-// 	}
-// }
-
-// static void	print_argv(char **argv)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (argv[i])
-// 	{
-// 		printf("[%s] ", argv[i]);
-// 		i++;
-// 	}
-// }
-
-// static void	print_cmd(t_cmd *cmd)
-// {
-// 	while (cmd)
-// 	{
-// 		printf("Command:\n");
-// 		printf("  argv: ");
-// 		if (cmd->argv)
-// 			print_argv(cmd->argv);
-// 		else
-// 			printf("(empty)");
-// 		printf("\n");
-// 		printf("  redirections: ");
-// 		if (cmd->redir)
-// 			print_redirections(cmd->redir);
-// 		else
-// 			printf("(none)");
-// 		printf("\n");
-// 		cmd = cmd->next;
-// 		if (cmd)
-// 			printf("  pipe to next command\n");
-// 	}
-// }
 
 static void	process_input(char *input, t_global_data *data)
 {
@@ -76,17 +22,12 @@ static void	process_input(char *input, t_global_data *data)
 	tokens = lexer(input, data);
 	if (!tokens)
 		return ;
-	// expand_tokens(tokens, envp, status);
 	cmds = parse_line(tokens);
 	free_token_list(tokens);
 	if (!cmds)
-	{
-		rl_clear_history();
-		exit(EXIT_FAILURE);
-	}
+		return ;
 	else
 	{
-		// print_cmd(cmds);
 		execute_cmds(cmds, data->envp);
 		free_cmd_list(cmds);
 	}

@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:58:02 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/25 14:50:38 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:00:56 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static int	parse(t_token **head, char *input, int *index, t_global_data *data)
 		status = new_token(head, index);
 	else if (input[*index] == '<' || input[*index] == '>')
 		status = parse_redirect(head, index, input);
-	// else if (input[*index] == '"' || input[*index] == '\'')
-	// 	status = parse_quotes(head, index, input);
 	else
 		status = parse_word(head, index, input, data);
 	return (status);

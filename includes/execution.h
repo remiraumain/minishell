@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:48:53 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/22 14:04:57 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/26 21:26:02 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 # define EXECUTION_H
 
 # include "minishell.h"
-
-typedef struct s_pid_data
-{
-	char	**envp;
-	int		nb_cmd;
-	int		**pipefd;
-	pid_t	*pids;
-}	t_pid_data;
 
 //	EXECUTION
 void	execute_cmds(t_cmd *cmd, char **envp);
