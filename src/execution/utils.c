@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:46 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/23 08:35:09 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/27 20:58:23 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,24 @@ int	**create_pipes(int cmd_count)
 	if (init_pipes(pipefd, cmd_count) == 0)
 		return (NULL);
 	return (pipefd);
+}
+
+void	dup_fd(t_pid_data *pdata, int index)
+{
+	if (index > 0)
+	{
+		if (dup2(pdata->pipefd[index - 1][0], STDIN_FILENO) < 0)
+		{
+			perror("dup2 in");
+			exit(1);
+		}
+	}
+	if (index < pdata->nb_cmd - 1)
+	{
+		if (dup2(pdata->pipefd[index][1], STDOUT_FILENO) < 0)
+		{
+			perror("dup2 out");
+			exit(1);
+		}
+	}
 }
