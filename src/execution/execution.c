@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 21:42:14 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:46:18 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata,
 {
 	pid_t	pid;
 
-	if (cmd->redir && cmd->redir->type == REDIR_HEREDOC
-		&& !set_heredoc(cmd, i, pdata->gdata))
+	if (cmd->redir && (cmd->redir->type == REDIR_HEREDOC
+			|| cmd->redir->type == REDIR_HEREDOC_E)
+		&& !set_heredoc(cmd->redir, i, pdata->gdata))
 	{
 		free(pdata->pids);
 		free(pdata);

@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:49:26 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 21:47:18 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:45:30 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,25 +73,24 @@ static void	readline_loop(t_redir *redir, int fd, t_global_data *data)
 			free(input);
 			break ;
 		}
-		expand_word(&input, data);
+		if (redir->type == REDIR_HEREDOC)
+			expand_word(&input, data);
 		// add_history(input); History deactivated because it was annoying
 		ft_putendl_fd(input, fd);
 		free(input);
 	}
 }
 
-int	set_heredoc(t_cmd *cmd, int cmd_i, t_global_data *data)
+int	set_heredoc(t_redir	*redir, int cmd_i, t_global_data *data)
 {
 	int		fd;
 	char	*filename;
 	int		redir_i;
-	t_redir	*redir;
 
 	redir_i = 0;
-	redir = cmd->redir;
 	while (redir)
 	{
-		if (redir->type == REDIR_HEREDOC)
+		if (redir->type == REDIR_HEREDOC || redir->type == REDIR_HEREDOC_E)
 		{
 			filename = create_heredoc_filename(cmd_i, redir_i);
 			if (!filename)
@@ -123,7 +122,7 @@ void	clean_heredocs(t_cmd *cmd, int len)
 		redir = cmd->redir;
 		while (redir)
 		{
-			if (redir->type == REDIR_HEREDOC)
+			if (redir->type == REDIR_HEREDOC || redir->type == REDIR_HEREDOC_E)
 			{
 				filename = create_heredoc_filename(cmd_i, redir_i++);
 				if (filename)

@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:20:03 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 21:41:29 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:43:18 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef enum e_token_type
 	TK_REDIR_OUT,
 	TK_REDIR_APPEND,
 	TK_HEREDOC,
+	TK_HEREDOC_EXPAND,
 	TK_EOF
 }	t_token_type;
 
@@ -56,7 +57,8 @@ typedef enum e_redir_type
 	REDIR_IN,
 	REDIR_OUT,
 	REDIR_OUT_APPEND,
-	REDIR_HEREDOC
+	REDIR_HEREDOC,
+	REDIR_HEREDOC_E
 }	t_redir_type;
 
 typedef struct s_redir

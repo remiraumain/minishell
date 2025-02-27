@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:48:53 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 21:42:38 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:26:11 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		**create_pipes(int cmd_count);
 void	dup_fd(t_pid_data *pdata, int index);
 
 //	HEREDOC
-int		set_heredoc(t_cmd *cmd, int cmd_i, t_global_data *data);
+int		set_heredoc(t_redir *redir, int cmd_i, t_global_data *data);
 void	clean_heredocs(t_cmd *cmd, int len);
 char	*create_heredoc_filename(int cmd_i, int redir_i);
 
