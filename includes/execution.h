@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:48:53 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/26 21:26:02 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/27 21:06:50 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 void	execute_cmds(t_cmd *cmd, char **envp);
 
 //	REDIRECTION
-int		apply_redirections(t_cmd *cmd);
+int		apply_redirections(t_cmd *cmd, int cmd_i);
 // int		setup_redirections(t_cmd *cmd);
 
 //	CMD_PATH
@@ -34,5 +34,11 @@ char	*join_paths(char *dir, char *cmd);
 int		count_cmds(t_cmd *cmd);
 void	cleanup_pipes(int **pipefd, int count);
 int		**create_pipes(int cmd_count);
+void	dup_fd(t_pid_data *pdata, int index);
+
+//	HEREDOC
+int		set_heredoc(t_cmd *cmd, int cmd_i);
+void	clean_heredocs(t_cmd *cmd, int len);
+char	*create_heredoc_filename(int cmd_i, int redir_i);
 
 #endif

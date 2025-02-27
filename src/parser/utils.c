@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:52:41 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/19 18:15:12 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/27 20:42:58 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	free_cmd_list(t_cmd *head)
 int	add_redir(t_cmd *cmd, t_redir_type type, const char *filename)
 {
 	t_redir	*new_redir;
+	t_redir	*tail;
 
 	new_redir = malloc(sizeof(t_redir));
 	if (!new_redir)
@@ -77,8 +78,15 @@ int	add_redir(t_cmd *cmd, t_redir_type type, const char *filename)
 		return (0);
 	}
 	new_redir->next = NULL;
-	new_redir->next = cmd->redir;
-	cmd->redir = new_redir;
+	if (!cmd->redir)
+		cmd->redir = new_redir;
+	else
+	{
+		tail = cmd->redir;
+		while (tail->next)
+			tail = tail->next;
+		tail->next = new_redir;
+	}
 	return (1);
 }
 

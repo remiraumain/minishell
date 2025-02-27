@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/23 08:48:55 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/27 21:05:20 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,6 @@ static void	close_and_wait(t_pid_data *pdata)
 	}
 }
 
-static void	dup_fd(t_pid_data *pdata, int index)
-{
-	if (index > 0)
-	{
-		if (dup2(pdata->pipefd[index - 1][0], STDIN_FILENO) < 0)
-		{
-			perror("dup2 in");
-			exit(1);
-		}
-	}
-	if (index < pdata->nb_cmd - 1)
-	{
-		if (dup2(pdata->pipefd[index][1], STDOUT_FILENO) < 0)
-		{
-			perror("dup2 out");
-			exit(1);
-		}
-	}
-}
-
 static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 {
 	int		i;
@@ -65,7 +45,7 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 		close(pdata->pipefd[i][1]);
 		i++;
 	}
-	if (!apply_redirections(cmd))
+	if (!apply_redirections(cmd, index))
 		exit(EXIT_FAILURE);
 	path = get_command_path(cmd->argv[0], pdata->envp);
 	if (!path)
@@ -79,32 +59,52 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 	exit(EXIT_FAILURE);
 }
 
-static void	process_cmds(t_cmd *cmd, t_pid_data *pdata)
+static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata,
+	t_cmd *head)
 {
-	int		i;
 	pid_t	pid;
 
+	if (cmd->redir && cmd->redir->type == REDIR_HEREDOC
+		&& !set_heredoc(cmd, i))
+	{
+		free(pdata->pids);
+		free(pdata);
+		clean_heredocs(head, i);
+		return (0);
+	}
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork");
+		free(pdata->pids);
+		free(pdata);
+		return (0);
+	}
+	if (pid == 0)
+		execute_child(cmd, i, pdata);
+	pdata->pids[i] = pid;
+	return (1);
+}
+
+static void	process_cmds(t_cmd *cmd, t_pid_data *pdata)
+{
+	t_cmd	*head;
+	int		i;
+
+	head = cmd;
 	pdata->pids = malloc(sizeof(pid_t) * pdata->nb_cmd);
 	if (!pdata->pids)
 		return ;
 	i = 0;
 	while (cmd)
 	{
-		pid = fork();
-		if (pid < 0)
-		{
-			perror("fork");
-			free(pdata->pids);
-			free(pdata);
-			return ;
-		}
-		if (pid == 0)
-			execute_child(cmd, i, pdata);
-		pdata->pids[i] = pid;
+		if (!fork_and_exec_child(cmd, i, pdata, head))
+			break ;
 		i++;
 		cmd = cmd->next;
 	}
 	close_and_wait(pdata);
+	clean_heredocs(head, i);
 	free(pdata->pids);
 }
 
