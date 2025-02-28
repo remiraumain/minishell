@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:34:56 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 14:44:10 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:56:03 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,16 @@ int	ft_strcmp(char *s1, char *s2)
 	if (s1[i] == s2[i])
 		return (0);
 	return (1);
+}
+
+void	ft_putstr_fd(char *str, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		write(fd, &str[i], 1);
+		i++;
+	}
 }

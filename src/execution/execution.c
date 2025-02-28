@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:33:15 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 15:01:36 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:45:37 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_global_dat
 		exit(EXIT_FAILURE);
 	if (is_builtin(cmd) == 1)
 	{
-		exec_builtin(cmd, data);
+		exec_builtin(cmd, data, pdata);
 		return ;
 	}
 	path = get_command_path(cmd->argv[0], data->envp);
