@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/01 13:01:22 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/03 09:46:09 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,10 @@
 // int chdir( const char * path );
 // cas de cd fichier.txt -> cd: not a directory: test.c return (1)
 
-
-
-// A FAIRE 
-// Fonction pour mettre à jour OLD_PWD dans l'environnement
-// void update_old_pwd(char **envp, const char *new_old_pwd)
-
-// Fonction pour mettre à jour PWD dans l'environnement
-// void update_pwd(char **envp, const char *new_pwd)
 	
 static char	*get_old_pwd(char **envp)
 {
 	int		i;
-	int		j;
 	char	*old_pwd;
 	int		len;
 	
@@ -44,8 +35,7 @@ static char	*get_old_pwd(char **envp)
 	old_pwd = NULL;
 	while (envp[i])
 	{
-		j = ft_strlen(envp[i]);
-		len = j - 7;
+		len = ft_strlen(envp[i]) - 7;
 		if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
 		{
 			old_pwd = ft_substr(envp[i], 7, len); // malloc, a free ailleurs
@@ -54,6 +44,42 @@ static char	*get_old_pwd(char **envp)
 		i++;
 	}
 	return (NULL);
+}
+
+static void update_old_pwd(char **envp, const char *new_old_pwd)
+{
+    int i;
+    
+    i = 0;
+
+    while (envp[i])
+    {
+        if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
+        {
+           free(envp[i]);//
+            envp[i] = ft_strjoin("OLDPWD=", new_old_pwd); // malloc
+            return;
+        }
+        i++;
+    }
+}
+
+static void update_pwd(char **envp, const char *new_pwd)
+{
+    int i;
+
+    i = 0;
+
+    while (envp[i])
+    {
+        if (ft_strncmp(envp[i], "PWD=", 4) == 0)
+        {
+          free(envp[i]);//
+            envp[i] = ft_strjoin("PWD=", new_pwd);
+            return;
+        }
+        i++;
+    }
 }
 
 static int print_error(char *argv)
@@ -83,30 +109,38 @@ static int print_error(char *argv)
 }
 
 
-// verifie si c'est un dossier// int stat(const char *pathname, struct stat *buf); A FAIRE PLUS TARD
+// verifie si c'est un dossier// 
 int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
 {
     char *pwd;
     char *path;
 	int res;
 	char *old_pwd;
+	char *new_pwd;
+    char *home;
 	
 	res = 0;
-	pwd = getcwd(NULL, 0); // allocation
+	pwd = getcwd(NULL, 0); // malloc
 	old_pwd = get_old_pwd(sdata->envp);// malloc qui n est pas free encore
 	path = NULL;
-	if (pdata->nb_cmd == 1) //if (argc == 3)
+	new_pwd = NULL;
+	home = NULL;
+	if (pdata->nb_cmd == 1)
 	{
+		if (old_pwd) // a voir , test a faire sans et avec;
+			update_old_pwd(sdata->envp, old_pwd);
+			//int stat(const char *pathname, struct stat *buf); A FAIRE PLUS TARD
 		if (ft_strcmp(cmd->argv[0], "cd") == 0 && cmd->argv[1] && cmd->argv[1][0] == '/') // verif a renforcer
 		{
 			res = print_error(cmd->argv[1]);
 			if (res == 1)
 			{
 				free(old_pwd);
+				free(pwd);
 				return (1);
 			}
 			free(pwd);
-			pwd = getcwd(NULL, 0); // allocation
+			pwd = getcwd(NULL, 0);
 		}
 		else if (ft_strcmp(cmd->argv[0],"cd") == 0 && cmd->argv[1])
 		{
@@ -118,6 +152,7 @@ int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
 				{
 					free (old_pwd);
 					free(path);
+					free(pwd);int stat(const char *pathname, struct stat *buf); A FAIRE PLUS TARD
 					return (1);
 				}
 				free (pwd);
@@ -134,9 +169,28 @@ int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
 				ft_putstr_fd("not a directory: ", 2);
 				ft_putstr_fd(cmd->argv[1], 2);	
 				free (old_pwd);
+				free(pwd);
 				return (1);
 			}	
 		}
+		else if ((ft_strcmp(cmd->argv[0], "cd") == 0 && !cmd->argv[1]) || 
+			(ft_strcmp(cmd->argv[0], "cd") == 0 && cmd->argv[1] && ft_strcmp(cmd->argv[1], "~") == 0))
+		{
+			home = getenv("HOME"); // Récupére $HOME
+            if (!home || chdir(home) == -1)
+            {
+                ft_putstr_fd("cd: HOME not set\n", 2);
+                free(old_pwd);
+                free(pwd);
+                return (1);
+			}
+		}
+		new_pwd = getcwd(NULL, 0);
+        if (new_pwd)
+        {
+            update_pwd(sdata->envp, new_pwd);
+            free(new_pwd);
+        }
 	}
 	free (pwd);
 	free (old_pwd);
