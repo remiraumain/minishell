@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/03 14:24:12 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:32:37 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static void update_old_pwd(char **envp, const char *new_old_pwd)
     {
         if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
         {
-           //free(envp[i]);//
             envp[i] = ft_strjoin("OLDPWD=", new_old_pwd); // malloc
             return;
         }
@@ -73,7 +72,6 @@ static void update_pwd(char **envp, const char *new_pwd)
     {
         if (ft_strncmp(envp[i], "PWD=", 4) == 0)
         {
-          //free(envp[i]);//
             envp[i] = ft_strjoin("PWD=", new_pwd);
             return;
         }
@@ -139,7 +137,7 @@ int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
                 return (1);
 			}
 		}
-		else if (cmd->argv[1] && ft_strcmp(cmd->argv[1], "..") == 0) // cd ..
+		else if (cmd->argv[1] && (ft_strcmp(cmd->argv[1], "..") == 0 || ft_strcmp(cmd->argv[1], "-") == 0)) // cd ..
 		{
 			if (chdir("..") == -1)
 			{

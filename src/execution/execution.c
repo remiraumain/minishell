@@ -6,88 +6,88 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:33:15 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/28 13:45:37 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:49:14 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	close_and_wait(t_pid_data *pdata)
-{
-	int	i;
-	int	status;
+// static void	close_and_wait(t_pid_data *pdata)
+// {
+// 	int	i;
+// 	int	status;
 
-	i = 0;
-	while (i < pdata->nb_cmd - 1)
-	{
-		close(pdata->pipefd[i][0]);
-		close(pdata->pipefd[i][1]);
-		i++;
-	}
-	i = 0;
-	while (i < pdata->nb_cmd)
-	{
-		waitpid(pdata->pids[i], &status, 0);
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < pdata->nb_cmd - 1)
+// 	{
+// 		close(pdata->pipefd[i][0]);
+// 		close(pdata->pipefd[i][1]);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (i < pdata->nb_cmd)
+// 	{
+// 		waitpid(pdata->pids[i], &status, 0);
+// 		i++;
+// 	}
+// }
 
-static void	dup_fd(t_pid_data *pdata, int index)
-{
-	if (index > 0)
-	{
-		if (dup2(pdata->pipefd[index - 1][0], STDIN_FILENO) < 0)
-		{
-			perror("dup2 in");
-			exit(1);
-		}
-	}
-	if (index < pdata->nb_cmd - 1)
-	{
-		if (dup2(pdata->pipefd[index][1], STDOUT_FILENO) < 0)
-		{
-			perror("dup2 out");
-			exit(1);
-		}
-	}
-}
+// static void	dup_fd(t_pid_data *pdata, int index)
+// {
+// 	if (index > 0)
+// 	{
+// 		if (dup2(pdata->pipefd[index - 1][0], STDIN_FILENO) < 0)
+// 		{
+// 			perror("dup2 in");
+// 			exit(1);
+// 		}
+// 	}
+// 	if (index < pdata->nb_cmd - 1)
+// 	{
+// 		if (dup2(pdata->pipefd[index][1], STDOUT_FILENO) < 0)
+// 		{
+// 			perror("dup2 out");
+// 			exit(1);
+// 		}
+// 	}
+// }
 
-static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_global_data *data)
-{
-	int		i;
-	char	*path;
+// static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_global_data *data)
+// {
+// 	int		i;
+// 	char	*path;
 
-	dup_fd(pdata, index);
-	i = 0;
-	while (i < pdata->nb_cmd - 1)
-	{
-		close(pdata->pipefd[i][0]);
-		close(pdata->pipefd[i][1]);
-		i++;
-	}
-	if (!apply_redirections(cmd))
-		exit(EXIT_FAILURE);
-	if (is_builtin(cmd) == 1)
-	{
-		exec_builtin(cmd, data, pdata);
-		return ;
-	}
-	path = get_command_path(cmd->argv[0], data->envp);
-	if (!path)
-	{
-		perror(cmd->argv[0]);
-		exit(127);
-	}
-	execve(path, cmd->argv, data->envp);
-	free(path);
-	perror(cmd->argv[0]);
-	exit(EXIT_FAILURE);
-}
+// 	dup_fd(pdata, index);
+// 	i = 0;
+// 	while (i < pdata->nb_cmd - 1)
+// 	{
+// 		close(pdata->pipefd[i][0]);
+// 		close(pdata->pipefd[i][1]);
+// 		i++;
+// 	}
+// 	if (!apply_redirections(cmd))
+// 		exit(EXIT_FAILURE);
+// 	if (is_builtin_child(cmd) == 1)
+// 	{
+// 		exec_builtin_child(cmd, data, pdata);
+// 		return ;
+// 	}
+// 	path = get_command_path(cmd->argv[0], data->envp);
+// 	if (!path)
+// 	{
+// 		perror(cmd->argv[0]);
+// 		exit(127);
+// 	}
+// 	execve(path, cmd->argv, data->envp);
+// 	free(path);
+// 	perror(cmd->argv[0]);
+// 	exit(EXIT_FAILURE);
+// }
 
 static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 {
 	int		i;
-	pid_t	pid;
+	// pid_t	pid;
 
 	pdata->pids = malloc(sizeof(pid_t) * pdata->nb_cmd);
 	if (!pdata->pids)
@@ -95,6 +95,11 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 	i = 0;
 	while (cmd)
 	{
+		// if (is_builtin_parent)
+		//	exec_builtin_parent();
+		//	else()
+		exec_builtin(cmd, data, pdata);
+		/*
 		pid = fork();
 		if (pid < 0)
 		{
@@ -106,10 +111,11 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 		if (pid == 0)
 			execute_child(cmd, i, pdata, data);
 		pdata->pids[i] = pid;
+		*/
 		i++;
 		cmd = cmd->next;
 	}
-	close_and_wait(pdata);
+	// close_and_wait(pdata);
 	free(pdata->pids);
 }
 

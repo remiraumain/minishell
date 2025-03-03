@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:10:52 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/03 14:03:03 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:47:56 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ void exec_builtin(t_cmd *cmd, t_global_data *data, t_pid_data *pdata)
 	// 	status = exec_env(cmd);
 	// if (!ft_strcmp(cmd->argv[0], "exit"))
 	// 	status = exec_exit(cmd);
-	exit(data->status);
+	// exit(data->status); // dans parent return();
+	
 }
