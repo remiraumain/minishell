@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/03 09:46:09 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:24:12 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 
 // char * getcwd( char *buffer, size_t size ); renvoie le pwd actuel
 // char * getenv( const char * varName ); ex: char *oldpwd = getenv("OLDPWD")
-// verif sur cd tout court
 // int chdir( const char * path );
-// cas de cd fichier.txt -> cd: not a directory: test.c return (1)
 
-	
+// cas de too many argument	A FAIRE
+
 static char	*get_old_pwd(char **envp)
 {
 	int		i;
@@ -56,7 +55,7 @@ static void update_old_pwd(char **envp, const char *new_old_pwd)
     {
         if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
         {
-           free(envp[i]);//
+           //free(envp[i]);//
             envp[i] = ft_strjoin("OLDPWD=", new_old_pwd); // malloc
             return;
         }
@@ -74,7 +73,7 @@ static void update_pwd(char **envp, const char *new_pwd)
     {
         if (ft_strncmp(envp[i], "PWD=", 4) == 0)
         {
-          free(envp[i]);//
+          //free(envp[i]);//
             envp[i] = ft_strjoin("PWD=", new_pwd);
             return;
         }
@@ -129,39 +128,18 @@ int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
 	{
 		if (old_pwd) // a voir , test a faire sans et avec;
 			update_old_pwd(sdata->envp, old_pwd);
-			//int stat(const char *pathname, struct stat *buf); A FAIRE PLUS TARD
-		if (ft_strcmp(cmd->argv[0], "cd") == 0 && cmd->argv[1] && cmd->argv[1][0] == '/') // verif a renforcer
+		if ((!cmd->argv[1]) || (cmd->argv[1] && ft_strcmp(cmd->argv[1], "~") == 0)) // cd ou cd ~
 		{
-			res = print_error(cmd->argv[1]);
-			if (res == 1)
-			{
-				free(old_pwd);
-				free(pwd);
-				return (1);
-			}
-			free(pwd);
-			pwd = getcwd(NULL, 0);
-		}
-		else if (ft_strcmp(cmd->argv[0],"cd") == 0 && cmd->argv[1])
-		{
-			if (ft_strcmp(cmd->argv[1], "~") != 0 && ft_strcmp(cmd->argv[1], "..") != 0)
-			{
-				path = ft_strjoin(pwd, cmd->argv[1]); // malloc Ã free
-				res = print_error(cmd->argv[1]);
-				if (res == 1)
-				{
-					free (old_pwd);
-					free(path);
-					free(pwd);int stat(const char *pathname, struct stat *buf); A FAIRE PLUS TARD
-					return (1);
-				}
-				free (pwd);
-				pwd = getcwd(NULL, 0);
-				free(path);
+			home = getenv("HOME");
+            if (!home || chdir(home) == -1)
+            {
+                ft_putstr_fd("cd: HOME not set\n", 2);
+                free(old_pwd);
+                free(pwd);
+                return (1);
 			}
 		}
-		// else if(a gerer plus tard cd ~ , cd .. et cd tout court)
-		else if (ft_strcmp(cmd->argv[0], "cd") == 0 && cmd->argv[1] && ft_strcmp(cmd->argv[1], "..") == 0)
+		else if (cmd->argv[1] && ft_strcmp(cmd->argv[1], "..") == 0) // cd ..
 		{
 			if (chdir("..") == -1)
 			{
@@ -171,24 +149,37 @@ int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
 				free (old_pwd);
 				free(pwd);
 				return (1);
-			}	
-		}
-		else if ((ft_strcmp(cmd->argv[0], "cd") == 0 && !cmd->argv[1]) || 
-			(ft_strcmp(cmd->argv[0], "cd") == 0 && cmd->argv[1] && ft_strcmp(cmd->argv[1], "~") == 0))
-		{
-			home = getenv("HOME"); // Récupére $HOME
-            if (!home || chdir(home) == -1)
-            {
-                ft_putstr_fd("cd: HOME not set\n", 2);
-                free(old_pwd);
-                free(pwd);
-                return (1);
 			}
+		}
+		else if (cmd->argv[1] && cmd->argv[1][0] == '/') // cd /argv[1];
+		{
+			res = print_error(cmd->argv[1]);
+			if (res == 1)
+			{
+				free(old_pwd);
+				free(pwd);
+				return (1);
+			}
+		}
+		else if (cmd->argv[1])
+		{
+			path = ft_strjoin(pwd, cmd->argv[1]); // malloc Ã free
+			free(pwd);//
+			res = print_error(cmd->argv[1]);
+			if (res == 1)
+			{
+				free (old_pwd);
+				free(path);
+				free(pwd);
+				return (1);
+			}
+			pwd = getcwd(NULL, 0);
+			free(path);
 		}
 		new_pwd = getcwd(NULL, 0);
         if (new_pwd)
         {
-            update_pwd(sdata->envp, new_pwd);
+			update_pwd(sdata->envp, new_pwd);
             free(new_pwd);
         }
 	}

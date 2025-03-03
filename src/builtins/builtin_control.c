@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:10:52 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/28 14:43:22 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:03:03 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void exec_builtin(t_cmd *cmd, t_global_data *data, t_pid_data *pdata)
 	if (!ft_strcmp(cmd->argv[0], "echo"))
 		data->status = exec_echo(cmd);
 	if (!ft_strcmp(cmd->argv[0], "cd"))
-		data->status = exec_cd(cmd, pdata);
+		data->status = exec_cd(cmd, pdata, data);
 	if (!ft_strcmp(cmd->argv[0], "pwd"))
 		data->status = exec_pwd(cmd, pdata);
 	// if (!ft_strcmp(cmd->argv[0], "export"))
