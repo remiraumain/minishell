@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:20:03 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 22:43:18 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/01 15:16:28 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 
 # include "minishell.h"
 
+#define INT_MAX 2147483647
+#define INT_MIN -2147483648
+
 //	GLOBAL
+extern int	g_sig;
 
 typedef struct s_global_data
 {

@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:58:02 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/26 10:00:56 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:38:29 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ t_token	*lexer(char *input, t_global_data *data)
 			free_token_list(head);
 			return (NULL);
 		}
+	}
+	if (g_sig)
+	{
+		free_token_list(head);
+		return (NULL);
 	}
 	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:49:26 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 22:45:30 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:45:34 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ static void	readline_loop(t_redir *redir, int fd, t_global_data *data)
 {
 	char	*input;
 
+	set_heredoc_signals();
 	while (1)
 	{
 		input = readline("> ");
 		if (!input)
-			break ;
-		if (ft_strncmp(input, redir->filename, ft_strlen(redir->filename)) == 0
-			&& ft_strlen(input) == ft_strlen(redir->filename))
+			break;
+		if (ft_strncmp(input, redir->filename, INT_MAX) == 0 || g_sig)
 		{
 			free(input);
 			break ;
@@ -79,6 +79,7 @@ static void	readline_loop(t_redir *redir, int fd, t_global_data *data)
 		ft_putendl_fd(input, fd);
 		free(input);
 	}
+	set_parent_signals();
 }
 
 int	set_heredoc(t_redir	*redir, int cmd_i, t_global_data *data)
@@ -88,7 +89,7 @@ int	set_heredoc(t_redir	*redir, int cmd_i, t_global_data *data)
 	int		redir_i;
 
 	redir_i = 0;
-	while (redir)
+	while (redir && !g_sig)
 	{
 		if (redir->type == REDIR_HEREDOC || redir->type == REDIR_HEREDOC_E)
 		{
