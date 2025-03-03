@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:50:19 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 22:45:52 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:38:48 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	apply_redirections(t_cmd *cmd, int cmd_i)
 		else if (redir->type == REDIR_OUT_APPEND && !redir_append(redir))
 			return (0);
 		else if ((redir->type == REDIR_HEREDOC
-				|| redir->type == REDIR_HEREDOC_E)
+				|| redir->type == REDIR_HEREDOC_Q)
 			&& !redir_heredoc(cmd_i, redir_i))
 			return (0);
 		redir_i++;
