@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/04 13:27:37 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:27:54 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int is_builtin_parent(t_cmd *cmd);
 void exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
 
 
-
 /* echo */
 int exec_echo(t_cmd *cmd);
 
@@ -42,7 +41,10 @@ int exec_pwd(t_cmd *cmd, t_pid_data *pdata);
 /* env.c*/
 int exec_env(t_cmd *cmd, t_global_data *sdata);
 
+/* exit.c */
+int exec_exit(t_cmd *cmd, t_global_data *data);
 
+/* */
 
 
 
