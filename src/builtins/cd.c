@@ -6,18 +6,13 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/03 16:32:37 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/04 11:37:55 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-// char * getcwd( char *buffer, size_t size ); renvoie le pwd actuel
-// char * getenv( const char * varName ); ex: char *oldpwd = getenv("OLDPWD")
-// int chdir( const char * path );
-
-// cas de too many argument	A FAIRE
+// test a gerer creer un dossier(ou fichier) le supprimer puis verifier pwd
 
 static char	*get_old_pwd(char **envp)
 {
@@ -50,7 +45,6 @@ static void update_old_pwd(char **envp, const char *new_old_pwd)
     int i;
     
     i = 0;
-
     while (envp[i])
     {
         if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
@@ -84,28 +78,28 @@ static int print_error(char *argv)
 	if (access(argv, F_OK) == -1)
 	{
 		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd("no such file or directory: ", 2);
-		ft_putstr_fd(argv, 2);
+		ft_putstr_fd(argv , 2);
+		ft_putstr_fd(": no such file or directory ", 2);
 		return (1);
 	}
 	if (access(argv, X_OK) == -1)
 	{
 		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd("permission denied: ", 2);
-		ft_putstr_fd(argv, 2);
+		ft_putstr_fd(argv , 2);
+		ft_putstr_fd(": permission denied ", 2);
 		return (1);
 	}
 	if (chdir(argv) == -1)
 	{
 		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd("not a directory: ", 2);
-		ft_putstr_fd(argv, 2);	
+		ft_putstr_fd(argv , 2);	
+		ft_putstr_fd(": not a directory ", 2);
 		return (1);
 	}
 	return (0);
 }
 
-
+// cas de too many argument	A FAIRE
 // verifie si c'est un dossier// 
 int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
 {
@@ -137,13 +131,13 @@ int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
                 return (1);
 			}
 		}
-		else if (cmd->argv[1] && (ft_strcmp(cmd->argv[1], "..") == 0 || ft_strcmp(cmd->argv[1], "-") == 0)) // cd ..
+		else if (cmd->argv[1] && (ft_strcmp(cmd->argv[1], "..") == 0 || ft_strcmp(cmd->argv[1], "-") == 0)) // a revoir cd - 2fois
 		{
 			if (chdir("..") == -1)
 			{
 				ft_putstr_fd("cd: ", 2);
-				ft_putstr_fd("not a directory: ", 2);
 				ft_putstr_fd(cmd->argv[1], 2);	
+				ft_putstr_fd(": not a directory ", 2);
 				free (old_pwd);
 				free(pwd);
 				return (1);

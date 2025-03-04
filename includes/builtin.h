@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/03 16:47:34 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/04 13:27:37 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,27 @@
 /* UTILS*/
 int	ft_strcmp(char *s1, char *s2);
 
-/* BUILTUIN*/
-int is_builtin(t_cmd *cmd);
-void exec_builtin(t_cmd *cmd, t_global_data *data, t_pid_data *pdata);
+/* builtin_control.c */
+int is_builtin_child(t_cmd *cmd);
+void exec_builtin_child(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
+//int exec_builtin_child(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
+int is_builtin_parent(t_cmd *cmd);
+//int exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
+void exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
+
+
 
 /* echo */
 int exec_echo(t_cmd *cmd);
 
-/* cd */
-
+/* cd.c */
 int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata);
+
 /* pwd */
 int exec_pwd(t_cmd *cmd, t_pid_data *pdata);
 
-
-
+/* env.c*/
+int exec_env(t_cmd *cmd, t_global_data *sdata);
 
 
 
