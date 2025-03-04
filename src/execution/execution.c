@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/04 09:18:42 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/04 09:21:32 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 	exit(EXIT_FAILURE);
 }
 
-static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata,
-	t_cmd *head)
+static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata)
 {
 	pid_t	pid;
 
@@ -95,7 +94,7 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata)
 	i = 0;
 	while (cmd)
 	{
-		if (!fork_and_exec_child(cmd, i, pdata, head))
+		if (!fork_and_exec_child(cmd, i, pdata))
 			break ;
 		i++;
 		cmd = cmd->next;
