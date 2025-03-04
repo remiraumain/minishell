@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:12:25 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/01 16:39:19 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/04 09:34:57 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,12 @@ static void	handle_sigint_heredoc(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	ioctl(0, TIOCSTI, "\n");
-	rl_redisplay();
-}
-
-static void	handle_sigquit(int sig)
-{
-	(void)sig;
 }
 
 void	set_parent_signals(void)
 {
 	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	set_child_signals(void)
