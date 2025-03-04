@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:40:01 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/26 18:46:08 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/27 21:42:55 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	process_input(char *input, t_global_data *data)
 		return ;
 	else
 	{
-		execute_cmds(cmds, data->envp);
+		execute_cmds(cmds, data);
 		free_cmd_list(cmds);
 	}
 }

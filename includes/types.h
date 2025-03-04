@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:20:03 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 20:42:46 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:59:59 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef enum e_token_type
 	TK_REDIR_OUT,
 	TK_REDIR_APPEND,
 	TK_HEREDOC,
+	TK_HEREDOC_QUOTES,
 	TK_EOF
 }	t_token_type;
 
@@ -56,18 +57,22 @@ typedef enum e_redir_type
 	REDIR_IN,
 	REDIR_OUT,
 	REDIR_OUT_APPEND,
-	REDIR_HEREDOC
+	REDIR_HEREDOC,
+	REDIR_HEREDOC_Q
 }	t_redir_type;
 
 typedef struct s_redir
 {
+	int				index;
 	t_redir_type	type;
 	char			*filename;
+	char			*delimeter;
 	struct s_redir	*next;
 }	t_redir;
 
 typedef struct s_cmd
 {
+	int				index;
 	char			**argv;
 	t_redir			*redir;
 	struct s_cmd	*next;
@@ -77,10 +82,10 @@ typedef struct s_cmd
 
 typedef struct s_pid_data
 {
-	char	**envp;
-	int		nb_cmd;
-	int		**pipefd;
-	pid_t	*pids;
+	t_global_data	*gdata;
+	int				nb_cmd;
+	int				**pipefd;
+	pid_t			*pids;
 }	t_pid_data;
 
 #endif
