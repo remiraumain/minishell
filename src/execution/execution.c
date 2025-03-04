@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 21:05:20 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/04 06:36:49 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,13 @@ static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata,
 	if (cmd->redir && cmd->redir->type == REDIR_HEREDOC
 		&& !set_heredoc(cmd, i))
 	{
-		free(pdata->pids);
-		free(pdata);
-		clean_heredocs(head, i);
+		perror("heredoc");
 		return (0);
 	}
 	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork");
-		free(pdata->pids);
-		free(pdata);
 		return (0);
 	}
 	if (pid == 0)
@@ -122,8 +118,8 @@ void	execute_cmds(t_cmd *cmd, char **envp)
 		free(pdata);
 		return ;
 	}
-	pdata->pipefd = create_pipes(pdata->nb_cmd);
-	if (!pdata->pipefd)
+	pdata->pipefd = create_pipes(pdata->nb_cmd - 1);
+	if (!pdata->pipefd && pdata->nb_cmd - 1 > 0)
 	{
 		free(pdata);
 		return ;
