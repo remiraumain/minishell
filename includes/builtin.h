@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/04 15:27:54 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:42:47 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,15 @@
 # include "minishell.h"
 # include "execution.h"
 
-/* UTILS*/
+typedef struct s_envp
+{
+    char *name;            // Le nom de la variable d'env
+    char *value;           // La valeur de la variable
+    struct s_envp *next;   // Pointeur vers le nœud suivant
+} t_envp;
+
+
+/* UTILS string.c */
 int	ft_strcmp(char *s1, char *s2);
 
 /* builtin_control.c */
@@ -44,7 +52,8 @@ int exec_env(t_cmd *cmd, t_global_data *sdata);
 /* exit.c */
 int exec_exit(t_cmd *cmd, t_global_data *data);
 
-/* */
+/* unset.c */
+
 
 
 

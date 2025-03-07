@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:04:44 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/07 11:26:58 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:33:51 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int is_numeric(char *str)
 		|| (str[i] >= '0' && str[i] <= '9'))
 			i++;
 		else
-		return (0);
+			return (0);
 	}
 	return (1);
 }
@@ -107,7 +107,3 @@ int exec_exit(t_cmd *cmd, t_global_data *data)
 	}
 	exit (data->status);
 }
-
-
-
-
