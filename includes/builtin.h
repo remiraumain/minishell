@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/07 16:42:47 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/08 12:58:55 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int exec_env(t_cmd *cmd, t_global_data *sdata);
 int exec_exit(t_cmd *cmd, t_global_data *data);
 
 /* unset.c */
-
+int exec_unset(t_cmd *cmd, t_global_data *data);
 
 
 
