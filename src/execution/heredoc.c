@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:49:26 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/11 17:09:00 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:13:04 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	set_heredoc(t_redir	*redir, t_global_data *data)
 {
 	int		fd;
 
-	redir_i = 0;
 	while (redir && !g_sig)
 	{
 		if (redir->type == REDIR_HEREDOC || redir->type == REDIR_HEREDOC_Q)
