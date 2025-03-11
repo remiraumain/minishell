@@ -6,7 +6,7 @@
 #    By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/15 14:42:57 by rraumain          #+#    #+#              #
-#    Updated: 2025/02/27 20:54:32 by rraumain         ###   ########.fr        #
+#    Updated: 2025/02/28 16:29:12 by rraumain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,10 @@ CFLAGS = -Wall -Wextra -Werror -g
 LEXER_SRC = $(addprefix lexer/, lexer.c token.c parse.c utils.c expander.c vars.c)
 PARSER_SRC = $(addprefix parser/, parser.c utils.c)
 EXEC_SRC = $(addprefix execution/, execution.c redirection.c path.c path_utils.c utils.c heredoc.c)
+SIGNALS_SRC = $(addprefix signals/, signals.c)
 UTILS_SRC = utils/string.c
 
-SRC = $(addprefix src/, main.c $(LEXER_SRC) $(PARSER_SRC) $(EXEC_SRC) $(UTILS_SRC))
+SRC = $(addprefix src/, main.c $(LEXER_SRC) $(PARSER_SRC) $(EXEC_SRC) $(SIGNALS_SRC) $(UTILS_SRC))
 
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

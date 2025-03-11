@@ -6,11 +6,13 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:40:01 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/26 18:46:08 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:44:39 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_sig = 0;
 
 static void	process_input(char *input, t_global_data *data)
 {
@@ -26,11 +28,13 @@ static void	process_input(char *input, t_global_data *data)
 	free_token_list(tokens);
 	if (!cmds)
 		return ;
-	else
+	else if (cmds && !g_sig)
 	{
-		execute_cmds(cmds, data->envp);
+		execute_cmds(cmds, data);
 		free_cmd_list(cmds);
 	}
+	else
+		free_cmd_list(cmds);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -42,12 +46,14 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	data = malloc(sizeof(t_global_data));
 	if (!data)
-		return (0);
+	return (0);
 	data->status = 0;
 	while (1)
 	{
+		set_parent_signals();
 		data->envp = envp;
 		input = readline("minishell> ");
+		g_sig = 0;
 		if (!input)
 		{
 			free(data);
@@ -57,6 +63,4 @@ int	main(int argc, char **argv, char **envp)
 		process_input(input, data);
 		free(input);
 	}
-	rl_clear_history();
-	return (0);
 }

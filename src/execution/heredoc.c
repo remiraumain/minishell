@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:49:26 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 21:08:46 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:45:34 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,38 +58,40 @@ char	*create_heredoc_filename(int cmd_i, int redir_i)
 	return (filename);
 }
 
-static void	readline_loop(t_redir *redir, int fd)
+static void	readline_loop(t_redir *redir, int fd, t_global_data *data)
 {
 	char	*input;
 
+	set_heredoc_signals();
 	while (1)
 	{
 		input = readline("> ");
 		if (!input)
-			break ;
-		if (ft_strncmp(input, redir->filename, ft_strlen(redir->filename)) == 0)
+			break;
+		if (ft_strncmp(input, redir->filename, INT_MAX) == 0 || g_sig)
 		{
 			free(input);
 			break ;
 		}
-		add_history(input);
+		if (redir->type == REDIR_HEREDOC)
+			expand_word(&input, data);
+		// add_history(input); History deactivated because it was annoying
 		ft_putendl_fd(input, fd);
 		free(input);
 	}
+	set_parent_signals();
 }
 
-int	set_heredoc(t_cmd *cmd, int cmd_i)
+int	set_heredoc(t_redir	*redir, int cmd_i, t_global_data *data)
 {
 	int		fd;
 	char	*filename;
 	int		redir_i;
-	t_redir	*redir;
 
 	redir_i = 0;
-	redir = cmd->redir;
-	while (redir)
+	while (redir && !g_sig)
 	{
-		if (redir->type == REDIR_HEREDOC)
+		if (redir->type == REDIR_HEREDOC || redir->type == REDIR_HEREDOC_E)
 		{
 			filename = create_heredoc_filename(cmd_i, redir_i);
 			if (!filename)
@@ -98,7 +100,7 @@ int	set_heredoc(t_cmd *cmd, int cmd_i)
 			free(filename);
 			if (fd < 0)
 				return (0);
-			readline_loop(redir, fd);
+			readline_loop(redir, fd, data);
 			close(fd);
 			redir_i++;
 		}
@@ -121,7 +123,7 @@ void	clean_heredocs(t_cmd *cmd, int len)
 		redir = cmd->redir;
 		while (redir)
 		{
-			if (redir->type == REDIR_HEREDOC)
+			if (redir->type == REDIR_HEREDOC || redir->type == REDIR_HEREDOC_E)
 			{
 				filename = create_heredoc_filename(cmd_i, redir_i++);
 				if (filename)

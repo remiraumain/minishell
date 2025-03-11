@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:57:43 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/19 18:46:00 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:44:28 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ static int	check_and_add_redir(t_cmd *cmd, t_token **current)
 		redir_type = REDIR_OUT;
 	else if (token_type == TK_REDIR_APPEND)
 		redir_type = REDIR_OUT_APPEND;
-	else
+	else if (token_type == TK_HEREDOC)
 		redir_type = REDIR_HEREDOC;
+	else
+		redir_type = REDIR_HEREDOC_E;
 	if (!add_redir(cmd, redir_type, (*current)->value))
 		return (0);
 	return (1);
@@ -73,7 +75,8 @@ static int	apply_type(t_cmd *cmd, t_token **current)
 			return (0);
 	}
 	else if (type == TK_REDIR_IN || type == TK_REDIR_OUT
-		|| type == TK_REDIR_APPEND || type == TK_HEREDOC)
+		|| type == TK_REDIR_APPEND || type == TK_HEREDOC
+		|| type == TK_HEREDOC_EXPAND)
 	{
 		if (!check_and_add_redir(cmd, current))
 			return (0);

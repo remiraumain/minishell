@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 21:05:20 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:25:06 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	close_and_wait(t_pid_data *pdata)
 		i++;
 	}
 	i = 0;
-	while (i < pdata->nb_cmd)
+	while (i < pdata->nb_cmd && !g_sig)
 	{
 		waitpid(pdata->pids[i], &status, 0);
 		i++;
@@ -47,13 +47,13 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 	}
 	if (!apply_redirections(cmd, index))
 		exit(EXIT_FAILURE);
-	path = get_command_path(cmd->argv[0], pdata->envp);
+	path = get_command_path(cmd->argv[0], pdata->gdata->envp);
 	if (!path)
 	{
 		perror(cmd->argv[0]);
 		exit(127);
 	}
-	execve(path, cmd->argv, pdata->envp);
+	execve(path, cmd->argv, pdata->gdata->envp);
 	free(path);
 	perror(cmd->argv[0]);
 	exit(EXIT_FAILURE);
@@ -64,8 +64,9 @@ static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata,
 {
 	pid_t	pid;
 
-	if (cmd->redir && cmd->redir->type == REDIR_HEREDOC
-		&& !set_heredoc(cmd, i))
+	if (cmd->redir && (cmd->redir->type == REDIR_HEREDOC
+			|| cmd->redir->type == REDIR_HEREDOC_E)
+		&& !set_heredoc(cmd->redir, i, pdata->gdata) && !g_sig)
 	{
 		free(pdata->pids);
 		free(pdata);
@@ -80,6 +81,7 @@ static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata,
 		free(pdata);
 		return (0);
 	}
+	set_child_signals();
 	if (pid == 0)
 		execute_child(cmd, i, pdata);
 	pdata->pids[i] = pid;
@@ -96,7 +98,7 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata)
 	if (!pdata->pids)
 		return ;
 	i = 0;
-	while (cmd)
+	while (cmd && !g_sig)
 	{
 		if (!fork_and_exec_child(cmd, i, pdata, head))
 			break ;
@@ -108,14 +110,14 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata)
 	free(pdata->pids);
 }
 
-void	execute_cmds(t_cmd *cmd, char **envp)
+void	execute_cmds(t_cmd *cmd, t_global_data *data)
 {
 	t_pid_data	*pdata;
 
 	pdata = malloc(sizeof(t_pid_data));
 	if (!pdata)
 		return ;
-	pdata->envp = envp;
+	pdata->gdata = data;
 	pdata->nb_cmd = count_cmds(cmd);
 	if (pdata->nb_cmd == 0)
 	{

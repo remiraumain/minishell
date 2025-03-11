@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:20:03 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 20:42:46 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/01 15:16:28 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 
 # include "minishell.h"
 
+#define INT_MAX 2147483647
+#define INT_MIN -2147483648
+
 //	GLOBAL
+extern int	g_sig;
 
 typedef struct s_global_data
 {
@@ -39,6 +43,7 @@ typedef enum e_token_type
 	TK_REDIR_OUT,
 	TK_REDIR_APPEND,
 	TK_HEREDOC,
+	TK_HEREDOC_EXPAND,
 	TK_EOF
 }	t_token_type;
 
@@ -56,7 +61,8 @@ typedef enum e_redir_type
 	REDIR_IN,
 	REDIR_OUT,
 	REDIR_OUT_APPEND,
-	REDIR_HEREDOC
+	REDIR_HEREDOC,
+	REDIR_HEREDOC_E
 }	t_redir_type;
 
 typedef struct s_redir
@@ -77,10 +83,10 @@ typedef struct s_cmd
 
 typedef struct s_pid_data
 {
-	char	**envp;
-	int		nb_cmd;
-	int		**pipefd;
-	pid_t	*pids;
+	t_global_data	*gdata;
+	int				nb_cmd;
+	int				**pipefd;
+	pid_t			*pids;
 }	t_pid_data;
 
 #endif
