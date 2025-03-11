@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:49:26 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/01 16:45:34 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:09:00 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,27 +82,20 @@ static void	readline_loop(t_redir *redir, int fd, t_global_data *data)
 	set_parent_signals();
 }
 
-int	set_heredoc(t_redir	*redir, int cmd_i, t_global_data *data)
+int	set_heredoc(t_redir	*redir, t_global_data *data)
 {
 	int		fd;
-	char	*filename;
-	int		redir_i;
 
 	redir_i = 0;
 	while (redir && !g_sig)
 	{
-		if (redir->type == REDIR_HEREDOC || redir->type == REDIR_HEREDOC_E)
+		if (redir->type == REDIR_HEREDOC || redir->type == REDIR_HEREDOC_Q)
 		{
-			filename = create_heredoc_filename(cmd_i, redir_i);
-			if (!filename)
-				return (0);
-			fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			free(filename);
+			fd = open(redir->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (fd < 0)
 				return (0);
 			readline_loop(redir, fd, data);
 			close(fd);
-			redir_i++;
 		}
 		redir = redir->next;
 	}
@@ -111,29 +104,20 @@ int	set_heredoc(t_redir	*redir, int cmd_i, t_global_data *data)
 
 void	clean_heredocs(t_cmd *cmd, int len)
 {
-	char	*filename;
-	int		redir_i;
-	int		cmd_i;
+	int		i;
 	t_redir	*redir;
 
-	cmd_i = -1;
-	while (cmd && cmd_i++ < len)
+	i = 0;
+	while (cmd && i < len)
 	{
-		redir_i = 0;
 		redir = cmd->redir;
 		while (redir)
 		{
-			if (redir->type == REDIR_HEREDOC || redir->type == REDIR_HEREDOC_E)
-			{
-				filename = create_heredoc_filename(cmd_i, redir_i++);
-				if (filename)
-				{
-					unlink(filename);
-					free(filename);
-				}
-			}
+			if (redir->type == REDIR_HEREDOC || redir->type == REDIR_HEREDOC_Q)
+				unlink(redir->filename);
 			redir = redir->next;
 		}
+		i++;
 		cmd = cmd->next;
 	}
 }

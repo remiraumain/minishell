@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:46 by rraumain          #+#    #+#             */
-/*   Updated: 2025/02/27 20:58:23 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/04 09:19:16 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,37 +35,38 @@ void	cleanup_pipes(int **pipefd, int count)
 	free(pipefd);
 }
 
-static int	init_pipes(int **pipefd, int cmd_count)
+static void	init_pipes(int **pipefd, int count)
 {
 	int	i;
 
 	i = 0;
-	while (i < cmd_count - 1)
+	while (i < count)
 	{
 		if (pipe(pipefd[i]) < 0)
 		{
-			cleanup_pipes(pipefd, cmd_count - 1);
+			cleanup_pipes(pipefd, count);
 			perror("pipe");
-			return (0);
+			return ;
 		}
 		i++;
 	}
-	return (1);
 }
 
-int	**create_pipes(int cmd_count)
+int	**create_pipes(int count)
 {
 	int	**pipefd;
 	int	i;
 
-	pipefd = malloc(sizeof(int *) * (cmd_count - 1));
+	if (count == 0)
+		return (NULL);
+	pipefd = malloc(sizeof(int *) * count);
 	if (!pipefd)
 	{
 		perror("malloc");
 		return (NULL);
 	}
 	i = 0;
-	while (i < cmd_count - 1)
+	while (i < count)
 	{
 		pipefd[i] = malloc(sizeof(int) * 2);
 		if (!pipefd[i])
@@ -76,8 +77,7 @@ int	**create_pipes(int cmd_count)
 		}
 		i++;
 	}
-	if (init_pipes(pipefd, cmd_count) == 0)
-		return (NULL);
+	init_pipes(pipefd, count);
 	return (pipefd);
 }
 

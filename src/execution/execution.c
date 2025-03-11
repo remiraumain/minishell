@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/01 16:25:06 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:11:29 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,21 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 	exit(EXIT_FAILURE);
 }
 
-static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata,
-	t_cmd *head)
+static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata)
 {
 	pid_t	pid;
 
 	if (cmd->redir && (cmd->redir->type == REDIR_HEREDOC
-			|| cmd->redir->type == REDIR_HEREDOC_E)
-		&& !set_heredoc(cmd->redir, i, pdata->gdata) && !g_sig)
+			|| cmd->redir->type == REDIR_HEREDOC_Q)
+		&& !set_heredoc(cmd->redir, pdata->gdata) && !g_sig)
 	{
-		free(pdata->pids);
-		free(pdata);
-		clean_heredocs(head, i);
+		perror("heredoc");
 		return (0);
 	}
 	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork");
-		free(pdata->pids);
-		free(pdata);
 		return (0);
 	}
 	set_child_signals();
@@ -100,7 +95,7 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata)
 	i = 0;
 	while (cmd && !g_sig)
 	{
-		if (!fork_and_exec_child(cmd, i, pdata, head))
+		if (!fork_and_exec_child(cmd, i, pdata))
 			break ;
 		i++;
 		cmd = cmd->next;
@@ -124,8 +119,8 @@ void	execute_cmds(t_cmd *cmd, t_global_data *data)
 		free(pdata);
 		return ;
 	}
-	pdata->pipefd = create_pipes(pdata->nb_cmd);
-	if (!pdata->pipefd)
+	pdata->pipefd = create_pipes(pdata->nb_cmd - 1);
+	if (!pdata->pipefd && pdata->nb_cmd - 1 > 0)
 	{
 		free(pdata);
 		return ;
