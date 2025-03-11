@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:49:26 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/11 17:13:04 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:45:11 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ static void	readline_loop(t_redir *redir, int fd, t_global_data *data)
 		input = readline("> ");
 		if (!input)
 			break;
-		if (ft_strncmp(input, redir->filename, INT_MAX) == 0 || g_sig)
+		if (ft_strncmp(input, redir->delimeter, INT_MAX) == 0 || g_sig)
 		{
 			free(input);
 			break ;
 		}
 		if (redir->type == REDIR_HEREDOC)
 			expand_word(&input, data);
-		// add_history(input); History deactivated because it was annoying
+		// add_history(input); // History deactivated because it was annoying
 		ft_putendl_fd(input, fd);
 		free(input);
 	}
