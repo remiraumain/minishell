@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 11:38:39 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/08 13:00:23 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:13:29 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ static int is_var_exist(t_cmd *cmd, t_global_data *data)
 
 	i = 0;
 	j = 1; // car av[0] = "unset"
-	if (!data->envp || !data->envp[0])
+	if (!data->envp)
 		return (1);
 	while (cmd->argv[j])
 	{
-		while (data->envp[i])
+		while (data->envp)
 		{
 			if (ft_strcmp(cmd->argv[j], data->envp[i]) == 0)
 				return (0);	// la variable existe
@@ -63,6 +63,29 @@ static int is_var_exist(t_cmd *cmd, t_global_data *data)
 		j++;
 	}
 	return (1);// variable non existant
+}
+
+
+int exec_unset(t_cmd *cmd, t_global_data *data)
+{
+	int i;
+	
+	i = 1;
+	
+	if (!data->envp || !data->envp[0])
+	return (0);
+	while (cmd->argv[i])
+	{	
+		// 	if (is_var_valid(cmd->argv[i]) == 1)// invalide
+		// 		return (0);
+		if (is_var_exist(cmd, data) == 1)
+		return (0);
+		//delete_var(cmd);
+		// ft_lstdelone;
+		i++;
+	}
+	return (1);// test
+	
 }
 
 // creer une fonction qui supprime la variable donnee en argv[]
@@ -96,25 +119,3 @@ static int is_var_exist(t_cmd *cmd, t_global_data *data)
 //     }
 // }
 
-
-int exec_unset(t_cmd *cmd, t_global_data *data)
-{
-	int i;
-	
-	i = 1;
-
-	if (!data->envp || !data->envp[0])
-		return (0);
-	while (cmd->argv[i])
-	{	
-	// 	if (is_var_valid(cmd->argv[i]) == 1)// invalide
-	// 		return (0);
-		if (is_var_exist(cmd, data) == 1)
-			return (0);
-		//delete_var(cmd);
-		// ft_lstdelone;
-		i++;
-	}
-	return (1);// test
-		
-}

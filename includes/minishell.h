@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:32:19 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 11:00:39 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:10:30 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 typedef struct s_global_data
 {
 	char	**envp;
+	// t_envp *envp;
 	int		status;
 }	t_global_data;
 

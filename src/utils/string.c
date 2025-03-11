@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:34:56 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/28 10:56:03 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/11 08:24:53 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,7 @@ int	is_whitespace(char c)
 	return (0);
 }
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
 
-	if (!s1 || !s2)
-		return (1);
-	i = 0;
-	while (s1[i] == s2[i] && s1[i] != '\0')
-		i++;
-	if (s1[i] == s2[i])
-		return (0);
-	return (1);
-}
 
 void	ft_putstr_fd(char *str, int fd)
 {

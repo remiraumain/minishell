@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:35:03 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 14:17:03 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:12:19 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,23 @@ int	main(int argc, char **argv, char **envp)
 	data = malloc(sizeof(t_global_data));
 	if (!data)
 		return (0);
+	// data->envp = NULL;
+	data->envp = malloc(sizeof(char **));
+	if (!data->envp)
+	{
+		free(data);
+		return (1);
+	}
+	ft_memcpy(data->envp, envp, sizeof(char **));
 	data->status = 0;
+	// var_copy(envp, &(data->envp)); // modif
 	while (1)
 	{
-		data->envp = envp;
+		//data->envp = envp;
 		input = readline("minishell> ");
 		if (!input)
 		{
+			// free_env_copy(data->envp); //ajout
 			free(data);
 			rl_clear_history();
 			return (0);
@@ -118,6 +128,7 @@ int	main(int argc, char **argv, char **envp)
 		process_input(input, data);
 		free(input);
 	}
+	// free_env_copy(data->envp); //ajout
 	rl_clear_history();
 	return (0);
 }

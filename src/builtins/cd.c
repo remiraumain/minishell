@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/04 11:37:55 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/11 09:42:42 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
 			update_old_pwd(sdata->envp, old_pwd);
 		if ((!cmd->argv[1]) || (cmd->argv[1] && ft_strcmp(cmd->argv[1], "~") == 0)) // cd ou cd ~
 		{
-			home = getenv("HOME");
+			home = getenv("HOME"); // a changer il faut faire une fonction qui chercher HOME
             if (!home || chdir(home) == -1)
             {
                 ft_putstr_fd("cd: HOME not set\n", 2);

@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:10:52 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/08 12:58:37 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:13:42 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 		data->status = exec_cd(cmd, pdata, data);
 	// if (!ft_strcmp(cmd->argv[0], "export"))
 	// 	data->status = exec_export(cmd);
-	if (!ft_strcmp(cmd->argv[0], "unset"))
-		data->status = exec_unset(cmd, data);
+	// if (!ft_strcmp(cmd->argv[0], "unset"))
+	// 	data->status = exec_unset(cmd, data);
 	if (!ft_strcmp(cmd->argv[0], "exit"))
 		data->status = exec_exit(cmd, data);
 	// return(0); // return a voir
