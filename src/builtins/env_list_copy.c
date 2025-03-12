@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envp_copy.c                                        :+:      :+:    :+:   */
+/*   env_list_copy.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:31:23 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/11 09:44:13 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:46:38 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_envp *init_var(char *envp)
 		return (NULL) ;
 	new->name = var_name(envp);
 	new->value = var_value(envp);
-	new->pos = 0; // 
+	new->pos = 0;
 	new->next = NULL;
 	return (new);
 }
