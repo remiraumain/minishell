@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/12 11:46:09 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:33:29 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,16 @@ int exec_env(t_cmd *cmd, t_global_data *sdata);
 /* envp.copy.c*/
 char **env_copy(char **envp);
 
-
 /* env_list_copy.c*/
 t_envp *init_var(char *envp);
 void var_copy(char **envp, t_envp **vars);
 
 /* exit.c */
 int exec_exit(t_cmd *cmd, t_global_data *data);
+
+
+/* export.c */
+
 
 
 /* pwd */

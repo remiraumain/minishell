@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/12 10:21:28 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:02:55 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 		exec_builtin_child(cmd, pdata, pdata->gdata);
 		return ;
 	}
-	path = get_command_path(cmd->argv[0], pdata->gdata->envp);
+	path = get_command_path(cmd->argv[0], pdata->gdata->envp);// modif a faire
 	if (!path)
 	{
 		perror(cmd->argv[0]);

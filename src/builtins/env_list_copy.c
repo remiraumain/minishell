@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:31:23 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/12 11:46:38 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:50:14 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ t_envp *init_var(char *envp)
 }
 
 
+// a free dans le main 
 void var_copy(char **envp, t_envp **vars)
 {
 	t_envp *new;
@@ -116,7 +117,7 @@ void var_copy(char **envp, t_envp **vars)
 		return ;
 	while (envp && envp[i])
 	{
-		new = init_var(envp[i]); // a free
+		new = init_var(envp[i]); // a free 
         if (!new)
             return ;
 		if (*vars == NULL)

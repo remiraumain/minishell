@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:40:01 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/12 10:11:36 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:49:18 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!data)
 	return (0);
 	data->status = 0;
-	// var_copy(envp, &(data->envp)); // modif
+	var_copy(envp, &(data->envp)); // modif
 	while (1)
 	{
 		set_parent_signals();

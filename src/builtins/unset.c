@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 11:38:39 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/11 10:13:29 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:33:55 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,6 @@
 // copier chaque variable dans une liste chainee
 // recuperer l index pour preciser quelle variable on veut supprimer
 
-// Pour EXPORT
-// static int is_var_valid(char *str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (str[0] != '_' && !ft_isalpha(str[0])) // ft_isalpha retourn 0 si faux
-// 		return (1); // false
-// 	if (str[0] == '_' && ft_isdigit(str[1]))
-//         return (1);
-// 	while (str[i])
-// 	{
-// 		if (!ft_isalnum(str[i]) && str[i] != '_')// _VAR
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0); // true
-// }
 
 
 static int is_var_exist(t_cmd *cmd, t_global_data *data)
