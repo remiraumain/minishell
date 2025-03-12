@@ -6,12 +6,26 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:50:29 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/12 11:43:50 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:07:07 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void free_var(char **envp)
+{
+	int i;
+
+	if (!envp)
+		return ;
+	i = 0;
+	while (envp && envp[i])
+	{
+		free(envp[i]);
+		i++;
+	}
+	free(envp);
+}
 
 static int copy_var(char **copy_env, char **envp)
 {
@@ -40,14 +54,12 @@ static int copy_var(char **copy_env, char **envp)
 	return (1);
 }
 
-char **env_copy(char **envp)
+char **env_copy(char **envp) //à free dans le main
 {
 	int i;
-	int j;
 	char **copy_env;
 	
 	i = 0;
-	j = 0;
 	copy_env = NULL;
 	if (!envp || !envp[i])
 		return (NULL);
