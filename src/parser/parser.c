@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 08:34:40 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 08:34:41 by nolecler         ###   ########.fr       */
+/*   Created: 2025/02/18 14:57:43 by rraumain          #+#    #+#             */
+/*   Updated: 2025/03/12 10:12:24 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "minishell.h"
 
@@ -42,7 +40,7 @@ static int	add_argv(t_cmd *cmd, const char *word)
 	return (1);
 }
 
-static int	check_and_add_redir(t_cmd *cmd, t_token **current)
+static int	check_and_add_redir(t_cmd *cmd, t_token **current, int *index)
 {
 	t_token_type	token_type;
 	t_redir_type	redir_type;
@@ -58,13 +56,19 @@ static int	check_and_add_redir(t_cmd *cmd, t_token **current)
 	else if (token_type == TK_REDIR_APPEND)
 		redir_type = REDIR_OUT_APPEND;
 	else
-		redir_type = REDIR_HEREDOC;
-	if (!add_redir(cmd, redir_type, (*current)->value))
+	{
+		*index = *index + 1;
+		if (token_type == TK_HEREDOC)
+			redir_type = REDIR_HEREDOC;
+		else
+			redir_type = REDIR_HEREDOC_Q;
+	}
+	if (!add_redir(cmd, redir_type, (*current)->value, *index))
 		return (0);
 	return (1);
 }
 
-static int	apply_type(t_cmd *cmd, t_token **current)
+static int	apply_type(t_cmd *cmd, t_token **current, int *index)
 {
 	t_token_type	type;
 
@@ -75,9 +79,10 @@ static int	apply_type(t_cmd *cmd, t_token **current)
 			return (0);
 	}
 	else if (type == TK_REDIR_IN || type == TK_REDIR_OUT
-		|| type == TK_REDIR_APPEND || type == TK_HEREDOC)
+		|| type == TK_REDIR_APPEND || type == TK_HEREDOC
+		|| type == TK_HEREDOC_QUOTES)
 	{
-		if (!check_and_add_redir(cmd, current))
+		if (!check_and_add_redir(cmd, current, index))
 			return (0);
 	}
 	else
@@ -85,17 +90,19 @@ static int	apply_type(t_cmd *cmd, t_token **current)
 	return (1);
 }
 
-static t_cmd	*parse_command(t_token **current)
+static t_cmd	*parse_command(t_token **current, int index)
 {
 	t_cmd	*cmd;
+	int		i;
 
-	cmd = create_cmd();
+	cmd = create_cmd(index);
 	if (!cmd)
-		return (NULL);
+	return (NULL);
+	i = -1;
 	while (*current && (*current)->type != TK_PIPE
 		&& (*current)->type != TK_EOF)
 	{
-		if (!apply_type(cmd, current))
+		if (!apply_type(cmd, current, &i))
 		{
 			free_cmd_list(cmd);
 			return (NULL);
@@ -111,13 +118,15 @@ t_cmd	*parse_line(t_token *tokens)
 	t_cmd	*tail;
 	t_token	*current;
 	t_cmd	*cmd;
+	int		i;
 
 	head = NULL;
 	tail = NULL;
 	current = tokens;
+	i = 0;
 	while (current && current->type != TK_EOF)
 	{
-		cmd = parse_command(&current);
+		cmd = parse_command(&current, i);
 		if (!cmd)
 		{
 			free_cmd_list(head);
@@ -129,7 +138,10 @@ t_cmd	*parse_line(t_token *tokens)
 			tail->next = cmd;
 		tail = cmd;
 		if (current && current->type == TK_PIPE)
+		{
 			current = current->next;
+			i++;
+		}
 	}
 	return (head);
 }

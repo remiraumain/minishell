@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 08:33:35 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 08:33:36 by nolecler         ###   ########.fr       */
+/*   Created: 2025/02/21 10:50:19 by rraumain          #+#    #+#             */
+/*   Updated: 2025/03/12 10:14:46 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "minishell.h"
 
@@ -74,10 +72,33 @@ static int	redir_append(t_redir *redir)
 	return (1);
 }
 
-int	apply_redirections(t_cmd *cmd)
+static int	redir_heredoc(int cmd_i, int redir_i)
 {
+	int		fd;
+	char	*filename;
+
+	filename = create_heredoc_filename(cmd_i, redir_i);
+	if (!filename)
+		return (0);
+	fd = open(filename, O_RDONLY);
+	free(filename);
+	if (fd < 0)
+		return (0);
+	if (dup2(fd, STDIN_FILENO) < 0)
+	{
+		close(fd);
+		return (0);
+	}
+	close(fd);
+	return (1);
+}
+
+int	apply_redirections(t_cmd *cmd, int cmd_i)
+{
+	int		redir_i;
 	t_redir	*redir;
 
+	redir_i = 0;
 	redir = cmd->redir;
 	while (redir)
 	{
@@ -87,11 +108,11 @@ int	apply_redirections(t_cmd *cmd)
 			return (0);
 		else if (redir->type == REDIR_OUT_APPEND && !redir_append(redir))
 			return (0);
-		else if (redir->type == REDIR_HEREDOC)
-		{
-			// Heredoc à faire plus tard
+		else if ((redir->type == REDIR_HEREDOC
+				|| redir->type == REDIR_HEREDOC_Q)
+			&& !redir_heredoc(cmd_i, redir_i))
 			return (0);
-		}
+		redir_i++;
 		redir = redir->next;
 	}
 	return (1);

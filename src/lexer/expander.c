@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 08:33:53 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 08:33:54 by nolecler         ###   ########.fr       */
+/*   Created: 2025/02/23 13:43:49 by rraumain          #+#    #+#             */
+/*   Updated: 2025/03/12 10:14:03 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "minishell.h"
 
@@ -53,7 +51,7 @@ static char	*get_var_value(char *varname, t_global_data *data)
 	return (value);
 }
 
-char	*expand_var(char *token, int *index, t_global_data *data)
+static char	*expand_var(char *token, int *index, t_global_data *data)
 {
 	char	*varname;
 	char	*value;
@@ -73,4 +71,23 @@ char	*expand_var(char *token, int *index, t_global_data *data)
 		return (token);
 	*index += ft_strlen(value);
 	return (expanded);
+}
+
+void	expand_word(char **word, t_global_data *data)
+{
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	while ((*word)[i])
+	{
+		if ((*word)[i] == '$')
+		{
+			tmp = expand_var(*word, &i, data);
+			free(*word);
+			*word = tmp;
+		}
+		else
+			i++;
+	}
 }

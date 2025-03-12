@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 08:33:41 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 08:33:42 by nolecler         ###   ########.fr       */
+/*   Created: 2025/02/21 10:24:46 by rraumain          #+#    #+#             */
+/*   Updated: 2025/03/12 10:14:29 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "minishell.h"
 
@@ -37,37 +35,38 @@ void	cleanup_pipes(int **pipefd, int count)
 	free(pipefd);
 }
 
-static int	init_pipes(int **pipefd, int cmd_count)
+static void	init_pipes(int **pipefd, int count)
 {
 	int	i;
 
 	i = 0;
-	while (i < cmd_count - 1)
+	while (i < count)
 	{
 		if (pipe(pipefd[i]) < 0)
 		{
-			cleanup_pipes(pipefd, cmd_count - 1);
+			cleanup_pipes(pipefd, count);
 			perror("pipe");
-			return (0);
+			return ;
 		}
 		i++;
 	}
-	return (1);
 }
 
-int	**create_pipes(int cmd_count)
+int	**create_pipes(int count)
 {
 	int	**pipefd;
 	int	i;
 
-	pipefd = malloc(sizeof(int *) * (cmd_count - 1));
+	if (count == 0)
+		return (NULL);
+	pipefd = malloc(sizeof(int *) * count);
 	if (!pipefd)
 	{
 		perror("malloc");
 		return (NULL);
 	}
 	i = 0;
-	while (i < cmd_count - 1)
+	while (i < count)
 	{
 		pipefd[i] = malloc(sizeof(int) * 2);
 		if (!pipefd[i])
@@ -78,7 +77,26 @@ int	**create_pipes(int cmd_count)
 		}
 		i++;
 	}
-	if (init_pipes(pipefd, cmd_count) == 0)
-		return (NULL);
+	init_pipes(pipefd, count);
 	return (pipefd);
+}
+
+void	dup_fd(t_pid_data *pdata, int index)
+{
+	if (index > 0)
+	{
+		if (dup2(pdata->pipefd[index - 1][0], STDIN_FILENO) < 0)
+		{
+			perror("dup2 in");
+			exit(1);
+		}
+	}
+	if (index < pdata->nb_cmd - 1)
+	{
+		if (dup2(pdata->pipefd[index][1], STDOUT_FILENO) < 0)
+		{
+			perror("dup2 out");
+			exit(1);
+		}
+	}
 }

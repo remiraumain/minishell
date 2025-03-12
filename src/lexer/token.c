@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 08:34:18 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 10:09:51 by nolecler         ###   ########.fr       */
+/*   Created: 2025/02/15 20:02:31 by rraumain          #+#    #+#             */
+/*   Updated: 2025/03/12 10:12:57 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "minishell.h"
 

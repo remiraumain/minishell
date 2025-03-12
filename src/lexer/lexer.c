@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 08:34:05 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 08:34:06 by nolecler         ###   ########.fr       */
+/*   Created: 2025/02/15 17:58:02 by rraumain          #+#    #+#             */
+/*   Updated: 2025/03/12 10:13:47 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "minishell.h"
 
@@ -34,8 +32,6 @@ static int	parse(t_token **head, char *input, int *index, t_global_data *data)
 		status = new_token(head, index);
 	else if (input[*index] == '<' || input[*index] == '>')
 		status = parse_redirect(head, index, input);
-	// else if (input[*index] == '"' || input[*index] == '\'')
-	// 	status = parse_quotes(head, index, input);
 	else
 		status = parse_word(head, index, input, data);
 	return (status);
@@ -59,6 +55,11 @@ t_token	*lexer(char *input, t_global_data *data)
 			free_token_list(head);
 			return (NULL);
 		}
+	}
+	if (g_sig)
+	{
+		free_token_list(head);
+		return (NULL);
 	}
 	return (head);
 }

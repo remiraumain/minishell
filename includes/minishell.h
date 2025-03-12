@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 08:32:19 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/11 10:10:30 by nolecler         ###   ########.fr       */
+/*   Created: 2025/02/15 08:51:33 by rraumain          #+#    #+#             */
+/*   Updated: 2025/03/12 10:09:27 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -22,22 +20,17 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <signal.h>
+# include <sys/ioctl.h>
 
 # include "libft.h"
 
-typedef struct s_global_data
-{
-	char	**envp;
-	// t_envp *envp;
-	int		status;
-}	t_global_data;
-
+# include "types.h"
+# include "signals.h"
 # include "string.h"
 # include "lexer.h"
-# include "expand.h"
 # include "parser.h"
 # include "builtin.h"
 # include "execution.h"
-
 
 #endif
