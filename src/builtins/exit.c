@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:04:44 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/07 11:33:51 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:42:35 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,23 @@ static long long ft_atoll(char *str)
 	return (stock * sign);
 }
 
-int exec_exit(t_cmd *cmd, t_global_data *data)
+int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata)
 {
 	long long value;
+	int			status;
 	
 	data->status = 0;
 	if (!cmd->argv[1])
-		exit (data->status);
+	{
+		status = data->status;
+		free(pdata->pids);
+		cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
+		clear_env(pdata->gdata->envp);
+		free(pdata);
+		free(data);
+		free_cmd_list(cmd);
+		exit (status);
+	}
 	else if (cmd->argv[2])
 	{
 		ft_putstr_fd("exit\n", 2);
@@ -105,5 +115,12 @@ int exec_exit(t_cmd *cmd, t_global_data *data)
 		value = ft_atoll(cmd->argv[1]);
         data->status = (int)value;	
 	}
-	exit (data->status);
+	status = data->status;
+	free(pdata->pids);
+	cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
+	clear_env(pdata->gdata->envp);
+	free(pdata);
+	free(data);
+	free_cmd_list(cmd);
+	exit (status);
 }

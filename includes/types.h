@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:20:03 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/11 17:10:44 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/17 12:40:10 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,19 @@
 //	GLOBAL
 extern int	g_sig;
 
+typedef struct s_envp
+{
+    char			*name;
+    char			*value;
+    int				pos;  // rang de la variable   
+    //bool equal; //        
+    struct s_envp	*next;   
+}	t_envp;
+
 typedef struct s_global_data
 {
-	char	**envp;
-	int		status;
+	struct s_envp	*envp;
+	int				status;
 }	t_global_data;
 
 typedef enum e_bool
