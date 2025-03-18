@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:32:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/18 13:36:52 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:37:44 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	clear_env(t_envp *envp)
 
 	while (envp)
 	{
-		temp = envp;
-		envp = envp->next;
-		free(temp->name);
-		free(temp->value);
-		free(temp);
+		temp = envp->next;
+		free(envp->name);
+		free(envp->value);
+		free(envp);
+		envp = temp;
 	}
 }
 

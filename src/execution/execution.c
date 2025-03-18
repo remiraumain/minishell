@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/18 13:52:10 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:42:40 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 	pdata->pids = malloc(sizeof(pid_t) * pdata->nb_cmd);
 	if (!pdata->pids)
 		return ;
+	ft_bzero(pdata->pids, sizeof(pid_t) * pdata->nb_cmd);
 	i = 0;
 	while (cmd && !g_sig)
 	{
