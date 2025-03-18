@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/18 19:01:53 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:35:53 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,13 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 	if (is_builtin_child(cmd) == 1)
 	{
 		exec_builtin_child(cmd, pdata, pdata->gdata);
-		exit(pdata->gdata->status);
+		free(pdata->pids);
+		cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
+		clear_env(pdata->gdata->envp);
+		free(pdata->gdata);
+		free(pdata);
+		free_cmd_list(cmd);
+		exit(0); // should be status exit code
 	}
 	env = convert_env(pdata->gdata->envp);
 	path = get_command_path(cmd->argv[0], pdata->gdata->envp);
