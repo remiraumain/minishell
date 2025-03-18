@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/18 18:42:40 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:01:53 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,12 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 	path = get_command_path(cmd->argv[0], pdata->gdata->envp);
 	if (!path)
 	{
+		clear_env_array(env);
 		perror(cmd->argv[0]);
 		exit(127);
 	}
 	execve(path, cmd->argv, env);
+	clear_env_array(env);
 	free(path);
 	perror(cmd->argv[0]);
 	exit(EXIT_FAILURE);

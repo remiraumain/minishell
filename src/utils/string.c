@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   basic.c                                            :+:      :+:    :+:   */
+/*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:34:56 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/18 13:46:51 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:11:19 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,11 @@ char	*ft_strndup(char *s, size_t n)
 	size_t	len;
 
 	len = 0;
-	while (s[len] && len <= n)
+	while (s[len] && len < n)
 		len++;
 	dup = malloc(len + 1);
 	if (!dup)
 		return (NULL);
-	ft_strlcpy(dup, s, len);
-	dup[len] = '\0';
+	ft_strlcpy(dup, s, len + 1);
 	return (dup);
 }

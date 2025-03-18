@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:32:33 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/18 13:50:12 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:59:24 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*ft_strndup(char *s, size_t n);
 
 //	ENV_UTILS
 void	clear_env(t_envp *envp);
+void	clear_env_array(char **envp);
 int		ft_envlen(t_envp *envp);
 t_envp	*ft_lastenv(t_envp *envp);
 
