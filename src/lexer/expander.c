@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:43:49 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/12 10:14:03 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/17 12:01:17 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static char	*get_varname(char *token, int start, int *len)
 
 static char	*get_var_value(char *varname, t_global_data *data)
 {
+	t_envp	*envp;
 	char	*value;
 
 	if (!varname || !data->envp)
@@ -45,10 +46,11 @@ static char	*get_var_value(char *varname, t_global_data *data)
 		value = ft_itoa(data->status);
 		return (value);
 	}
-	value = get_env_value(varname, data->envp);
-	if (!value)
+	envp = NULL;
+	envp = search_var(data->envp, varname); //get_env_value(varname, data->envp);
+	if (!envp)
 		return ("");
-	return (value);
+	return (envp->name);
 }
 
 static char	*expand_var(char *token, int *index, t_global_data *data)

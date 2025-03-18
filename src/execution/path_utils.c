@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   path_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:33:22 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/27 10:37:16 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:54:40 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-static char	*get_env_path(char **envp)
-{
-	int		i;
-	char	*path;
+// static char	*get_env_path(char **envp)
+// {
+// 	int		i;
+// 	char	*path;
 
-	i = 0;
-	path = NULL;
-	while (envp[i] && !path)
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-			path = envp[i] + 5;
-		i++;
-	}
-	return (path);
-}
+// 	i = 0;
+// 	path = NULL;
+// 	while (envp[i] && !path)
+// 	{
+// 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+// 			path = envp[i] + 5;
+// 		i++;
+// 	}
+// 	return (path);
+// }
 
 void	free_split(char **array)
 {
@@ -44,15 +44,15 @@ void	free_split(char **array)
 	free(array);
 }
 
-char	**find_paths_in_env(char **envp)
+char	**find_paths_in_env(t_envp *envp)
 {
-	char	*env_path;
+	t_envp	*var;
 	char	**paths;
 
-	env_path = get_env_path(envp);
-	if (!env_path)
+	var = search_var(envp, "PATH");
+	if (!var)
 		return (NULL);
-	paths = ft_split(env_path, ':');
+	paths = ft_split(var->value, ':');
 	return (paths);
 }
 

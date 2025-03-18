@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:40:01 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/12 10:11:36 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:53:09 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,19 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	data = malloc(sizeof(t_global_data));
 	if (!data)
-	return (0);
+		return (0);
+	data->envp = init_env(envp);
+	if (!data->envp)
+		return (0);
 	data->status = 0;
-	// var_copy(envp, &(data->envp)); // modif
 	while (1)
 	{
 		set_parent_signals();
-		data->envp = envp;
 		input = readline("minishell> ");
 		g_sig = 0;
 		if (!input)
 		{
-			// free_env_copy(data->envp); //ajout
+			clear_env(data->envp);
 			free(data);
 			rl_clear_history();
 			return (0);

@@ -1,0 +1,66 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/18 12:32:39 by rraumain          #+#    #+#             */
+/*   Updated: 2025/03/18 13:36:52 by rraumain         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+void	clear_env(t_envp *envp)
+{
+	t_envp	*temp;
+
+	while (envp)
+	{
+		temp = envp;
+		envp = envp->next;
+		free(temp->name);
+		free(temp->value);
+		free(temp);
+	}
+}
+
+int	ft_envlen(t_envp *envp)
+{
+	t_envp	*temp;
+	int		count;
+
+	temp = envp;
+	count = 0;
+	while (temp)
+	{
+		count++;
+		temp = temp->next;
+	}
+	return (count);
+}
+
+t_envp	*ft_lastenv(t_envp *envp)
+{
+	t_envp	*temp;
+
+	temp = envp;
+	while (temp->next)
+		temp = temp->next;
+	return (temp);
+}
+
+t_envp	*search_var(t_envp *envp, char *str)
+{
+	t_envp	*var;
+
+	var = envp;
+	while (var)
+	{
+		if (!ft_strcmp(var->name, str))
+			return (var);
+		var = var->next;
+	}
+	return (NULL);
+}
