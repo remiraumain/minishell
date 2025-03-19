@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_control.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:10:52 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/18 19:38:50 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/19 14:58:36 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 		return ; // return (data->status) ?
 	if (!ft_strcmp(cmd->argv[0], "cd"))
 		data->status = exec_cd(cmd, pdata, data);
-	// if (!ft_strcmp(cmd->argv[0], "export"))
-	// 	data->status = exec_export(cmd);
+	if (!ft_strcmp(cmd->argv[0], "export"))
+		data->status = exec_export(cmd, data);
 	// if (!ft_strcmp(cmd->argv[0], "unset"))
 	// 	data->status = exec_unset(cmd, data);
 	if (!ft_strcmp(cmd->argv[0], "exit"))
