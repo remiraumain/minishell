@@ -6,12 +6,42 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:22:47 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/19 17:21:33 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/20 12:46:30 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+static void ft_sort_params(t_envp *env)
+{
+    t_envp *i;                // Pointeur pour parcourir la liste
+    t_envp *j;                // Pointeur pour comparer les éléments
+    char *tmp_name;          // Variable temporaire pour échanger les noms
+    char *tmp_value;         // Variable temporaire pour échanger les valeurs
+
+    if (env == NULL || env->next == NULL)
+        return;
+    i = env;
+    while (i != NULL)
+    {
+        j = i->next;
+        while (j != NULL)
+        {
+            if (ft_strcmp(i->name, j->name) > 0)
+            {
+                tmp_name = i->name;
+                i->name = j->name;
+                j->name = tmp_name;
+                tmp_value = i->value;
+                i->value = j->value;
+                j->value = tmp_value;
+            }
+            j = j->next;
+        }
+        i = i->next;
+    }
+}
 
 int exec_export(t_cmd *cmd, t_global_data *data)
 {
@@ -27,14 +57,19 @@ int exec_export(t_cmd *cmd, t_global_data *data)
 			printf("Error: envp is empty or NULL\n");
 			return (1);
 		}
+		ft_sort_params(data->envp);
 		while(var)
 		{
-			printf("declare -x ");
-			printf("%s=%c%s%c\n", var->name, c, var->value, c);
+			printf("declare -x %s=%c%s%c\n", var->name, c, var->value, c);
 			var = var->next;
 		}
 	}
-		
+	return (0);
+}
+
+
+
+
 	/*
 	char **env;
 	int i;
@@ -49,5 +84,5 @@ int exec_export(t_cmd *cmd, t_global_data *data)
 		i++;
 	}
 	clear_env_array(env);*/
-	return (0);
-}
+
+
