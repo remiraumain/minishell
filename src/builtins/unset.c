@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 11:38:39 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/17 12:27:24 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:36:59 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,48 +22,6 @@
 // copier chaque variable dans une liste chainee
 // recuperer l index pour preciser quelle variable on veut supprimer
 
-// Pour EXPORT
-// static int is_var_valid(char *str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (str[0] != '_' && !ft_isalpha(str[0])) // ft_isalpha retourn 0 si faux
-// 		return (1); // false
-// 	if (str[0] == '_' && ft_isdigit(str[1]))
-//         return (1);
-// 	while (str[i])
-// 	{
-// 		if (!ft_isalnum(str[i]) && str[i] != '_')// _VAR
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0); // true
-// }
-
-
-// static int is_var_exist(t_cmd *cmd, t_global_data *data)
-// {
-// 	int		i;// index de l envp[i]
-// 	int		j;// index de la cmd->argv[j]
-
-// 	i = 0;
-// 	j = 1; // car av[0] = "unset"
-// 	if (!data->envp)
-// 		return (1);
-// 	while (cmd->argv[j])
-// 	{
-// 		while (data->envp)
-// 		{
-// 			if (ft_strcmp(cmd->argv[j], data->envp[i]) == 0)
-// 				return (0);	// la variable existe
-// 			i++;
-
-// 		}
-// 		j++;
-// 	}
-// 	return (1);// variable non existant
-// }
 
 
 int exec_unset(t_cmd *cmd, t_global_data *data)

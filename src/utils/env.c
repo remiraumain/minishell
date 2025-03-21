@@ -3,49 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:33:06 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/18 13:44:28 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:57:50 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	fill_new(t_envp **new, char *envp, char *equal)
-{
-	(*new)->name = ft_strndup(envp, equal - envp);
-	if (!(*new)->name)
-	{
-		free((*new));
-		return ;
-	}
-	(*new)->value = ft_strdup(equal + 1);
-	if (!(*new)->value)
-	{
-		free((*new)->name);
-		free((*new));
-		return ;
-	}
-	(*new)->next = NULL;
-}
-
-static t_envp	*init_var(char *envp, int pos)
+t_envp	*init_var(char *envp, int pos)
 {
 	t_envp	*new;
-	char	*equal;
+	char	*val;
 
 	new = malloc(sizeof(t_envp));
 	if (!new)
 		return (NULL);
-	equal = ft_strchr(envp, '=');
-	if (!equal)
+	val = ft_strchr(envp, '=');
+	new->pos = pos;
+	new->name = ft_strndup(envp, val - envp);
+	if (!new->name)
 	{
 		free(new);
 		return (NULL);
 	}
-	new->pos = pos;
-	fill_new(&new, envp, equal);
+	if (val)
+		new->value = ft_strdup(val + 1);
+	else
+		new->value = NULL;
+	new->next = NULL;
 	return (new);
 }
 

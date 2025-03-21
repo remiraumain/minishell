@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 08:51:33 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/18 13:50:17 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/21 09:20:43 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <sys/ioctl.h>
-
+# include <stdbool.h>
 # include "libft.h"
 
 # include "types.h"

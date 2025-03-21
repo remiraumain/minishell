@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:20:03 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/17 12:40:10 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:43:19 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ typedef struct s_envp
 {
     char			*name;
     char			*value;
-    int				pos;  // rang de la variable   
-    //bool equal; //        
+    int				pos;  // rang de la variable
     struct s_envp	*next;   
 }	t_envp;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:45:21 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/17 12:25:48 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:00:17 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int exec_env(t_cmd *cmd, t_global_data *sdata)
 {
-    t_envp *envp;
+    t_envp *var;
     
     if (!sdata->envp)
     {
@@ -23,11 +23,12 @@ int exec_env(t_cmd *cmd, t_global_data *sdata)
     }
     if (!cmd->argv[1])
     {
-        envp = sdata->envp;
-        while (envp)
+        var = sdata->envp;
+        while (var)
         {
-            printf("%s=%s\n", envp->name, envp->value);
-            envp = envp->next;
+            if (var->value)
+                printf("%s=%s\n", var->name, var->value);
+            var = var->next;
         }
     }
     else if (cmd->argv[1]) // cas ou il y a plus d'argv[]

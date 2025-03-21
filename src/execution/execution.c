@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/18 19:35:53 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/21 14:53:36 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	close_and_wait(t_pid_data *pdata)
 	}
 }
 
-static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
+static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 {
 	int		i;
 	char	*path;
@@ -56,7 +56,7 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 		clear_env(pdata->gdata->envp);
 		free(pdata->gdata);
 		free(pdata);
-		free_cmd_list(cmd);
+		free_cmd_list(head);
 		exit(0); // should be status exit code
 	}
 	env = convert_env(pdata->gdata->envp);
@@ -74,7 +74,7 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 	exit(EXIT_FAILURE);
 }
 
-static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata)
+static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata, t_cmd *head)
 {
 	pid_t	pid;
 
@@ -93,7 +93,7 @@ static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata)
 	}
 	set_child_signals();
 	if (pid == 0)
-		execute_child(cmd, i, pdata);
+		execute_child(cmd, i, pdata, head);
 	pdata->pids[i] = pid;
 	return (1);
 }
@@ -113,7 +113,7 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 	{
 		if (is_builtin_parent(cmd) == 1)
 			exec_builtin_parent(cmd, pdata, data);
-		else if (!fork_and_exec_child(cmd, i, pdata))
+		else if (!fork_and_exec_child(cmd, i, pdata, head))
 			break ;
 		i++;
 		cmd = cmd->next;

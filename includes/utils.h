@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:32:33 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/18 18:59:24 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/21 10:44:23 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		ft_envlen(t_envp *envp);
 t_envp	*ft_lastenv(t_envp *envp);
 
 //	ENV
+t_envp	*init_var(char *envp, int pos);
 t_envp	*init_env(char **envp);
 char	**convert_env(t_envp *envp);
 
