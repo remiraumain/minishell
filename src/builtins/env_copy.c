@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:50:29 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/12 16:07:07 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/13 10:23:37 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static int copy_var(char **copy_env, char **envp)
 	return (1);
 }
 
-char **env_copy(char **envp) //à free dans le main
+ //à free dans le main
+char **env_copy(char **envp)
 {
 	int i;
 	char **copy_env;
@@ -73,9 +74,5 @@ char **env_copy(char **envp) //à free dans le main
 	copy_env[i] = NULL;
 	return (copy_env);
 }
-
-
-
-
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:43:49 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/12 10:14:03 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/22 11:17:50 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,26 @@ static char	*get_varname(char *token, int start, int *len)
 
 static char	*get_var_value(char *varname, t_global_data *data)
 {
+	t_envp	*envp;//modif
 	char	*value;
 
 	if (!varname || !data->envp)
+	//if (!varname || !data->lst_envp)
 		return (NULL);
 	if (varname[0] == '?' && varname[1] == '\0')
 	{
 		value = ft_itoa(data->status);
 		return (value);
 	}
-	value = get_env_value(varname, data->envp);
-	if (!value)
+	//value = get_env_value(varname, data->envp);
+	envp = NULL;
+	//value = get_env_value(varname, data->lst_envp);
+	envp = search_var(data->envp, varname);//modif
+	//if (!value)
+	if (!envp)//modif
 		return ("");
-	return (value);
+	//return (value);
+	return (envp->name);
 }
 
 static char	*expand_var(char *token, int *index, t_global_data *data)

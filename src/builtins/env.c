@@ -6,12 +6,13 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:45:21 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/04 13:43:54 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:36:41 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 int exec_env( t_cmd *cmd, t_global_data *sdata)
 {
 	int i;
@@ -39,4 +40,32 @@ int exec_env( t_cmd *cmd, t_global_data *sdata)
 		return (127);
 	}
 	return (0);
+}*/
+
+int exec_env(t_cmd *cmd, t_global_data *sdata)
+{
+    t_envp *envp;
+    
+    if (!sdata->envp)
+    {
+        ft_putstr_fd("envp doesn't exist or is empty\n", 2);
+        return (1); // return a revoir
+    }
+    if (!cmd->argv[1])
+    {
+        envp = sdata->envp;
+        while (envp)
+        {
+            printf("%s=%s\n", envp->name, envp->value);
+            envp = envp->next;
+        }
+    }
+    else if (cmd->argv[1]) // cas ou il y a plus d'argv[]
+    {
+        ft_putstr_fd("env: ", 2);
+        ft_putstr_fd(cmd->argv[1], 2);
+        ft_putstr_fd(": no such file or directory\n", 2);
+        return (127);
+    }
+    return (0);
 }

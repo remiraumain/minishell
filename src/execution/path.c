@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:33:29 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/27 10:35:40 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/22 11:35:45 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*search_in_paths(char **paths, char *cmd)
 	return (result);
 }
 
-char	*get_command_path(char *cmd, char **envp)
+char	*get_command_path(char *cmd, t_envp *envp)
 {
 	char	**paths;
 	char	*found;

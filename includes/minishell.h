@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 08:51:33 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/12 10:09:27 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/22 11:11:13 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@
 
 # include "types.h"
 # include "signals.h"
-# include "string.h"
+# include "utils.h"
+//# include "string.h"//a enlever??
 # include "lexer.h"
 # include "parser.h"
 # include "builtin.h"

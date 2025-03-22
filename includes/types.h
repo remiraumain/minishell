@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:20:03 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/11 17:10:44 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/22 10:56:35 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,23 @@
 //	GLOBAL
 extern int	g_sig;
 
+// // BUILTIN a enlever 
+typedef struct s_envp
+{
+    char *name;
+    char *value; 
+    int pos;  // rang de la variable   
+    //bool equal; //        
+    struct s_envp *next;   
+} t_envp;
+
+
 typedef struct s_global_data
 {
-	char	**envp;
-	int		status;
+	//char	**envp;//
+	//t_envp *lst_envp;
+	struct s_envp	*envp;
+	int				status;
 }	t_global_data;
 
 typedef enum e_bool

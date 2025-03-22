@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/12 17:02:55 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:34:13 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 {
 	int		i;
 	char	*path;
+	char 	**env;
 
 	dup_fd(pdata, index);
 	i = 0;
@@ -50,15 +51,24 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata)
 	if (is_builtin_child(cmd) == 1)
 	{
 		exec_builtin_child(cmd, pdata, pdata->gdata);
-		return ;
+		free(pdata->pids);
+		cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
+		clear_env(pdata->gdata->envp);
+		free(pdata->gdata);
+		free(pdata);
+		free_cmd_list(cmd);
+		exit(0); // should be status exit code
 	}
-	path = get_command_path(cmd->argv[0], pdata->gdata->envp);// modif a faire
+	env = convert_env(pdata->gdata->envp);
+	path = get_command_path(cmd->argv[0], pdata->gdata->envp);
 	if (!path)
 	{
+		clear_env_array(env);
 		perror(cmd->argv[0]);
 		exit(127);
 	}
-	execve(path, cmd->argv, pdata->gdata->envp);
+	execve(path, cmd->argv, env);
+	clear_env_array(env);
 	free(path);
 	perror(cmd->argv[0]);
 	exit(EXIT_FAILURE);

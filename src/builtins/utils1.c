@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 08:22:54 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/11 10:16:32 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:37:51 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n)
 // 	return (dest);
 // }
 
-// void	ft_lstadd_back(t_envp **lst, t_envp *new)// libft ??
+// void	ft_lstadd_back(t_envp **lst, t_envp *new)
 // {
 // 	t_envp	*tmp;
 
@@ -79,16 +79,16 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n)
 // 	tmp->next = new;
 // }
 
-void free_env_copy(t_envp *var)
-{
-    t_envp *tmp;
+// void free_env_copy(t_envp *var)
+// {
+//     t_envp *tmp;
     
-    while (var)
-    {
-        tmp = var;
-        var = var->next;
-        free(tmp->name);
-        free(tmp->value);
-        free(tmp);
-    }
-}
+//     while (var)
+//     {
+//         tmp = var;
+//         var = var->next;
+//         free(tmp->name);
+//         free(tmp->value);
+//         free(tmp);
+//     }
+// }

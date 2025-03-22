@@ -6,14 +6,13 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:34:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 08:34:32 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:30:48 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 
 #include "minishell.h"
-
 char	*get_env_value(char *varname, char **envp)
 {
 	int	i;

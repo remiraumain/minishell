@@ -6,17 +6,12 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:31:23 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/12 16:50:14 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/22 11:50:34 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-// gerer le cas sans = (d'ou le bool dans la structure)
-// fonction qui affiche export
-// export affiche dans l ordre alphabletique avec declare -x au debut
-// sera afficher dans export "declare -x titi" mais pas dans env 
 
 // pour l'execution travailler avec la copie de char **envp
 // donc faire une fonction qui copie la liste chainee de l'env mais en char **envp
@@ -51,7 +46,7 @@ static char *var_name(char *envp)
 		i++;
 	if (envp[i] == '=')
 	{
-		name = malloc(i + 1); // a free
+		name = malloc(i + 1);
 		if (!name)
 		{
 			free(name);
@@ -68,7 +63,6 @@ static char *var_name(char *envp)
 static char *var_value(char *envp)
 {
 	int i;
-	
 	char *value;
 	
 	i = 0;
@@ -78,12 +72,9 @@ static char *var_value(char *envp)
 		i++;
 	if (envp[i] == '=')
 	{
-		value = ft_strdup(&envp[i + 1]); // a free
+		value = ft_strdup(&envp[i + 1]);
 		if (!value)
-		{
-			free(value);
 			return (NULL);
-		}
 	}
 	else
 		return (NULL);
@@ -107,26 +98,26 @@ t_envp *init_var(char *envp)
 
 
 // a free dans le main 
-void var_copy(char **envp, t_envp **vars)
+t_envp *var_copy(char **envp)
 {
 	t_envp *new;
+	t_envp *vars;
 	int	i;
 	
+	vars = NULL;
 	i = 0;
 	if (!envp || !envp[0])
-		return ;
+		return (NULL);
 	while (envp && envp[i])
 	{
-		new = init_var(envp[i]); // a free 
+		new = init_var(envp[i]);
         if (!new)
             return ;
-		if (*vars == NULL)
-			*vars = new;	
-		else
-			ft_lstadd_back(vars, new);
+		ft_lstadd_back(vars, new);
 		new->pos = i;
 		i++;
 	}
+	return (vars);
 }
 
 

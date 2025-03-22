@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 11:38:39 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/12 16:33:55 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/19 09:10:47 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 // recuperer l index pour preciser quelle variable on veut supprimer
 
 
-
+/* 
 static int is_var_exist(t_cmd *cmd, t_global_data *data)
 {
 	int		i;// index de l envp[i]
@@ -99,5 +99,5 @@ int exec_unset(t_cmd *cmd, t_global_data *data)
 //         previous = current;
 //         current = current->next;
 //     }
-// }
+// }*/
 

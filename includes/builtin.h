@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/12 16:33:29 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/22 13:02:43 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 # include "minishell.h"
 # include "execution.h"
 
-typedef struct s_envp
-{
-    char *name;
-    char *value; 
-    int pos;  // rang de la variable   
-    //bool equal; //        
-    struct s_envp *next;   
-} t_envp;
+// typedef struct s_envp
+// {
+//     char *name;
+//     char *value; 
+//     int pos;  // rang de la variable   
+//     //bool equal; //        
+//     struct s_envp *next;   
+// } t_envp;
 
 
 
@@ -48,19 +48,23 @@ int exec_echo(t_cmd *cmd);
 /* env.c*/
 int exec_env(t_cmd *cmd, t_global_data *sdata);
 
+/* exit.c */
+int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata);
+
+
 /* envp.copy.c*/
 char **env_copy(char **envp);
 
 /* env_list_copy.c*/
-t_envp *init_var(char *envp);
-void var_copy(char **envp, t_envp **vars);
+//t_envp *init_var(char *envp);
+//t_envp *var_copy(char **envp);
 
 /* exit.c */
-int exec_exit(t_cmd *cmd, t_global_data *data);
-
+//int exec_exit(t_cmd *cmd, t_global_data *data);
+int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata);
 
 /* export.c */
-
+int exec_export(t_cmd *cmd, t_global_data *data);
 
 
 /* pwd */

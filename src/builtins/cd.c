@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/11 09:42:42 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/22 16:22:17 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,64 +14,118 @@
 
 // test a gerer creer un dossier(ou fichier) le supprimer puis verifier pwd
 
-static char	*get_old_pwd(char **envp)
-{
-	int		i;
-	char	*old_pwd;
-	int		len;
+// static char	*get_old_pwd(char **envp)
+// {
+// 	int		i;
+// 	char	*old_pwd;
+// 	int		len;
 	
-	if (!envp || !envp[0])
-	{
-		ft_putstr_fd("get_old_pwd failed : envp doesn't exist or is empty\n", 2);
-		return (NULL);
-	}
-	i = 0;
-	old_pwd = NULL;
-	while (envp[i])
-	{
-		len = ft_strlen(envp[i]) - 7;
-		if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
-		{
-			old_pwd = ft_substr(envp[i], 7, len); // malloc, a free ailleurs
-			return (old_pwd);
-		}
-		i++;
-	}
-	return (NULL);
-}
+// 	if (!envp || !envp[0])
+// 	{
+// 		ft_putstr_fd("get_old_pwd failed : envp doesn't exist or is empty\n", 2);
+// 		return (NULL);
+// 	}
+// 	i = 0;
+// 	old_pwd = NULL;
+// 	while (envp[i])
+// 	{
+// 		len = ft_strlen(envp[i]) - 7;
+// 		if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
+// 		{
+// 			old_pwd = ft_substr(envp[i], 7, len); // malloc, a free ailleurs
+// 			return (old_pwd);
+// 		}
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
 
-static void update_old_pwd(char **envp, const char *new_old_pwd)
+static char	*get_old_pwd(t_envp *envp)
 {
-    int i;
+	t_envp *var;
     
-    i = 0;
-    while (envp[i])
+    if (!envp)
     {
-        if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
-        {
-            envp[i] = ft_strjoin("OLDPWD=", new_old_pwd); // malloc
-            return;
-        }
-        i++;
+        ft_putstr_fd("get_old_pwd failed: envp is NULL or empty\n", 2);
+        return (NULL);
     }
+    var = envp;
+    while (var)
+    {
+        if (ft_strncmp(var->name, "OLDPWD=", 7) == 0)
+            return (ft_strdup(var->value));
+        var = var->next;
+    }
+    return (NULL); 
 }
 
-static void update_pwd(char **envp, const char *new_pwd)
+static void update_old_pwd(t_envp *envp, const char *new_old_pwd)
 {
-    int i;
-
-    i = 0;
-
-    while (envp[i])
+    t_envp *var;
+    
+	var = envp;
+    while (var)
     {
-        if (ft_strncmp(envp[i], "PWD=", 4) == 0)
+        if (ft_strncmp(var->name, "OLDPWD=", 7) == 0)
         {
-            envp[i] = ft_strjoin("PWD=", new_pwd);
+			free(var->value);
+			var->value = ft_strdup(new_old_pwd);
             return;
         }
-        i++;
+        var = var->next;
     }
 }
+
+// static void update_old_pwd(char **envp, const char *new_old_pwd)
+// {
+//     int i;
+    
+//     i = 0;
+//     while (envp[i])
+//     {
+//         if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
+//         {
+//             envp[i] = ft_strjoin("OLDPWD=", new_old_pwd); // malloc
+//             return;
+//         }
+//         i++;
+//     }
+// }
+
+
+static void update_pwd(t_envp*envp, const char *new_pwd)
+{
+   t_envp *var;
+
+   var = envp;
+    while (var)
+    {
+        if (ft_strncmp(var->name, "PWD=", 4) == 0)
+        {
+			free(var->value);
+			var->value = ft_strdup(new_pwd);
+            return;
+        }
+        var = var->next;
+    }
+}
+
+// static void update_pwd(char **envp, const char *new_pwd)
+// {
+//     int i;
+
+//     i = 0;
+
+//     while (envp[i])
+//     {
+//         if (ft_strncmp(envp[i], "PWD=", 4) == 0)
+//         {
+//             envp[i] = ft_strjoin("PWD=", new_pwd);
+//             return;
+//         }
+//         i++;
+//     }
+// }
 
 static int print_error(char *argv)
 {
@@ -99,6 +153,23 @@ static int print_error(char *argv)
 	return (0);
 }
 
+static char *get_var_home(t_envp *envp)
+{
+    t_envp *var;
+	
+	var = envp;
+
+    while (var)
+    {
+        if (var->name && ft_strcmp(var->name, "HOME") == 0)
+            return (var->value);
+        var = var->next;
+    }
+	ft_putstr_fd("cd: HOME not set\n", 2);
+    return (NULL);
+}
+
+
 // cas de too many argument	A FAIRE
 // verifie si c'est un dossier// 
 int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
@@ -111,21 +182,26 @@ int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
     char *home;
 	
 	res = 0;
-	pwd = getcwd(NULL, 0); // malloc
-	old_pwd = get_old_pwd(sdata->envp);// malloc qui n est pas free encore
 	path = NULL;
 	new_pwd = NULL;
 	home = NULL;
+	pwd = getcwd(NULL, 0); // pwd actuel // malloc
+	old_pwd = get_old_pwd(sdata->envp);// oldpwd actuel // malloc qui n est pas free encore
+	if (old_pwd) // a voir , test a faire sans et avec;
+			//update_old_pwd(sdata->envp, old_pwd);
+		update_old_pwd(sdata->envp, pwd);
 	if (pdata->nb_cmd == 1)
 	{
-		if (old_pwd) // a voir , test a faire sans et avec;
-			update_old_pwd(sdata->envp, old_pwd);
+		// if (old_pwd) // a voir , test a faire sans et avec;
+		// 	//update_old_pwd(sdata->envp, old_pwd);
+		// 	update_old_pwd(sdata->envp, pwd);
 		if ((!cmd->argv[1]) || (cmd->argv[1] && ft_strcmp(cmd->argv[1], "~") == 0)) // cd ou cd ~
 		{
-			home = getenv("HOME"); // a changer il faut faire une fonction qui chercher HOME
+			//home = getenv("HOME"); // a changer il faut faire une fonction qui chercher HOME
+			home = get_var_home(sdata->envp);
             if (!home || chdir(home) == -1)
             {
-                ft_putstr_fd("cd: HOME not set\n", 2);
+                //ft_putstr_fd("cd: HOME not set\n", 2);
                 free(old_pwd);
                 free(pwd);
                 return (1);
@@ -176,7 +252,7 @@ int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
         }
 	}
 	free (pwd);
-	free (old_pwd);
+	//free (old_pwd);
 	return (0);
 }
 
