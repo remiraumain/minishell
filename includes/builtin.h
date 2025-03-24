@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/19 15:00:10 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:40:35 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int exec_unset(t_cmd *cmd, t_global_data *data);
 
 //	ENVP_COPY
 t_envp	*search_var(t_envp *envp, char *str);
-char 	**convert_envp_to_ptrchar(t_envp *envp);
+//char 	**convert_envp_to_ptrchar(t_envp *envp);
 
 
 

@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:45:21 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/21 13:00:17 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/22 09:23:40 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int exec_env(t_cmd *cmd, t_global_data *sdata)
             var = var->next;
         }
     }
-    else if (cmd->argv[1]) // cas ou il y a plus d'argv[]
+    else if (cmd->argv[1])
     {
         ft_putstr_fd("env: ", 2);
-        ft_putstr_fd(cmd->argv[1], 2);
-        ft_putstr_fd(": no such file or directory\n", 2);
+        ft_putstr_fd(cmd->argv[1], 2); // 'cmd->argv[1]' , manque le ' ' 
+        ft_putstr_fd(": No such file or directory\n", 2);
         return (127);
     }
     return (0);

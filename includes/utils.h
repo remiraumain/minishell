@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:32:33 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/21 10:44:23 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/22 11:26:07 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	clear_env(t_envp *envp);
 void	clear_env_array(char **envp);
 int		ft_envlen(t_envp *envp);
 t_envp	*ft_lastenv(t_envp *envp);
+t_envp	*search_var(t_envp *envp, char *str);// a ajouter
 
 //	ENV
 t_envp	*init_var(char *envp, int pos);

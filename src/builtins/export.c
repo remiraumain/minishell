@@ -6,13 +6,13 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:22:47 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/21 16:33:21 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:08:17 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
+// good version
 static void ft_sort_params(t_envp *env)
 {
     t_envp *i;                // Pointeur pour parcourir la liste
@@ -85,7 +85,7 @@ static int is_var_exist(char *argv, t_global_data *data)
 		if (ft_strncmp(argv, tmp->name, len) == 0)
 			return (0);
 		tmp = tmp->next;
-		}
+	}
 	return (1);
 }
 

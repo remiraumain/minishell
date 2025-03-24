@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:04:44 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/19 10:58:57 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/22 09:46:49 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata)
 	data->status = 0;
 	if (!cmd->argv[1])
 	{
+		ft_putstr_fd("exit\n", 2);
 		status = data->status;
 		free(pdata->pids);
 		cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
@@ -96,20 +97,14 @@ int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata)
 		free_cmd_list(cmd);
 		exit (status);
 	}
-	else if (cmd->argv[2])
-	{
-		ft_putstr_fd("exit\n", 2);
-		ft_putstr_fd("exit: too many arguments\n", 2);
-		return (1);
-	}
-	else if (cmd->argv[1])
+	else
 	{	
 		if (!is_numeric(cmd->argv[1])) 
 		{
 			ft_putstr_fd("exit\n", 2);
 			ft_putstr_fd("exit: ", 2);
 			ft_putstr_fd(cmd->argv[1] , 2);
-			ft_putstr_fd(": numeric argument required", 2);
+			ft_putstr_fd(": numeric argument required\n", 2);
 			exit(2);
 		}
 		value = ft_atoll(cmd->argv[1]);

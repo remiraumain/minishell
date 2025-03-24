@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 08:51:33 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/21 09:20:43 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/22 09:17:42 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <sys/ioctl.h>
-# include <stdbool.h>
+# include <stdbool.h>// a voir si on garde ou pas 
 # include "libft.h"
 
 # include "types.h"
