@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/24 12:40:35 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:48:12 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ int is_builtin_parent(t_cmd *cmd);
 //int exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
 void exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
 
+/* cd_utils.c*/
+void update_old_pwd(t_envp *envp, const char *old_pwd);
+void update_pwd(t_envp*envp, const char *new_pwd);
+int print_error(char *argv);
+char *get_var_home(t_envp *envp);
+//char	*get_old_pwd(t_envp *envp); // for test
 
 
 /* cd.c */
@@ -55,6 +61,6 @@ t_envp	*search_var(t_envp *envp, char *str);
 //char 	**convert_envp_to_ptrchar(t_envp *envp);
 
 
-
+//
 
 #endif 
