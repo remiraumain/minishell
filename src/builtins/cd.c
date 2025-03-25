@@ -6,16 +6,11 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/24 15:49:43 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:15:08 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-// test a gerer creer un dossier(ou fichier) le supprimer puis verifier pwd
-// cas de too many arguments a verifier
-
 
 static int cd_home(t_global_data *sdata, char *pwd)
 {
@@ -35,40 +30,34 @@ static int cd_home(t_global_data *sdata, char *pwd)
 
 static int cd_dot(t_cmd *cmd, t_global_data *sdata, char *pwd)
 {
-	if (chdir(cmd->argv[1]) == -1)
-	{
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(cmd->argv[1], 2);	
-		ft_putstr_fd(": not a directory ", 2);
-		free(pwd);
-		return (1);
-	}
-	update_old_pwd(sdata->envp, pwd);
+    t_envp  *old;
+    char    *dest;
+    
+    old = search_var(sdata->envp, "OLDPWD");
+    if (ft_strcmp(old->value, pwd) == 0)
+        dest = "..";
+    else
+        dest = old->value;
+    if (chdir(dest) == -1)
+    {
+        ft_putstr_fd("cd: ", 2);
+        ft_putstr_fd(cmd->argv[1], 2);	
+        ft_putstr_fd(": not a directory ", 2);
+        free(pwd);
+        return (1);
+    }
+    if (!pwd)
+        pwd = ft_strdup(dest);
+    update_old_pwd(sdata->envp, pwd);
     update_pwd(sdata->envp, getcwd(NULL, 0));
     free(pwd);
     return (0);
 }
 
-
-static int cd_slash(t_cmd *cmd, char *pwd)
+static int process_cd(char *path, char *pwd, t_cmd *cmd, t_global_data *sdata)
 {
-	int res;
-	
-    res = print_error(cmd->argv[1]);
-    if (res == 1)
-    {
-        free(pwd);
-        return (1);
-    }
-    return (0);
-}
-
-static int cd_relative(t_cmd *cmd, t_global_data *sdata, char *pwd)
-{
-	char *path;
-	int res;
-	
-    path = ft_strjoin(pwd, cmd->argv[1]);
+    int res;
+    
     res = print_error(cmd->argv[1]);
     if (res == 1)
     {
@@ -90,6 +79,25 @@ static int cd_relative(t_cmd *cmd, t_global_data *sdata, char *pwd)
 }
 
 
+static int cd_relative(t_cmd *cmd, t_global_data *sdata, char *pwd)
+{
+    char *path;
+    int result;
+
+    pwd = ft_strjoin(pwd, "/");
+    if (!pwd)
+        return (1);
+    path = ft_strjoin(pwd, cmd->argv[1]);
+    if (!path)
+    {
+        free(pwd);
+        return (1);
+    }
+    result = process_cd(path, pwd, cmd, sdata);
+    return (result);
+}
+
+
 int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
 {
     int res;
@@ -101,7 +109,7 @@ int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
     {
         if (!cmd->argv[1] || ft_strcmp(cmd->argv[1], "~") == 0)
             return (cd_home(sdata, pwd));
-        if (ft_strcmp(cmd->argv[1], "..") == 0 || ft_strcmp(cmd->argv[1], "-") == 0)// cd - a tester
+        if (ft_strcmp(cmd->argv[1], "..") == 0 || ft_strcmp(cmd->argv[1], "-") == 0)
             return (cd_dot(cmd, sdata, pwd));
         if (cmd->argv[1][0] == '/')
             return (cd_slash(cmd, pwd));

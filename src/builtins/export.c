@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:22:47 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/24 13:08:17 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:17:50 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,11 @@ static int is_var_valid(char *str)
 	i = 0;
 	while (str[i] && str[i] != '=')
 	{
-		if (!(ft_isalnum(str[i]) || str[i] == '_')) // _VAR 
+		if (!(ft_isalnum(str[i]) || str[i] == '_'))
 			return (1);
 		i++;
 	}
-	return (0); // true
+	return (0);
 }
 
 static void	update_value(t_global_data *data, char *argv)
@@ -162,7 +162,7 @@ int exec_export(t_cmd *cmd, t_global_data *data)
 
 	i = 0;
 	var = data->envp;
-	if (!cmd || !cmd->argv || !cmd->argv[1]) // export sans argument
+	if (!cmd || !cmd->argv || !cmd->argv[1])
 	{
 		if (!data->envp)
 		{

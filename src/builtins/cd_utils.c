@@ -6,31 +6,12 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:50:16 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/24 15:47:52 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:13:57 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-// char	*get_old_pwd(t_envp *envp)
-// {
-// 	t_envp *var;
-    
-//     if (!envp)
-//     {
-//         ft_putstr_fd("get_old_pwd failed: envp is NULL or empty\n", 2);
-//         return (NULL);
-//     }
-//     var = envp;
-//     while (var)
-//     {
-//         if (ft_strncmp(var->name, "OLDPWD", 6) == 0)
-//             return (ft_strdup(var->value));
-//         var = var->next;
-//     }
-//     return (NULL);
-// }
 
 void update_old_pwd(t_envp *envp, const char *old_pwd)
 {
@@ -39,7 +20,7 @@ void update_old_pwd(t_envp *envp, const char *old_pwd)
 	var = envp;
     while (var)
     {
-        if (ft_strncmp(var->name, "OLDPWD", 6) == 0)
+		if (ft_strcmp(var->name, "OLDPWD") == 0)
         {
 			free(var->value);
 			var->value = ft_strdup(old_pwd);
@@ -49,7 +30,6 @@ void update_old_pwd(t_envp *envp, const char *old_pwd)
     }
 }
 
-
 void update_pwd(t_envp*envp, const char *new_pwd)
 {
    t_envp *var;
@@ -57,7 +37,7 @@ void update_pwd(t_envp*envp, const char *new_pwd)
    var = envp;
     while (var)
     {
-        if (ft_strncmp(var->name, "PWD", 3) == 0)
+		if (ft_strcmp(var->name, "PWD") == 0)
         {
 			free(var->value);
 			var->value = ft_strdup(new_pwd);
@@ -107,4 +87,17 @@ char *get_var_home(t_envp *envp)
     }
 	ft_putstr_fd("cd: HOME not set\n", 2);
     return (NULL);
+}
+
+int cd_slash(t_cmd *cmd, char *pwd)
+{
+	int res;
+	
+    res = print_error(cmd->argv[1]);
+    if (res == 1)
+    {
+        free(pwd);
+        return (1);
+    }
+    return (0);
 }
