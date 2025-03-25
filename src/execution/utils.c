@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:46 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/12 10:14:29 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:54:13 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	**create_pipes(int count)
 	return (pipefd);
 }
 
-void	dup_fd(t_pid_data *pdata, int index)
+void	dup_fd(t_pid_data *pdata, int index, t_cmd *cmd)
 {
 	if (index > 0)
 	{
@@ -93,7 +93,8 @@ void	dup_fd(t_pid_data *pdata, int index)
 	}
 	if (index < pdata->nb_cmd - 1)
 	{
-		if (dup2(pdata->pipefd[index][1], STDOUT_FILENO) < 0)
+		if (is_builtin_child(cmd->next)
+			&& dup2(pdata->pipefd[index][1], STDOUT_FILENO) < 0)
 		{
 			perror("dup2 out");
 			exit(1);

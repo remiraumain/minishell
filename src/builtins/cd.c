@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/25 15:15:08 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:30:55 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,8 @@ static int cd_relative(t_cmd *cmd, t_global_data *sdata, char *pwd)
 
 int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
 {
-    int res;
     char *pwd;
 	
-	res = 0;
     pwd = getcwd(NULL, 0);
     if (pdata->nb_cmd == 1)
     {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:22:47 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/25 15:17:50 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:31:28 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,9 +158,7 @@ void fct(t_cmd *cmd, t_global_data *data)
 int exec_export(t_cmd *cmd, t_global_data *data)
 {
 	t_envp *var;
-	int i;
 
-	i = 0;
 	var = data->envp;
 	if (!cmd || !cmd->argv || !cmd->argv[1])
 	{
