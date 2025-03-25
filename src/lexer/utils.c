@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:38:20 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/12 10:12:43 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:27:28 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,34 @@ static char	*add_unquoted_chunk(const char *input, int *index,
 	int		start;
 	char	*substring;
 	char	*chunk;
+	int		varlen;
+	char	*var;
 
 	start = *index;
 	while (input[*index] && !is_whitespace(input[*index])
 		&& input[*index] != '\'' && input[*index] != '"'
 		&& input[*index] != '|' && input[*index] != '<'
 		&& input[*index] != '>')
+	{
+		if (input[*index] == '$')
+		{
+			varlen = *index;
+			while (ft_isalpha(input[varlen]) || input[varlen] == '_' || input[varlen] == '-')
+				varlen++;
+			var = ft_substr(input, *index, varlen);
+			if (var)
+			{
+				expand_word(&var, data);
+				chunk = ft_strjoin(word, var);
+				free(var);
+				free(word);
+				word = chunk;
+				*index += varlen;
+				continue;
+			}
+		}
 		*index = *index + 1;
+	}
 	substring = ft_substr(input, start, *index - start);
 	if (!substring)
 	{
