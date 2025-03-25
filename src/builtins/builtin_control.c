@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:10:52 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/25 14:50:39 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:12:03 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@ int is_builtin_child(t_cmd *cmd)
 		!ft_strcmp(cmd->argv[0], "pwd") ||
 		!ft_strcmp(cmd->argv[0], "env"))
 		return (1);
+	return (0);
+}
+
+int	has_child_process(t_cmd *head)
+{
+	t_cmd	*cmd;
+
+	cmd = head;
+	while (cmd)
+	{
+		if (is_builtin_child(cmd))
+			return (1);
+		cmd = cmd->next;
+	}
 	return (0);
 }
 
@@ -49,7 +63,7 @@ void exec_builtin_child(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 	// exit(data->status); 
 }
 
-void exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
+void exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data, t_cmd *head)
 //int exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 {
 	if (!cmd || !cmd->argv || !cmd->argv[0])
@@ -61,6 +75,6 @@ void exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 	if (!ft_strcmp(cmd->argv[0], "unset"))
 		data->status = exec_unset(cmd, data);
 	if (!ft_strcmp(cmd->argv[0], "exit"))
-		data->status = exec_exit(cmd, data, pdata);
+		data->status = exec_exit(cmd, data, pdata, head);
 	// return(0); // return a voir
 }

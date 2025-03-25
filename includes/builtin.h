@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/25 14:25:51 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:12:17 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 int is_builtin_child(t_cmd *cmd);
 void exec_builtin_child(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
 //int exec_builtin_child(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
+int	has_child_process(t_cmd *head);
 int is_builtin_parent(t_cmd *cmd);
 //int exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
-void exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
+void exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data, t_cmd *head);
 
 /* cd_utils.c*/
 void update_old_pwd(t_envp *envp, const char *old_pwd);
@@ -32,7 +33,6 @@ void update_pwd(t_envp*envp, const char *new_pwd);
 int print_error(char *argv);
 char *get_var_home(t_envp *envp);
 int cd_slash(t_cmd *cmd, char *pwd);
-
 
 
 /* cd.c */
@@ -45,7 +45,7 @@ int exec_echo(t_cmd *cmd);
 int exec_env(t_cmd *cmd, t_global_data *sdata);
 
 /* exit.c */
-int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata);
+int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head);
 
 /* export.c*/
 int exec_export(t_cmd *cmd, t_global_data *data);

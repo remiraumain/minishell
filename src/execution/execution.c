@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/21 14:53:36 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:16:55 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,10 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 	while (cmd && !g_sig)
 	{
 		if (is_builtin_parent(cmd) == 1)
-			exec_builtin_parent(cmd, pdata, data);
+		{
+			if (!has_child_process(head))
+				exec_builtin_parent(cmd, pdata, data, head);
+		}
 		else if (!fork_and_exec_child(cmd, i, pdata, head))
 			break ;
 		i++;

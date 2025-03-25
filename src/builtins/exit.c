@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:04:44 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/22 09:46:49 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:11:38 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static long long ft_atoll(char *str)
 	return (stock * sign);
 }
 
-int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata)
+int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head)
 {
 	long long value;
 	int			status;
@@ -94,7 +94,7 @@ int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata)
 		clear_env(pdata->gdata->envp);
 		free(pdata);
 		free(data);
-		free_cmd_list(cmd);
+		free_cmd_list(head);
 		exit (status);
 	}
 	else
@@ -116,6 +116,6 @@ int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata)
 	clear_env(pdata->gdata->envp);
 	free(pdata);
 	free(data);
-	free_cmd_list(cmd);
+	free_cmd_list(head);
 	exit (status);
 }
