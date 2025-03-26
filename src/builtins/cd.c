@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/25 12:30:55 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/26 17:16:01 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,40 @@ static int cd_home(t_global_data *sdata, char *pwd)
     return (0);
 }
 
+// ici le cd .. plus de 2fois ne fonctionne pas mais juste une fois fonctionne
+
+// static int cd_dot(t_cmd *cmd, t_global_data *sdata, char *pwd)
+// {
+//     t_envp  *old;
+//     char    *dest;
+    
+//     old = search_var(sdata->envp, "OLDPWD");
+//     if (ft_strcmp(old->value, pwd) == 0)
+//         dest = "..";
+//     else
+//         dest = old->value;
+//     if (chdir(dest) == -1)
+//     {
+//         ft_putstr_fd("cd: ", 2);
+//         ft_putstr_fd(cmd->argv[1], 2);	
+//         ft_putstr_fd(": not a directory ", 2);
+//         free(pwd);
+//         return (1);
+//     }
+//     if (!pwd)
+//         pwd = ft_strdup(dest);
+//     update_old_pwd(sdata->envp, pwd);
+//     update_pwd(sdata->envp, getcwd(NULL, 0));
+//     free(pwd);
+//     return (0);
+// }
+
+
+// ici cd .. fonctionne mais ne gere pas le cas de suppression de dossier 
+
 static int cd_dot(t_cmd *cmd, t_global_data *sdata, char *pwd)
 {
-    t_envp  *old;
-    char    *dest;
-    
-    old = search_var(sdata->envp, "OLDPWD");
-    if (ft_strcmp(old->value, pwd) == 0)
-        dest = "..";
-    else
-        dest = old->value;
-    if (chdir(dest) == -1)
+    if (chdir("..") == -1)
     {
         ft_putstr_fd("cd: ", 2);
         ft_putstr_fd(cmd->argv[1], 2);	
@@ -46,8 +69,6 @@ static int cd_dot(t_cmd *cmd, t_global_data *sdata, char *pwd)
         free(pwd);
         return (1);
     }
-    if (!pwd)
-        pwd = ft_strdup(dest);
     update_old_pwd(sdata->envp, pwd);
     update_pwd(sdata->envp, getcwd(NULL, 0));
     free(pwd);
