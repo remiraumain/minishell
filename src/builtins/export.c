@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:22:47 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/31 15:46:11 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:18:44 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,20 @@ static int is_var_valid(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && str[i] != '=')
+	if (str[i] == '=' || (str[i] >= '0' &&  str[i] <= '9'))
+		return (1);
+	else
 	{
-		if (!(ft_isalnum(str[i]) || str[i] == '_'))
-			return (1);
-		i++;
+		while (str[i] && str[i] != '=')
+		{
+			if (!(ft_isalnum(str[i]) || str[i] == '_'))
+				return (1);
+			i++;
+		}
 	}
 	return (0);
 }
+
 
 static void	update_value(t_global_data *data, char *argv)
 {
@@ -129,11 +135,10 @@ static void	update_value(t_global_data *data, char *argv)
 	}
 }
 
-// a renommer
-void fct(t_cmd *cmd, t_global_data *data)
+static int export_with_args(t_cmd *cmd, t_global_data *data)
 {
 	int i;
-
+	
 	i = 1;
 	while (cmd->argv[i])
 	{
@@ -142,8 +147,7 @@ void fct(t_cmd *cmd, t_global_data *data)
 			ft_putstr_fd("export: ", 2);
 			ft_putstr_fd(cmd->argv[i], 2);
 			ft_putstr_fd(": not a valid identifier\n", 2);
-			//return (1);// ne quitte pas, passe a l'argument suivant
-			//code_status = 1;
+			data->status = 1;
 		}
 		else 
 		{
@@ -154,7 +158,9 @@ void fct(t_cmd *cmd, t_global_data *data)
 		}
 		i++;
 	}
+	return (data->status);
 }
+
 
 int exec_export(t_cmd *cmd, t_global_data *data)
 {
@@ -166,7 +172,8 @@ int exec_export(t_cmd *cmd, t_global_data *data)
 		if (!data->envp)
 		{
 			printf("Error: envp is empty or NULL\n");
-			return (1);
+			data->status = 1;
+			return (data->status);
 		}
 		ft_sort_params(data->envp);
 		while(var)
@@ -179,8 +186,8 @@ int exec_export(t_cmd *cmd, t_global_data *data)
 		}
 	}
 	else
-		fct(cmd, data);
-	return (0);
+		data->status = export_with_args(cmd, data);
+	return (data->status);
 }
 
 
