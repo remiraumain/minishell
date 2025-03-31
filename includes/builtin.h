@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/25 16:12:17 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/31 18:00:24 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,6 @@ int is_builtin_parent(t_cmd *cmd);
 //int exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
 void exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data, t_cmd *head);
 
-/* cd_utils.c*/
-void update_old_pwd(t_envp *envp, const char *old_pwd);
-void update_pwd(t_envp*envp, const char *new_pwd);
-int print_error(char *argv);
-char *get_var_home(t_envp *envp);
-int cd_slash(t_cmd *cmd, char *pwd);
-
 
 /* cd.c */
 int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata);
@@ -50,18 +43,30 @@ int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head);
 /* export.c*/
 int exec_export(t_cmd *cmd, t_global_data *data);
 
-/* pwd */
+/* pwd.c */
 int exec_pwd(t_cmd *cmd, t_pid_data *pdata);
-
 
 /* unset.c */
 int exec_unset(t_cmd *cmd, t_global_data *data);
 
-//	ENVP_COPY
-t_envp	*search_var(t_envp *envp, char *str);
-//char 	**convert_envp_to_ptrchar(t_envp *envp);
+/* utils_cd.c*/
+void update_old_pwd(t_envp *envp, const char *old_pwd);
+void update_pwd(t_envp*envp, const char *new_pwd);
+int print_error(char *argv);
+char *get_var_home(t_envp *envp);
+int cd_slash(t_cmd *cmd, char *pwd);
 
+/* utils_exit.c*/
+int is_numeric(char *str);
+void print_error_message(char *str);
+void  exit_no_args(t_global_data *data, t_pid_data *pdata, t_cmd *head);
+void  exit_invalid_numeric(char *arg, t_global_data *data, t_pid_data *pdata, t_cmd *head);
+void cleanup(t_global_data *data, t_pid_data *pdata, t_cmd *head);
 
-//
+/* utils_export.c*/
+void ft_sort_params(t_envp *env);
+int is_var_valid(char *str);
+int is_var_exist(char *argv, t_global_data *data);
+
 
 #endif 

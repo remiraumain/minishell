@@ -6,41 +6,16 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:04:44 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/31 16:14:56 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/31 18:01:04 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <limits.h> 
-
-
-static int is_numeric(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (((str[0] == '+' || str[0] == '-') && (str[1] >= '0' && str[1] <= '9'))
-		|| (str[i] >= '0' && str[i] <= '9'))
-			i++;
-		else
-			return (0);
-	}
-	return (1);
-}
+#include <limits.h>
 
 // -9223372036854775808 long long min
 // 9223372036854775807
 
-
-static void print_error_message(char *str)
-{
-	ft_putstr_fd("exit\n", 2);
-    ft_putstr_fd("exit: ", 2);
-    ft_putstr_fd(str, 2);
-    ft_putstr_fd(": numeric argument required\n", 2);
-}
 
 static long long ft_atoll_convert(char *str, int *sign)
 {
@@ -90,35 +65,6 @@ static long long ft_atoll(char *str)
     }
     return (stock * sign);
 }
-
-
-static void cleanup(t_global_data *data, t_pid_data *pdata, t_cmd *head)// voir execute_child
-{
-	free(pdata->pids);
-	cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
-	clear_env(pdata->gdata->envp);
-	free(pdata);
-	free(data);
-	free_cmd_list(head);
-}
-
-
-static void    exit_no_args(t_global_data *data, t_pid_data *pdata, t_cmd *head)
-{
-    ft_putstr_fd("exit\n", 2);
-    int status = data->status;
-    cleanup(data, pdata, head);
-    exit(status);
-}
-
-static void    exit_invalid_numeric(char *arg, t_global_data *data, t_pid_data *pdata, t_cmd *head)
-{
-    print_error_message(arg);
-    data->status = 2;
-    cleanup(data, pdata, head);
-    exit(2);
-}
-
 
 int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head)
 {
