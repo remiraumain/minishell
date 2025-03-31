@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:33:06 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/25 12:53:08 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/28 10:07:27 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static void	fill_var(t_envp *envp, int index, char ***res)
 {
 	char	*var;
 	size_t	len;
-
 
 	var = malloc(ft_strlen(envp->name) + ft_strlen(envp->value) + 2);
 	if (!var)

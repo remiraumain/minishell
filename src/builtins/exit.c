@@ -6,12 +6,13 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:04:44 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/26 17:17:01 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:44:59 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <limits.h> 
+
 
 static int is_numeric(char *str)
 {
@@ -91,7 +92,7 @@ static long long ft_atoll(char *str)
 }
 
 
-static void cleanup(t_global_data *data, t_pid_data *pdata, t_cmd *head)
+static void cleanup(t_global_data *data, t_pid_data *pdata, t_cmd *head)// voir execute_child
 {
 	free(pdata->pids);
 	cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
@@ -105,76 +106,36 @@ static void cleanup(t_global_data *data, t_pid_data *pdata, t_cmd *head)
 int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head)
 {
 	long long value;
-	int			status;
 	
 	data->status = 0;
 	if (!cmd->argv[1])
 	{
 		ft_putstr_fd("exit\n", 2);
-		status = data->status;
 		cleanup(data, pdata, head);
-		exit (status);
+		exit (data->status);
 	}
 	else if (is_numeric(cmd->argv[1]) && cmd->argv[2])
 	{
 		ft_putstr_fd("exit\n", 2);
     	ft_putstr_fd("exit:", 2);
     	ft_putstr_fd(" too many arguments\n", 2);
-		return (1);
+		data->status = 1;
+		return (data->status);
 	}
 	else
 	{	
 		if (!is_numeric(cmd->argv[1])) 
 		{
 			print_error_message(cmd->argv[1]);
-			exit (2); // status = data->status = 2; exit (status);
+			data->status = 2;
+			//cleanup ?? 
+			exit(data->status);
 		}
 		value = ft_atoll(cmd->argv[1]);
         data->status = (int)value;	
 	}
-	status = data->status;
 	cleanup(data, pdata, head);
-	exit (status);
+	exit (data->status);
 }
 
 
-
-
-/*
-int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head)
-{
-	long long value;
-	int			status;
-	
-	data->status = 0;
-	if (!cmd->argv[1])
-	{
-		ft_putstr_fd("exit\n", 2);
-		status = data->status;
-		free(pdata->pids);
-		cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
-		clear_env(pdata->gdata->envp);
-		free(pdata);
-		free(data);
-		free_cmd_list(head);
-		exit (status);
-	}
-	else
-	{	
-		if (!is_numeric(cmd->argv[1])) 
-		{
-			print_error_message(cmd->argv[1] );
-			exit(2);
-		}
-		value = ft_atoll(cmd->argv[1]);
-        data->status = (int)value;	
-	}
-	status = data->status;
-	free(pdata->pids);
-	cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
-	clear_env(pdata->gdata->envp);
-	free(pdata);
-	free(data);
-	free_cmd_list(head);
-	exit (status);
-}*/

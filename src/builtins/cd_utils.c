@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:50:16 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/25 15:13:57 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/31 11:11:51 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,21 @@ int print_error(char *argv)
 	{
 		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(argv , 2);
-		ft_putstr_fd(": No such file or directory ", 2);
+		ft_putstr_fd(": No such file or directory \n", 2);
 		return (1);
 	}
 	if (access(argv, X_OK) == -1)
 	{
 		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(argv , 2);
-		ft_putstr_fd(": permission denied ", 2);
+		ft_putstr_fd(": permission denied \n", 2);
 		return (1);
 	}
 	if (chdir(argv) == -1)
 	{
 		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(argv , 2);	
-		ft_putstr_fd(": not a directory ", 2);
+		ft_putstr_fd(": not a directory \n", 2);
 		return (1);
 	}
 	return (0);
@@ -78,7 +78,6 @@ char *get_var_home(t_envp *envp)
     t_envp *var;
 	
 	var = envp;
-
     while (var)
     {
         if (var->name && ft_strcmp(var->name, "HOME") == 0)
@@ -92,7 +91,6 @@ char *get_var_home(t_envp *envp)
 int cd_slash(t_cmd *cmd, char *pwd)
 {
 	int res;
-	
     res = print_error(cmd->argv[1]);
     if (res == 1)
     {

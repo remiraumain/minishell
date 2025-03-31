@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:38:20 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/25 17:27:28 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:32:38 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static char	*add_unquoted_chunk(const char *input, int *index,
 				free(word);
 				word = chunk;
 				*index += varlen;
-				continue;
+				return (word);
 			}
 		}
 		*index = *index + 1;
@@ -102,6 +102,7 @@ static char	*add_unquoted_chunk(const char *input, int *index,
 	free(word);
 	return (chunk);
 }
+
 
 char	*read_word_and_expand(const char *input, int *index,
 	t_global_data *data)

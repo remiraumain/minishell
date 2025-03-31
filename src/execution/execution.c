@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/25 16:51:30 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:50:11 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,14 @@ static void	close_and_wait(t_pid_data *pdata)
 	}
 	i = 0;
 	while (i < pdata->nb_cmd && !g_sig)
-	{
-		waitpid(pdata->pids[i], &status, 0);
-		i++;
-	}
+    {
+        waitpid(pdata->pids[i], &status, 0);
+        if (WIFEXITED(status))
+            pdata->gdata->status = WEXITSTATUS(status);
+        else if (WIFSIGNALED(status))
+            pdata->gdata->status = 128 + WTERMSIG(status);
+        i++;
+    }
 }
 
 static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
@@ -37,8 +41,9 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 	int		i;
 	char	*path;
 	char 	**env;
-
+	
 	dup_fd(pdata, index, cmd);
+	pdata->gdata->status = 0;
 	i = 0;
 	while (i < pdata->nb_cmd - 1)
 	{
@@ -58,19 +63,26 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 		free(pdata);
 		free_cmd_list(head);
 		exit(0); // should be status exit code
+		//exit (data->status);
 	}
 	env = convert_env(pdata->gdata->envp);
 	path = get_command_path(cmd->argv[0], pdata->gdata->envp);
 	if (!path)
 	{
 		clear_env_array(env);
-		perror(cmd->argv[0]);
-		exit(127);
+		//perror(cmd->argv[0]);
+		ft_putstr_fd(cmd->argv[0], 2);//modif
+		ft_putstr_fd(": command not found\n", 2);// modif
+		pdata->gdata->status = 127;
+		//exit (127);
+		exit(pdata->gdata->status);
 	}
 	execve(path, cmd->argv, env);
 	clear_env_array(env);
 	free(path);
-	perror(cmd->argv[0]);
+	//perror(cmd->argv[0]);
+	ft_putstr_fd(cmd->argv[0], 2);// modif
+    ft_putstr_fd(": command not found\n", 2);// modif
 	exit(EXIT_FAILURE);
 }
 
@@ -95,6 +107,7 @@ static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata, t_cmd *head
 	if (pid == 0)
 		execute_child(cmd, i, pdata, head);
 	pdata->pids[i] = pid;
+	
 	return (1);
 }
 
@@ -114,7 +127,10 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 		if (is_builtin_parent(cmd) == 1)
 		{
 			if (!has_child_process(head))
+			{
 				exec_builtin_parent(cmd, pdata, data, head);
+				return ;
+			}
 		}
 		else if (!fork_and_exec_child(cmd, i, pdata, head))
 			break ;
@@ -150,3 +166,4 @@ void	execute_cmds(t_cmd *cmd, t_global_data *data)
 	cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
 	free(pdata);
 }
+

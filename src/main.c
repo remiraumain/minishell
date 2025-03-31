@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:40:01 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/21 09:35:50 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/27 10:18:07 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ int	main(int argc, char **argv, char **envp)
 			clear_env(data->envp);
 			free(data);
 			rl_clear_history();
-			return (0);
+			return (0);// return (data->status);
 		}
 		process_input(input, data);
 		free(input);
 	}
+	return (data->status);
 }

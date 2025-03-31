@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:43:49 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/17 12:01:17 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:48:36 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static char	*get_varname(char *token, int start, int *len)
 	char	*varname;
 
 	*len = 1;
+	if (!token[start + 1])
+        return (ft_strdup("$"));
 	if (token[start + 1] == '?')
 	{
 		varname = ft_strdup("?");
@@ -47,32 +49,36 @@ static char	*get_var_value(char *varname, t_global_data *data)
 		return (value);
 	}
 	envp = NULL;
-	envp = search_var(data->envp, varname); //get_env_value(varname, data->envp);
+	envp = search_var(data->envp, varname);
 	if (!envp)
 		return ("");
 	return (envp->name);
 }
 
-static char	*expand_var(char *token, int *index, t_global_data *data)
-{
-	char	*varname;
-	char	*value;
-	char	*expanded;
-	int		len;
 
-	len = 0;
-	varname = get_varname(token, *index, &len);
-	if (!varname)
-		return (token);
-	value = get_var_value(varname, data);
-	expanded = replace_var(token, *index, len, value);
-	if (varname[0] == '?' && value)
-		free(value);
-	free(varname);
-	if (!expanded)
-		return (token);
-	*index += ft_strlen(value);
-	return (expanded);
+char *expand_var(char *token, int *index, t_global_data *data)
+{
+    char *varname;
+    char *value;
+    char *expanded;
+    int len = 0;
+
+    varname = get_varname(token, *index, &len);
+    if (!varname)
+        return (token);
+    if (ft_strcmp(varname, "$") == 0)
+        value = ft_strdup("$");
+    else
+        value = get_var_value(varname, data);
+    expanded = replace_var(token, *index, len, value);
+
+    if (varname[0] == '?' && value)
+        free(value);
+    free(varname);
+    if (!expanded)
+        return (token);
+    *index += ft_strlen(value);
+    return (expanded);
 }
 
 void	expand_word(char **word, t_global_data *data)

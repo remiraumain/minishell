@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:57:43 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/12 10:12:24 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:39:31 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static t_cmd	*parse_command(t_token **current, int index)
 
 	cmd = create_cmd(index);
 	if (!cmd)
-	return (NULL);
+		return (NULL);
 	i = -1;
 	while (*current && (*current)->type != TK_PIPE
 		&& (*current)->type != TK_EOF)

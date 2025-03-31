@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/26 17:16:01 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/27 12:09:53 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,16 @@ static int cd_home(t_global_data *sdata, char *pwd)
 	if (!home || chdir(home) == -1)
 	{
 		free(pwd);
-		return (1);
+        sdata->status = 1;
+		//return (1);
+        return (sdata->status);
 	}
 	update_old_pwd(sdata->envp, pwd);
     update_pwd(sdata->envp, getcwd(NULL, 0));
     free(pwd);
-    return (0);
+    sdata->status = 0;
+    //return (0);
+    return (sdata->status);
 }
 
 // ici le cd .. plus de 2fois ne fonctionne pas mais juste une fois fonctionne

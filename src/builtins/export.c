@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:22:47 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/25 12:31:28 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:46:11 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 // good version
 static void ft_sort_params(t_envp *env)
 {
-    t_envp *i;                // Pointeur pour parcourir la liste
-    t_envp *j;                // Pointeur pour comparer les éléments
-    char *tmp_name;          // Variable temporaire pour échanger les noms
-    char *tmp_value;         // Variable temporaire pour échanger les valeurs
+    t_envp *i;
+    t_envp *j;                
+    char *tmp_name;          
+    char *tmp_value;         
 
     if (env == NULL || env->next == NULL)
         return;
@@ -129,6 +129,7 @@ static void	update_value(t_global_data *data, char *argv)
 	}
 }
 
+// a renommer
 void fct(t_cmd *cmd, t_global_data *data)
 {
 	int i;
@@ -158,7 +159,7 @@ void fct(t_cmd *cmd, t_global_data *data)
 int exec_export(t_cmd *cmd, t_global_data *data)
 {
 	t_envp *var;
-
+	
 	var = data->envp;
 	if (!cmd || !cmd->argv || !cmd->argv[1])
 	{
@@ -181,7 +182,6 @@ int exec_export(t_cmd *cmd, t_global_data *data)
 		fct(cmd, data);
 	return (0);
 }
-
 
 
 

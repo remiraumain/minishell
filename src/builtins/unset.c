@@ -6,12 +6,22 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 11:38:39 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/25 15:17:08 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:22:01 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
+
+static void free_current(t_envp *current)
+{
+	free(current->name);
+	current->name = NULL;
+	free(current->value);
+	current->value = NULL;
+	free(current);
+	current = NULL;
+}
 
 int exec_unset(t_cmd *cmd, t_global_data *data)
 {
@@ -36,16 +46,8 @@ int exec_unset(t_cmd *cmd, t_global_data *data)
 			data->envp = current->next;
 		else
 			prev->next = current->next;
-		free(current->name);
-		current->name = NULL;
-		free(current->value);
-		current->value = NULL;
-		free(current);
-		current = NULL;
+		free_current(current);
 		i++;
 	}
 	return (1);// test	
 }
-
-
-
