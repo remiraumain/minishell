@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:04:44 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/31 16:07:46 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:14:56 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,42 +103,6 @@ static void cleanup(t_global_data *data, t_pid_data *pdata, t_cmd *head)// voir 
 }
 
 
-// int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head)
-// {
-// 	long long value;
-	
-// 	data->status = 0;
-// 	if (!cmd->argv[1])
-// 	{
-// 		ft_putstr_fd("exit\n", 2);
-// 		cleanup(data, pdata, head);
-// 		exit (data->status);
-// 	}
-// 	else if (is_numeric(cmd->argv[1]) && cmd->argv[2])
-// 	{
-// 		ft_putstr_fd("exit\n", 2);
-//     	ft_putstr_fd("exit:", 2);
-//     	ft_putstr_fd(" too many arguments\n", 2);
-// 		data->status = 1;
-// 		return (data->status);
-// 	}
-// 	else
-// 	{	
-// 		if (!is_numeric(cmd->argv[1])) 
-// 		{
-// 			print_error_message(cmd->argv[1]);
-// 			data->status = 2;
-// 			//cleanup ?? 
-// 			exit(data->status);
-// 		}
-// 		value = ft_atoll(cmd->argv[1]);
-//         data->status = (int)value;	
-// 	}
-// 	cleanup(data, pdata, head);
-// 	exit (data->status);
-// }
-
-
 static void    exit_no_args(t_global_data *data, t_pid_data *pdata, t_cmd *head)
 {
     ft_putstr_fd("exit\n", 2);
@@ -159,8 +123,10 @@ static void    exit_invalid_numeric(char *arg, t_global_data *data, t_pid_data *
 int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head)
 {
     long long value;
+	int status;
 
     data->status = 0;
+	status = 0;
     if (!cmd->argv[1])
         exit_no_args(data, pdata, head);
     else if (is_numeric(cmd->argv[1]) && cmd->argv[2])
@@ -176,7 +142,7 @@ int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head)
         value = ft_atoll(cmd->argv[1]);
         data->status = (int)value;
     }
-    int status = data->status;
+	status = data->status;
     cleanup(data, pdata, head);
     exit(status);
 }
