@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/02 14:40:09 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:34:22 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	close_and_wait(t_pid_data *pdata)
 	int	status;
 
 	i = 0;
-	status = 0;
 	while (i < pdata->nb_cmd - 1)
 	{
 		close(pdata->pipefd[i][0]);
@@ -28,7 +27,9 @@ static void	close_and_wait(t_pid_data *pdata)
 	i = 0;
 	while (i < pdata->nb_cmd)
     {
-        waitpid(pdata->pids[i], &status, 0);
+		if (pdata->pids[i] > 0)
+   			waitpid(pdata->pids[i], &status, 0);
+        //waitpid(pdata->pids[i], &status, 0);
         if (WIFEXITED(status))
             pdata->gdata->status = WEXITSTATUS(status);
         else if (WIFSIGNALED(status))
@@ -43,6 +44,28 @@ static int is_directory(const char *path)
 {
 	struct stat sb;
 	return (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode));
+}
+
+
+static void	exit_clean_child(t_pid_data *pdata, t_cmd *head, char **env, char *path, int status)
+{
+	if (env)
+	{
+		clear_env_array(env);
+		env = NULL;
+	}
+	if (path)
+		free(path);
+	if (pdata)
+	{
+		free(pdata->pids);
+		cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
+		clear_env(pdata->gdata->envp);
+		free(pdata->gdata);
+		free(pdata);
+	}
+	free_cmd_list(head);
+	exit(status);
 }
 
 static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
@@ -61,7 +84,9 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 		i++;
 	}
 	if (!apply_redirections(cmd, index))
-		exit(EXIT_FAILURE);
+		exit_clean_child(pdata, head, NULL, NULL, EXIT_FAILURE);
+	// if (!apply_redirections(cmd, index))
+	// 	exit(EXIT_FAILURE);
 	if (is_builtin_child(cmd) == 1)
 	{
 		exec_builtin_child(cmd, pdata, pdata->gdata);
@@ -78,47 +103,34 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 	path = get_command_path(cmd->argv[0], pdata->gdata->envp);
 	if (!path)
 	{
-		clear_env_array(env);
-		ft_putstr_fd(cmd->argv[0], 2);//modif
-		/*
-		02/04/2025
-		si c'est un fichier qui existe
-		mais qu'on a pas les droits 
-		*/
-		if ((cmd->argv[0][0] == '.' || cmd->argv[0][0] == '/'))
+		if (cmd->argv[0][0] == '.' || cmd->argv[0][0] == '/')
 		{
+			// Fichier existe mais pas exécutable
 			if (access(cmd->argv[0], F_OK) == 0 && access(cmd->argv[0], X_OK) != 0)
 			{
+				ft_putstr_fd(cmd->argv[0], 2);
 				ft_putstr_fd(": Permission denied\n", 2);
-				pdata->gdata->status = 126;
-				exit(126);
+				exit_clean_child(pdata, head, env, NULL, 126);
+			}
+			// C’est un dossier
+			if (access(cmd->argv[0], F_OK) == 0 && is_directory(cmd->argv[0]))
+			{
+				ft_putstr_fd(cmd->argv[0], 2);
+				ft_putstr_fd(": Is a directory\n", 2);
+				exit_clean_child(pdata, head, env, NULL, 126);
+			}
+			// Fichier inexistant
+			if (access(cmd->argv[0], F_OK) != 0)
+			{
+				ft_putstr_fd(cmd->argv[0], 2);
+				ft_putstr_fd(": No such file or directory\n", 2);
+				exit_clean_child(pdata, head, env, NULL, 127);
 			}
 		}
-			//perror(cmd->argv[0]);
-		/*
-		02/04/2025
-		Rajout de d'autres conditions
-		. ou / permet de savoir si c'est un chemin absolu / ou relatif ../
-		la avec c'est conditio tu es sur que c'est un directory 
-		*/
-		if ((cmd->argv[0][0] == '.' || cmd->argv[0][0] == '/')
-		&& access(cmd->argv[0], F_OK) == 0 && is_directory(cmd->argv[0]))
-		{
-			//if (access(cmd->argv[0], F_OK) == 0 && is_directory(cmd->argv[0]))
-			ft_putstr_fd(": Is a directory\n", 2);
-			pdata->gdata->status = 126;
-		}
-		else if ((cmd->argv[0][0] == '.' || cmd->argv[0][0] == '/') && access(cmd->argv[0], F_OK) != 0)
-		{
-			ft_putstr_fd(": No such file or directory\n", 2);
-			pdata->gdata->status = 127;
-		}
-		else
-		{
-			ft_putstr_fd(": command not found\n", 2);
-			pdata->gdata->status = 127;
-		}
-		exit(pdata->gdata->status);
+		// Cas : pas un chemin, juste une commande invalide
+		ft_putstr_fd(cmd->argv[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit_clean_child(pdata, head, env, NULL, 127);
 	}
 	execve(path, cmd->argv, env);		
 	clear_env_array(env);
