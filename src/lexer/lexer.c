@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:58:02 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/12 10:13:47 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:04:03 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ static int	parse(t_token **head, char *input, int *index, t_global_data *data)
 {
 	int	status;
 
+	// if (input[*index] == '|' && index == 0 && index + 1 == '\0')
+	// {
+	// 	ft_putstr_fd(": syntax error near unexpected token '|'\n", 2);
+	// 	status = 2;
+	// 	return (status);
+	// }
 	if (input[*index] == '|')
 		status = new_token(head, index);
 	else if (input[*index] == '<' || input[*index] == '>')
@@ -36,6 +42,20 @@ static int	parse(t_token **head, char *input, int *index, t_global_data *data)
 		status = parse_word(head, index, input, data);
 	return (status);
 }
+
+/*
+static int	parse(t_token **head, char *input, int *index, t_global_data *data)
+{
+	int	status;
+
+	if (input[*index] == '|')
+		status = new_token(head, index);
+	else if (input[*index] == '<' || input[*index] == '>')
+		status = parse_redirect(head, index, input);
+	else
+		status = parse_word(head, index, input, data);
+	return (status);
+}*/
 
 t_token	*lexer(char *input, t_global_data *data)
 {
@@ -56,10 +76,6 @@ t_token	*lexer(char *input, t_global_data *data)
 			return (NULL);
 		}
 	}
-	if (g_sig)
-	{
-		free_token_list(head);
-		return (NULL);
-	}
 	return (head);
 }
+

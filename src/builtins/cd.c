@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/27 12:09:53 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:16:25 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,17 @@ static int cd_relative(t_cmd *cmd, t_global_data *sdata, char *pwd)
 
 int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
 {
-    char *pwd;
-	
+    char    *pwd;
+    
     pwd = getcwd(NULL, 0);
     if (pdata->nb_cmd == 1)
     {
+        if (cmd->argv[2])
+        {
+            ft_putstr_fd("cd: ", 2);
+            ft_putstr_fd("too many arguments\n", 2);
+            return (1);
+        }
         if (!cmd->argv[1] || ft_strcmp(cmd->argv[1], "~") == 0)
             return (cd_home(sdata, pwd));
         if (ft_strcmp(cmd->argv[1], "..") == 0 || ft_strcmp(cmd->argv[1], "-") == 0)

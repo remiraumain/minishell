@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:10:52 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/25 16:12:03 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/01 12:59:50 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int is_builtin_parent(t_cmd *cmd)
 }
 
 void exec_builtin_child(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
-//int exec_builtin_child(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 {
 	if (!cmd || !cmd->argv || !cmd->argv[0])
 		return ; // return(data->status) ou exit (data->status);
@@ -64,7 +63,6 @@ void exec_builtin_child(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 }
 
 void exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data, t_cmd *head)
-//int exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 {
 	if (!cmd || !cmd->argv || !cmd->argv[0])
 		return ; // return (data->status) ?

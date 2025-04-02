@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:49:26 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/11 17:45:11 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/02 14:35:08 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,13 @@ int	set_heredoc(t_redir	*redir, t_global_data *data)
 	return (1);
 }
 
-void	clean_heredocs(t_cmd *cmd, int len)
+void	clean_heredocs(t_cmd *cmd)
 {
 	int		i;
 	t_redir	*redir;
 
 	i = 0;
-	while (cmd && i < len)
+	while (cmd)
 	{
 		redir = cmd->redir;
 		while (redir)

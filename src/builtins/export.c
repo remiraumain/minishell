@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tebandam <tebandam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 14:22:47 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/31 17:35:37 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:34:07 by tebandam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int export_with_args(t_cmd *cmd, t_global_data *data)
 		{
 			if (is_var_exist(cmd->argv[i], data) == 1)
 				add_var_in_env(cmd->argv[i], data->envp);
-			else
+			else if (ft_strchr(cmd->argv[i], '='))
 				update_value(data, cmd->argv[i]);
 		}
 		i++;
@@ -90,30 +90,44 @@ static int export_with_args(t_cmd *cmd, t_global_data *data)
 }
 
 
+static void	print_sorted_env(t_envp *var)
+{
+	ft_sort_params(var);
+	while (var)
+	{
+		printf("declare -x %s", var->name);
+		if (var->value)
+			printf("=\"%s\"", var->value);
+		printf("\n");
+		var = var->next;
+	}
+}
+
 int exec_export(t_cmd *cmd, t_global_data *data)
 {
 	t_envp *var;
+	char	**temp;
 	
-	var = data->envp;
-	if (!cmd || !cmd->argv || !cmd->argv[1])
+	if (!cmd->argv[1])
 	{
+		temp = convert_env(data->envp);
+		if (!temp)
+			return (1);
+		var = init_env(temp);
+		if (!var)
+			return (1);
+		clear_env_array(temp);
 		if (!data->envp)
 		{
 			printf("Error: envp is empty or NULL\n");
 			data->status = 1;
 			return (data->status);
 		}
-		ft_sort_params(data->envp);
-		while(var)
-		{
-			printf("declare -x %s", var->name);
-			if (var->value)
-				printf("=\"%s\"",var->value);
-			printf("\n");
-			var = var->next;
-		}
+		print_sorted_env(var);
+		clear_env(var);
 	}
 	else
 		data->status = export_with_args(cmd, data);
 	return (data->status);
 }
+

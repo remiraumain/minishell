@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:48:53 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/26 10:23:18 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/02 14:35:21 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	dup_fd(t_pid_data *pdata, int index, t_cmd *cmd);
 
 //	HEREDOC
 int		set_heredoc(t_redir *redir, t_global_data *data);
-void	clean_heredocs(t_cmd *cmd, int len);
+void	clean_heredocs(t_cmd *cmd);
 char	*create_heredoc_filename(int cmd_i, int redir_i);
 
 #endif

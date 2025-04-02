@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:43:49 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/31 15:48:36 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/02 14:46:42 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*get_var_value(char *varname, t_global_data *data)
 	envp = search_var(data->envp, varname);
 	if (!envp)
 		return ("");
-	return (envp->name);
+	return (envp->value);
 }
 
 
@@ -89,7 +89,7 @@ void	expand_word(char **word, t_global_data *data)
 	i = 0;
 	while ((*word)[i])
 	{
-		if ((*word)[i] == '$')
+		if ((*word)[i] == '$' && !is_whitespace((*word)[i + 1]))
 		{
 			tmp = expand_var(*word, &i, data);
 			free(*word);

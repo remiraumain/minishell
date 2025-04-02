@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:38:20 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/31 15:32:38 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:57:02 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,22 @@ static char	*add_unquoted_chunk(const char *input, int *index,
 		&& input[*index] != '|' && input[*index] != '<'
 		&& input[*index] != '>')
 	{
-		if (input[*index] == '$')
+		if (input[*index] == '$' && input[*index + 1] && !is_whitespace(input[*index + 1]))
 		{
 			varlen = *index;
-			while (ft_isalpha(input[varlen]) || input[varlen] == '_' || input[varlen] == '-')
+			varlen++;
+			while ((ft_isalpha(input[varlen]) || input[varlen] == '_' || input[varlen] == '-' || input[varlen] == '?') && !is_whitespace(input[varlen]))
 				varlen++;
-			var = ft_substr(input, *index, varlen);
+			var = ft_substr(input, start, varlen - start);
 			if (var)
 			{
 				expand_word(&var, data);
-				chunk = ft_strjoin(word, var);
-				free(var);
+				// ft_strlcpy(word, &input[start], *index - start + 1);
+				// chunk = ft_strjoin(word, var);
+				// free(var);
 				free(word);
-				word = chunk;
-				*index += varlen;
+				word = var;// chunk;
+				*index = varlen;
 				return (word);
 			}
 		}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_utils.c                                         :+:      :+:    :+:   */
+/*   utils_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:50:16 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/31 11:11:51 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:03:31 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int print_error(char *argv)
 	{
 		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(argv , 2);
-		ft_putstr_fd(": No such file or directory \n", 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		return (1);
 	}
 	if (access(argv, X_OK) == -1)
