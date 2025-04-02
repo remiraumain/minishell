@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:43:49 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/02 14:46:42 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:03:48 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,15 @@ static char	*get_varname(char *token, int start, int *len)
 static char	*get_var_value(char *varname, t_global_data *data)
 {
 	t_envp	*envp;
-	char	*value;
+	// char	*value;
 
 	if (!varname || !data->envp)
 		return (NULL);
-	if (varname[0] == '?' && varname[1] == '\0')
-	{
-		value = ft_itoa(data->status);
-		return (value);
-	}
+	// if (varname[0] == '?' && varname[1] == '\0')
+	// {
+	// 	value = ft_itoa(data->status);
+	// 	return (value);
+	// }
 	envp = NULL;
 	envp = search_var(data->envp, varname);
 	if (!envp)
@@ -61,6 +61,7 @@ char *expand_var(char *token, int *index, t_global_data *data)
     char *varname;
     char *value;
     char *expanded;
+	char *tmp;
     int len = 0;
 
     varname = get_varname(token, *index, &len);
@@ -68,16 +69,28 @@ char *expand_var(char *token, int *index, t_global_data *data)
         return (token);
     if (ft_strcmp(varname, "$") == 0)
         value = ft_strdup("$");
+	else if (varname[0] == '?')
+	{
+		tmp = ft_itoa(data->status);
+		value = ft_strdup(tmp);
+		free(tmp);
+		if (varname[1])
+		{
+			expanded = value;
+			value = ft_strjoin(value, &varname[1]);
+			free(expanded);
+			free(varname);
+			return (value);
+		}
+	}
     else
         value = get_var_value(varname, data);
     expanded = replace_var(token, *index, len, value);
-
-    if (varname[0] == '?' && value)
-        free(value);
     free(varname);
     if (!expanded)
-        return (token);
+		return (token);
     *index += ft_strlen(value);
+	free(value);
     return (expanded);
 }
 
