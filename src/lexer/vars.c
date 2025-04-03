@@ -6,11 +6,9 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:34:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/02/26 08:34:32 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:14:28 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "minishell.h"
 
@@ -23,8 +21,7 @@ char	*get_env_value(char *varname, char **envp)
 	len = ft_strlen(varname);
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], varname, len) == 0
-			&& envp[i][len] == '=')
+		if (ft_strncmp(envp[i], varname, len) == 0 && envp[i][len] == '=')
 			return (envp[i] + len + 1);
 		i++;
 	}
@@ -46,8 +43,7 @@ char	*replace_var(char *token, int start, int varname_len, char *value)
 		return (NULL);
 	ft_memcpy(expanded, token, start);
 	ft_memcpy(&expanded[start], value, value_len);
-	ft_memcpy(&expanded[start + value_len],
-		&token[start + varname_len], after);
+	ft_memcpy(&expanded[start + value_len], &token[start + varname_len], after);
 	expanded[start + value_len + after] = '\0';
 	return (expanded);
 }

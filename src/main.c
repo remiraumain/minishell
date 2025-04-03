@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:40:01 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/01 18:51:05 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:01:03 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,6 @@ static void	process_input(char *input, t_global_data *data)
 	execute_cmds(cmds, data);
 	free_cmd_list(cmds);
 }
-
-
-
-/*
-static void	process_input(char *input, t_global_data *data)
-{
-	t_token	*tokens;
-	t_cmd	*cmds;
-
-	if (*input)
-		add_history(input);
-	tokens = lexer(input, data);
-	if (!tokens)
-		return ;
-	cmds = parse_line(tokens);
-	free_token_list(tokens);
-	if (!cmds)
-		return ;
-	execute_cmds(cmds, data);
-	free_cmd_list(cmds);
-}*/
 
 
 int	main(int argc, char **argv, char **envp)

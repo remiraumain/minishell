@@ -6,15 +6,12 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:04:44 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/31 18:01:04 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:53:40 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <limits.h>
-
-// -9223372036854775808 long long min
-// 9223372036854775807
 
 
 static long long ft_atoll_convert(char *str, int *sign)

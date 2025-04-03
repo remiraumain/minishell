@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/02 17:34:22 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:48:27 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	close_and_wait(t_pid_data *pdata)
     {
 		if (pdata->pids[i] > 0)
    			waitpid(pdata->pids[i], &status, 0);
-        //waitpid(pdata->pids[i], &status, 0);
         if (WIFEXITED(status))
             pdata->gdata->status = WEXITSTATUS(status);
         else if (WIFSIGNALED(status))
@@ -85,8 +84,6 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 	}
 	if (!apply_redirections(cmd, index))
 		exit_clean_child(pdata, head, NULL, NULL, EXIT_FAILURE);
-	// if (!apply_redirections(cmd, index))
-	// 	exit(EXIT_FAILURE);
 	if (is_builtin_child(cmd) == 1)
 	{
 		exec_builtin_child(cmd, pdata, pdata->gdata);
@@ -135,8 +132,7 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 	execve(path, cmd->argv, env);		
 	clear_env_array(env);
 	free(path);
-	//perror(cmd->argv[0]);
-	ft_putstr_fd(cmd->argv[0], 2);// modif
+	ft_putstr_fd(cmd->argv[0], 2);//??
 	exit(EXIT_FAILURE);
 }
 
@@ -179,20 +175,11 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 	i = 0;
 	while (cmd)
 	{
-		/*
-		02/04/2025
-		Le shell essayait d’exécuter une commande vide après l’expansion de $EMPTY,
-		ce qui causait une erreur.
-		apres execution $EMPTY deviens -> ""
-		Donc la si c'est une commande vide on met exit status a 0
-		Si ce n'est pas une command vite le programme fais son chemin normalement
-		
-		*/
 		if (!cmd->argv || !cmd->argv[0] || cmd->argv[0][0] == '\0')
 		{
 			data->status = 0;
 			cmd = cmd->next;
-			continue;
+			continue ;
 		}
 		if (is_builtin_parent(cmd) == 1)
 		{

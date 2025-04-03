@@ -6,13 +6,11 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 09:45:55 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/03 09:45:56 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:08:17 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
-
 
 static void	add_var_in_env(char *str, t_envp *envp)
 {
@@ -37,10 +35,9 @@ static void	add_var_in_env(char *str, t_envp *envp)
 	i++;
 }
 
-
 static void	update_value(t_global_data *data, char *argv)
 {
-	t_envp *var;
+	t_envp	*var;
 	size_t	len;
 	char	*val;
 
@@ -64,10 +61,10 @@ static void	update_value(t_global_data *data, char *argv)
 	}
 }
 
-static int export_with_args(t_cmd *cmd, t_global_data *data)
+static int	export_with_args(t_cmd *cmd, t_global_data *data)
 {
-	int i;
-	
+	int	i;
+
 	i = 1;
 	while (cmd->argv[i])
 	{
@@ -78,7 +75,7 @@ static int export_with_args(t_cmd *cmd, t_global_data *data)
 			ft_putstr_fd(": not a valid identifier\n", 2);
 			data->status = 1;
 		}
-		else 
+		else
 		{
 			if (is_var_exist(cmd->argv[i], data) == 1)
 				add_var_in_env(cmd->argv[i], data->envp);
@@ -89,7 +86,6 @@ static int export_with_args(t_cmd *cmd, t_global_data *data)
 	}
 	return (data->status);
 }
-
 
 static void	print_sorted_env(t_envp *var)
 {
@@ -104,11 +100,11 @@ static void	print_sorted_env(t_envp *var)
 	}
 }
 
-int exec_export(t_cmd *cmd, t_global_data *data)
+int	exec_export(t_cmd *cmd, t_global_data *data)
 {
-	t_envp *var;
+	t_envp	*var;
 	char	**temp;
-	
+
 	if (!cmd->argv[1])
 	{
 		temp = convert_env(data->envp);
@@ -131,4 +127,3 @@ int exec_export(t_cmd *cmd, t_global_data *data)
 		data->status = export_with_args(cmd, data);
 	return (data->status);
 }
-

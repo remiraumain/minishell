@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/31 18:00:24 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:05:29 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@
 /* builtin_control.c */
 int is_builtin_child(t_cmd *cmd);
 void exec_builtin_child(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
-//int exec_builtin_child(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
 int	has_child_process(t_cmd *head);
 int is_builtin_parent(t_cmd *cmd);
-//int exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
 void exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data, t_cmd *head);
 
 

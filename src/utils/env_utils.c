@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:32:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/19 10:54:48 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:16:19 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ t_envp	*search_var(t_envp *envp, char *str)
 
 void	clear_env_array(char **envp)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!envp)
-		return;
+		return ;
 	while (envp[i])
 	{
 		free(envp[i]);

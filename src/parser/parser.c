@@ -6,10 +6,9 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 09:46:09 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/03 09:46:10 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:14:55 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -115,7 +114,8 @@ static t_cmd	*parse_command(t_token **current, int index)
 	return (cmd);
 }
 
-static int	handle_command_node(t_token **current, t_cmd **head, t_cmd **tail, int *i)
+static int	handle_command_node(t_token **current, t_cmd **head, t_cmd **tail,
+		int *i)
 {
 	t_cmd	*cmd;
 
@@ -138,7 +138,6 @@ static int	handle_command_node(t_token **current, t_cmd **head, t_cmd **tail, in
 	return (1);
 }
 
-
 t_cmd	*parse_line(t_token *tokens)
 {
 	int		i;
@@ -150,7 +149,6 @@ t_cmd	*parse_line(t_token *tokens)
 	tail = NULL;
 	current = tokens;
 	i = 0;
-	
 	while (current && current->type != TK_EOF)
 	{
 		if (!handle_command_node(&current, &head, &tail, &i))
@@ -158,4 +156,3 @@ t_cmd	*parse_line(t_token *tokens)
 	}
 	return (head);
 }
-

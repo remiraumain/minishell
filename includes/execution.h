@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:48:53 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/02 17:33:42 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:05:48 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	execute_cmds(t_cmd *cmd, t_global_data *data);
 
 //	REDIRECTION
 int		apply_redirections(t_cmd *cmd, int cmd_i);
-// int		setup_redirections(t_cmd *cmd);
 
 //	CMD_PATH
 char	*get_command_path(char *cmd, t_envp *envp);
