@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/03 16:48:27 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:23:51 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 			// Fichier existe mais pas exécutable
 			if (access(cmd->argv[0], F_OK) == 0 && access(cmd->argv[0], X_OK) != 0)
 			{
+				//printf("je rentre ici 1\n");// ///!!!!!
 				ft_putstr_fd(cmd->argv[0], 2);
 				ft_putstr_fd(": Permission denied\n", 2);
 				exit_clean_child(pdata, head, env, NULL, 126);

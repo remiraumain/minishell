@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/04 10:32:24 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:54:37 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,38 +38,6 @@ static int cd_home(t_global_data *sdata, char *pwd)
     return (sdata->status);
 }
 
-
-// ici le cd .. plus de 2fois ne fonctionne pas mais juste une fois fonctionne
-
-// static int cd_dot(t_cmd *cmd, t_global_data *sdata, char *pwd)
-// {
-//     t_envp  *old;
-//     char    *dest;
-    
-//     old = search_var(sdata->envp, "OLDPWD");
-//     if (ft_strcmp(old->value, pwd) == 0)
-//         dest = "..";
-//     else
-//         dest = old->value;
-//     if (chdir(dest) == -1)
-//     {
-//         ft_putstr_fd("cd: ", 2);
-//         ft_putstr_fd(cmd->argv[1], 2);	
-//         ft_putstr_fd(": not a directory ", 2);
-//         free(pwd);
-//         return (1);
-//     }
-//     if (!pwd)
-//         pwd = ft_strdup(dest);
-//     update_old_pwd(sdata->envp, pwd);
-//     update_pwd(sdata->envp, getcwd(NULL, 0));
-//     free(pwd);
-//     return (0);
-// }
-
-
-// ici cd .. ne met pas a jour pwd ou oldpwd si suppression de dossier
-// leak cd arg1 arg2 , leak cd tout court
 static int cd_dot(t_cmd *cmd, t_global_data *sdata, char *pwd)
 {
     char *current_pwd;
@@ -101,12 +69,10 @@ static void free_path_pwd(char *path, char *pwd)
     free(pwd);
 }
 
-
 static int process_cd(char *path, char *pwd, t_cmd *cmd, t_global_data *sdata)
 {
     int res;
     char *current_pwd;
-    //(void)sdata;
     
     res = print_error(cmd->argv[1]);
     if (res == 1)
@@ -137,13 +103,13 @@ static int cd_relative(t_cmd *cmd, t_global_data *sdata, char *pwd)
 {
     char *path;
     int result;
-    char *temp;
+    char *tmp;
     
-    temp = ft_strjoin(pwd, "/");
+    tmp = ft_strjoin(pwd, "/");
     if (!pwd)
         return (1);
-    path = ft_strjoin(temp, cmd->argv[1]);
-    free(temp);
+    path = ft_strjoin(tmp, cmd->argv[1]);
+    free(tmp);
     if (!path)
     {
         free(pwd);

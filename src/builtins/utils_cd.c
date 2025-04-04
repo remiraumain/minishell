@@ -6,18 +6,33 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:50:16 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/04 08:55:27 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:47:26 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static char	*get_var_value(t_envp *envp, char *str)
+{
+	t_envp	*var;
+
+	var = envp;
+	while (var)
+	{
+		if (!ft_strcmp(var->name, str))
+			return (var->value);
+		var = var->next;
+	}
+	return (NULL);
+}
+
+
 void	update_old_pwd(t_envp *envp, const char *old_pwd)
 {
 	t_envp	*var;
 	
-	if (!old_pwd)
-		return;
+	if (old_pwd == NULL)
+		old_pwd = get_var_value(envp, "PWD");
 	var = envp;
 	while (var)
 	{
@@ -59,12 +74,13 @@ int	print_error(char *argv)
 	}
 	if (access(argv, X_OK) == -1)
 	{
+		//printf("je rentre ici 2\n"); // !!!!!
 		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(argv, 2);
 		ft_putstr_fd(": permission denied \n", 2);
 		return (1);
 	}
-	if (chdir(argv) == -1)
+	if (chdir(argv) == -1)// cd Makefile message d erreur ici 
 	{
 		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(argv, 2);
