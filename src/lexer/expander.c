@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:43:49 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/04 09:48:23 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/04 10:53:49 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,12 @@ void	expand_word(char **word, t_global_data *data)
 	i = 0;
 	while ((*word)[i])
 	{
-		if ((*word)[i] == '$' && !is_whitespace((*word)[i + 1]))
+		if ((*word)[i] == '$' && (*word)[i + 1] && !is_whitespace((*word)[i + 1]))
 		{
 			tmp = expand_var(*word, &i, data);
 			free(*word);
 			*word = tmp;
+			return (expand_word(word, data));// 4 avril modif ici
 		}
 		else
 			i++;

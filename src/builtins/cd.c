@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/04 10:14:36 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/04 10:32:24 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,21 +160,19 @@ int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
     pwd = getcwd(NULL, 0);
     if (pdata->nb_cmd == 1)
     {
-            if (!cmd->argv[1] || ft_strcmp(cmd->argv[1], "~") == 0)
-                return (cd_home(sdata, pwd));
-            if (ft_strcmp(cmd->argv[1], "..") == 0 || ft_strcmp(cmd->argv[1], "-") == 0)
-                return (cd_dot(cmd, sdata, pwd));
-            if (cmd->argv[1][0] == '/')
-                return (cd_slash(cmd, pwd));
-            if (cmd->argv[2])
-            {
-                ft_putstr_fd("cd: ", 2);
-                ft_putstr_fd("too many arguments\n", 2);
-                free(pwd);
-                return (1);
-            }
-            return (cd_relative(cmd, sdata, pwd));
-        
+        if (cmd->argv[1] && cmd->argv[2])
+        {
+            ft_putstr_fd("cd: too many arguments\n", 2);
+            free(pwd);
+            return (1);
+        }
+        if (!cmd->argv[1] || ft_strcmp(cmd->argv[1], "~") == 0)
+            return (cd_home(sdata, pwd));  
+        if (ft_strcmp(cmd->argv[1], "..") == 0 || ft_strcmp(cmd->argv[1], "-") == 0)
+            return (cd_dot(cmd, sdata, pwd));     
+        if (cmd->argv[1][0] == '/')
+            return (cd_slash(cmd, pwd));
+        return (cd_relative(cmd, sdata, pwd));   
     }
     free(pwd);
     return (0);
