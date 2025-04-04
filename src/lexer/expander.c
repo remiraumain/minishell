@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:43:49 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/02 17:38:26 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/04 09:48:23 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char *expand_var(char *token, int *index, t_global_data *data)
     free(varname);
     if (!expanded)
         return (token);
-    *index += ft_strlen(value);
+    *index += ft_strlen(expanded);// 4 avril modif ici *index += ft_strlen(value)
     return (expanded);
 }
 

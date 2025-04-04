@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/03 17:43:29 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/04 10:14:36 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,13 @@ static void free_path_pwd(char *path, char *pwd)
     free(pwd);
 }
 
+
 static int process_cd(char *path, char *pwd, t_cmd *cmd, t_global_data *sdata)
 {
     int res;
     char *current_pwd;
-    (void)sdata;
+    //(void)sdata;
+    
     res = print_error(cmd->argv[1]);
     if (res == 1)
     {
@@ -158,22 +160,21 @@ int exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
     pwd = getcwd(NULL, 0);
     if (pdata->nb_cmd == 1)
     {
-        if (!cmd->argv[2])
-        {
             if (!cmd->argv[1] || ft_strcmp(cmd->argv[1], "~") == 0)
                 return (cd_home(sdata, pwd));
             if (ft_strcmp(cmd->argv[1], "..") == 0 || ft_strcmp(cmd->argv[1], "-") == 0)
                 return (cd_dot(cmd, sdata, pwd));
             if (cmd->argv[1][0] == '/')
-                return (cd_slash(cmd, pwd)); 
+                return (cd_slash(cmd, pwd));
+            if (cmd->argv[2])
+            {
+                ft_putstr_fd("cd: ", 2);
+                ft_putstr_fd("too many arguments\n", 2);
+                free(pwd);
+                return (1);
+            }
             return (cd_relative(cmd, sdata, pwd));
-        }
-        else// leak quand on le place ici 
-        {
-            ft_putstr_fd("cd: ", 2);
-            ft_putstr_fd("too many arguments\n", 2);
-            return (1);
-        }
+        
     }
     free(pwd);
     return (0);

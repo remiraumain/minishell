@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:50:16 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/03 16:20:20 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/04 08:55:27 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	update_old_pwd(t_envp *envp, const char *old_pwd)
 void	update_pwd(t_envp *envp, const char *new_pwd)
 {
 	t_envp	*var;
-
+	
 	var = envp;
 	while (var)
 	{
