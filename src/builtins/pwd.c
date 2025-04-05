@@ -6,17 +6,18 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:17:50 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/03 16:55:36 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/05 10:49:06 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
 int	exec_pwd(t_cmd *cmd, t_pid_data *pdata)
 {
 	char	*pwd;
 
-	(void)pdata;
+	(void)pdata;// ?? a voir utilité
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:50:16 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/04 15:47:26 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/05 10:05:58 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static char	*get_var_value(t_envp *envp, char *str)
 	}
 	return (NULL);
 }
-
 
 void	update_old_pwd(t_envp *envp, const char *old_pwd)
 {
@@ -61,33 +60,6 @@ void	update_pwd(t_envp *envp, const char *new_pwd)
 		}
 		var = var->next;
 	}
-}
-
-int	print_error(char *argv)
-{
-	if (access(argv, F_OK) == -1)
-	{
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(argv, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		return (1);
-	}
-	if (access(argv, X_OK) == -1)
-	{
-		//printf("je rentre ici 2\n"); // !!!!!
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(argv, 2);
-		ft_putstr_fd(": permission denied \n", 2);
-		return (1);
-	}
-	if (chdir(argv) == -1)// cd Makefile message d erreur ici 
-	{
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(argv, 2);
-		ft_putstr_fd(": not a directory \n", 2);
-		return (1);
-	}
-	return (0);
 }
 
 char	*get_var_home(t_envp *envp)

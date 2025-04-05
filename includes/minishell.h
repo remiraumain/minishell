@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 08:51:33 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/31 17:54:50 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:58:09 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <sys/stat.h> // is_directory
 # include <signal.h>
 # include <sys/ioctl.h>
 # include <stdbool.h>// a voir si on garde ou pas 

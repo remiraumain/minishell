@@ -6,7 +6,7 @@
 #    By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/15 14:42:57 by rraumain          #+#    #+#              #
-#    Updated: 2025/03/31 17:51:34 by nolecler         ###   ########.fr        #
+#    Updated: 2025/04/05 13:57:10 by nolecler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 LEXER_SRC = $(addprefix lexer/, lexer.c token.c parse.c utils.c expander.c vars.c)
 PARSER_SRC = $(addprefix parser/, parser.c utils.c)
-EXEC_SRC = $(addprefix execution/, execution.c redirection.c path.c path_utils.c utils.c heredoc.c)
-BUILTIN_SRC = $(addprefix builtins/, builtin_control.c echo.c utils_cd.c cd.c pwd.c env.c exit.c unset.c export.c utils_export.c utils_exit.c) 
+EXEC_SRC = $(addprefix execution/, execution.c execution_utils.c redirection.c path.c path_utils.c utils.c heredoc.c)
+BUILTIN_SRC = $(addprefix builtins/, builtin_control.c echo.c utils_cd.c utils2_cd.c cd.c pwd.c env.c exit.c unset.c export.c utils_export.c utils_exit.c) 
 SIGNALS_SRC = $(addprefix signals/, signals.c)
 UTILS_SRC = $(addprefix utils/, string.c env.c env_utils.c)
 

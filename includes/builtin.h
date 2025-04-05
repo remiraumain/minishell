@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/04 09:17:53 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/05 10:50:45 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ void update_pwd(t_envp*envp, const char *new_pwd);
 int print_error(char *argv);
 char *get_var_home(t_envp *envp);
 int cd_slash(t_cmd *cmd, char *pwd);
+
+/* utils2_cd.c */
+int	print_error(char *argv);
+void free_path_pwd(char *path, char *pwd);
 
 /* utils_exit.c*/
 int is_numeric(char *str);

@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:48:53 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/03 10:05:48 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:56:37 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 
 //	EXECUTION
 void	execute_cmds(t_cmd *cmd, t_global_data *data);
+
+// EXECUTION_UTILS.c
+void	close_and_wait(t_pid_data *pdata);
+int is_directory(const char *path);
 
 //	REDIRECTION
 int		apply_redirections(t_cmd *cmd, int cmd_i);

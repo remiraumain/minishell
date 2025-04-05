@@ -3,31 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   path_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:33:22 by nolecler          #+#    #+#             */
-/*   Updated: 2025/03/18 12:54:40 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:51:32 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
-
-// static char	*get_env_path(char **envp)
-// {
-// 	int		i;
-// 	char	*path;
-
-// 	i = 0;
-// 	path = NULL;
-// 	while (envp[i] && !path)
-// 	{
-// 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-// 			path = envp[i] + 5;
-// 		i++;
-// 	}
-// 	return (path);
-// }
 
 void	free_split(char **array)
 {

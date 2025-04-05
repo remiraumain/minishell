@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:33:00 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/04 15:47:41 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/05 10:36:46 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	is_var_valid(char *str)
 	}
 	return (0);
 }
-
 
 int	is_var_exist(char *argv, t_global_data *data)
 {
