@@ -6,12 +6,12 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:04:44 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/03 16:53:40 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:28:03 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <limits.h>
+#include <limits.h> // a laisser ici?
 
 
 static long long ft_atoll_convert(char *str, int *sign)
@@ -21,8 +21,8 @@ static long long ft_atoll_convert(char *str, int *sign)
 	
 	i = 0;
 	stock = 0;
-    while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
-        i++;
+    while (is_whitespace(str[i]))
+		i++;
     while (str[i] == '-' || str[i] == '+')
     {
         if (str[i] == '-')
@@ -31,7 +31,10 @@ static long long ft_atoll_convert(char *str, int *sign)
     }
     while (str[i] >= '0' && str[i] <= '9')
     {
-        stock = (stock * 10) + (str[i] - '0');
+        if (stock <= ((stock * 10) + (str[i] - '0')))
+            stock = (stock * 10) + (str[i] - '0');
+        else
+            return (-1);
         i++;
     }
     return (stock);
@@ -68,7 +71,6 @@ int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head)
     long long value;
 	int status;
 
-    data->status = 0;
 	status = 0;
     if (!cmd->argv[1])
         exit_no_args(data, pdata, head);
@@ -80,12 +82,15 @@ int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head)
     }
     else
     {    
-        if (!is_numeric(cmd->argv[1])) 
+        if (!is_numeric(cmd->argv[1]))
             exit_invalid_numeric(cmd->argv[1], data, pdata, head);
         value = ft_atoll(cmd->argv[1]);
+        if (value == -1)
+            exit_invalid_numeric(cmd->argv[1], data, pdata, head);
         data->status = (int)value;
     }
 	status = data->status;
     cleanup(data, pdata, head);
+    ft_putstr_fd("exit\n", 2);
     exit(status);
 }

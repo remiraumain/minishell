@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:40:01 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/05 13:38:31 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/08 15:44:37 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,29 @@ int	g_sig = 0;
 static void	process_input(char *input, t_global_data *data)
 {
 	t_token	*tokens;
+	t_token	*current;
 	t_cmd	*cmds;
-	int		i;
+	int		is_first;
 
-	i = -1;
 	if (*input)
 		add_history(input);
-	while (input[++i] != '\0')
-	{
-		if (input[0] == '|' || (input[i] == '|' && input[i + 1] == '\0'))
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token '|'\n", 2);
-			data->status = 2;
-			return ;
-		}
-	}
 	tokens = lexer(input, data);
 	if (!tokens)
 		return ;
+	is_first = 1;
+	current = tokens;
+	while (current)
+	{
+		if ((is_first && current->type == TK_PIPE) || (!current->next && current->type == TK_PIPE))
+		{
+			ft_putstr_fd("bash: syntax error near unexpected token '|'\n", 2);
+			data->status = 2;
+			free_token_list(tokens);
+			return ;
+		}
+		is_first = 0;
+		current = current->next;
+	}
 	cmds = parse_line(tokens);
 	free_token_list(tokens);
 	if (!cmds)
@@ -61,6 +66,7 @@ int	main(int argc, char **argv, char **envp)
 		return (0);
 	}
 	data->status = 0;
+	data->line_count = 1;
 	while (1)
 	{
 		if (g_sig != -29)
@@ -77,10 +83,12 @@ int	main(int argc, char **argv, char **envp)
 			clear_env(data->envp);
 			free(data);
 			rl_clear_history();
+			printf("exit\n");
 			return (0);// return (data->status);
 		}
 		process_input(input, data);
 		free(input);
+		data->line_count++;
 	}
 	return (data->status);
 }

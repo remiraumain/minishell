@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/05 13:58:24 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:33:39 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 		close(pdata->pipefd[i][1]);
 		i++;
 	}
+	if (!cmd->argv)
+		exit_clean_child(pdata, head, NULL, NULL, 0);
 	if (!apply_redirections(cmd, index))
 		exit_clean_child(pdata, head, NULL, NULL, EXIT_FAILURE);
 	if (is_builtin_child(cmd) == 1)
@@ -60,7 +62,6 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 		free(pdata);
 		free_cmd_list(head);
 		exit(0); // should be status exit code
-		//exit (data->status);
 	}
 	env = convert_env(pdata->gdata->envp);
 	path = get_command_path(cmd->argv[0], pdata->gdata->envp);
@@ -91,10 +92,10 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 		ft_putstr_fd(": command not found\n", 2);
 		exit_clean_child(pdata, head, env, NULL, 127);
 	}
-	execve(path, cmd->argv, env);		
+	execve(path, cmd->argv, env);
 	clear_env_array(env);
 	free(path);
-	ft_putstr_fd(cmd->argv[0], 2);//??
+	ft_putstr_fd(cmd->argv[0], 2);
 	exit(EXIT_FAILURE);
 }
 
@@ -137,12 +138,12 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 	i = 0;
 	while (cmd)
 	{
-		if (!cmd->argv || !cmd->argv[0] || cmd->argv[0][0] == '\0')
-		{
-			data->status = 0;
-			cmd = cmd->next;
-			continue ;
-		}
+		// if (!cmd->argv || !cmd->argv[0] || cmd->argv[0][0] == '\0')
+		// {
+		// 	data->status = 0;
+		// 	cmd = cmd->next;
+		// 	continue ;
+		// }
 		if (is_builtin_parent(cmd) == 1)
 		{
 			if (!has_child_process(head))

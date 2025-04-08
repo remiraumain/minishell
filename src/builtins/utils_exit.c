@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:51:51 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/03 10:37:12 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:37:55 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,28 @@
 int	is_numeric(char *str)
 {
 	int	i;
-
+	int	sign;
+	
 	i = 0;
+	sign = 0;
+	while (is_whitespace(str[i]))
+		i++;
 	while (str[i])
 	{
-		if (((str[0] == '+' || str[0] == '-') && (str[1] >= '0'
-					&& str[1] <= '9')) || (str[i] >= '0' && str[i] <= '9'))
+		if (sign == 0 && (str[i] == '+' || str[i] == '-'))
+		{
+			sign = 1;
+			i++;
+		}
+		if (ft_isdigit(str[i]))
 			i++;
 		else
-			return (0);
+		{
+			while (is_whitespace(str[i]))
+				i++;
+			if (str[i])
+				return (0);
+		}
 	}
 	return (1);
 }

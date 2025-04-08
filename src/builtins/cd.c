@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/05 10:12:27 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/07 09:36:28 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,7 @@ int	exec_cd(t_cmd *cmd, t_pid_data *pdata, t_global_data *sdata)
 		}
 		if (!cmd->argv[1] || ft_strcmp(cmd->argv[1], "~") == 0)
 			return (cd_home(sdata, pwd));
-		if (ft_strcmp(cmd->argv[1], "..") == 0 || ft_strcmp(cmd->argv[1],
-				"-") == 0)
+		if (ft_strcmp(cmd->argv[1], "..") == 0)
 			return (cd_dot(cmd, sdata, pwd));
 		if (cmd->argv[1][0] == '/')
 			return (cd_slash(cmd, pwd));

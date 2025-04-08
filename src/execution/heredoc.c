@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:49:26 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/02 17:33:30 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:20:16 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,15 @@ char	*create_heredoc_filename(int cmd_i, int redir_i)
 static void	readline_loop(t_redir *redir, int fd, t_global_data *data)
 {
 	char	*input;
-
 	set_heredoc_signals();
 	while (1)
 	{
 		input = readline("> ");
 		if (!input)
+		{
+			printf("warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", data->line_count, redir->delimeter);
 			break;
+		}
 		if (ft_strncmp(input, redir->delimeter, INT_MAX) == 0 || g_sig)
 		{
 			free(input);
@@ -78,6 +80,7 @@ static void	readline_loop(t_redir *redir, int fd, t_global_data *data)
 		// add_history(input); // History deactivated because it was annoying
 		ft_putendl_fd(input, fd);
 		free(input);
+		data->line_count++;
 	}
 	set_parent_signals();
 }
