@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:20:03 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/08 13:17:51 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/09 11:33:54 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_global_data
 {
 	struct s_envp	*envp;
 	int				status;
-	int				line_count;
+	int				line_count; //
 }	t_global_data;
 
 typedef enum e_bool

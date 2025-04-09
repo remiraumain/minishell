@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:51:51 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/08 12:37:55 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/09 10:08:13 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	is_numeric(char *str)
 
 void	print_error_message(char *str)
 {
-	ft_putstr_fd("exit\n", 2);
+	ft_putstr_fd("exit\n", 1);
 	ft_putstr_fd("exit: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
@@ -63,7 +63,7 @@ void	exit_no_args(t_global_data *data, t_pid_data *pdata, t_cmd *head)
 {
 	int	status;
 
-	ft_putstr_fd("exit\n", 2);
+	ft_putstr_fd("exit\n", 1);
 	status = data->status;
 	cleanup(data, pdata, head);
 	exit(status);

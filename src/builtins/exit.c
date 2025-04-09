@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:04:44 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/08 16:28:03 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/09 10:09:02 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head)
         exit_no_args(data, pdata, head);
     else if (is_numeric(cmd->argv[1]) && cmd->argv[2])
     {
-        ft_putstr_fd("exit\n", 2);
+        ft_putstr_fd("exit\n", 1);
         ft_putstr_fd("exit: too many arguments\n", 2);
         return (1);
     }
@@ -91,6 +91,6 @@ int exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head)
     }
 	status = data->status;
     cleanup(data, pdata, head);
-    ft_putstr_fd("exit\n", 2);
+    ft_putstr_fd("exit\n", 1);
     exit(status);
 }
