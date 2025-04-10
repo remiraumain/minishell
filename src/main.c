@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:40:01 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/10 14:43:57 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:49:30 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,115 +59,67 @@ static void	process_input(char *input, t_global_data *data)
 	free_cmd_list(cmds);
 }
 
-//test
-/*
-static t_global_data *init_data(char **envp)
+
+
+static t_global_data *init_global_data(char **envp)
 {
-	t_global_data	*data;
-	
-	data = malloc(sizeof(t_global_data));
-	if (!data)
-		return (NULL);
-	data->envp = init_env(envp);
-	if (!data->envp)
-	{
-		free(data);
-		return (NULL);
-	}
-	return (data);	
+    t_global_data *data = malloc(sizeof(t_global_data));
+    if (!data)
+        return (NULL);
+    data->envp = init_env(envp);
+    if (!data->envp)
+    {
+        free(data);
+        return (NULL);
+    }
+    data->status = 0;
+    data->line_count = 1;
+    return (data);
 }
 
-static int shell_loop(t_global_data *data)
-{
-    char *input;
 
+static int clean_exit(t_global_data *data)
+{
+    clear_env(data->envp);
+    free(data);
+    rl_clear_history();
+    printf("exit\n");
+    return (0);
+}
+
+static void    handle_signal(t_global_data *data)
+{
+    if (g_sig)
+    {
+        data->status = 130;
+        g_sig = 0;
+    }
+}
+
+
+int    main(int argc, char **argv, char **envp)
+{
+    char            *input;
+    t_global_data    *data;
+    (void)argc;
+    (void)argv;
+    
+    data = init_global_data(envp);
+    if (!data)
+        return (0);
     while (1)
     {
         if (g_sig != -29)
             g_sig = 0;
         set_parent_signals();
         input = readline("minishell> ");
-        if (g_sig)
-        {
-            data->status = 130;
-            g_sig = 0;
-        }
+        handle_signal(data);
         if (!input)
-            //break ;
-			return (1);
+            return (clean_exit(data));
         process_input(input, data);
         free(input);
         data->line_count++;
     }
-	return (0);
+    return (data->status);
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	(void)argc;
-	(void)argv;
-	//char			*input;
-	t_global_data	*data;
-	int loop;
-	
-	data = init_data(envp);
-	if (!data)
-		return (0);
-	data->status = 0;
-	data->line_count = 1;
-	loop = shell_loop(data);
-	if (loop == 1)
-	{
-		clear_env(data->envp);
-		free(data);
-		rl_clear_history();
-		printf("exit\n");
-		return (0); // return (data->status);
-	}
-	return (data->status);
-} */
-
-
-int	main(int argc, char **argv, char **envp)
-{
-	(void)argc;
-	(void)argv;
-	char			*input;
-	t_global_data	*data;
-	
-	data = malloc(sizeof(t_global_data));
-	if (!data)
-		return (0);
-	data->envp = init_env(envp);
-	if (!data->envp)
-	{
-		free(data);
-		return (0);
-	}
-	data->status = 0;
-	data->line_count = 1;
-	while (1)
-	{
-		if (g_sig != -29)
-			g_sig = 0;
-		set_parent_signals();
-		input = readline("minishell> ");
-		if (g_sig)
-		{
-			data->status = 130;
-			g_sig = 0;
-		}
-		if (!input)
-		{
-			clear_env(data->envp);
-			free(data);
-			rl_clear_history();
-			printf("exit\n");
-			return (0); // return (data->status);
-		}
-		process_input(input, data);
-		free(input);
-		data->line_count++;
-	}
-	return (data->status);
-}

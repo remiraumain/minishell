@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/10 09:51:39 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:42:18 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,6 @@ static int execution_loop(t_cmd *cmd, t_pid_data *pdata, t_global_data *data, t_
 	i = 0;
 	while (cmd)
 	{
-		// if (!cmd->argv || !cmd->argv[0] || cmd->argv[0][0] == '\0')
-		// {
-		// 	data->status = 0;
-		// 	cmd = cmd->next;
-		// 	continue ;
-		// }
 		if (is_builtin_parent(cmd) == 1)
 		{
 			if (!has_child_process(head))
@@ -114,47 +108,6 @@ static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 	clean_heredocs(head);
 	free(pdata->pids);
 }
-
-
-/*
-static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
-{
-	t_cmd	*head;
-	int		i;
-
-	head = cmd;
-	pdata->pids = malloc(sizeof(pid_t) * pdata->nb_cmd);
-	if (!pdata->pids)
-		return ;
-	ft_bzero(pdata->pids, sizeof(pid_t) * pdata->nb_cmd);
-	i = 0;
-	while (cmd)
-	{
-		// if (!cmd->argv || !cmd->argv[0] || cmd->argv[0][0] == '\0')
-		// {
-		// 	data->status = 0;
-		// 	cmd = cmd->next;
-		// 	continue ;
-		// }
-		if (is_builtin_parent(cmd) == 1)
-		{
-			if (!has_child_process(head))
-			{
-				exec_builtin_parent(cmd, pdata, data, head);
-				clean_heredocs(head);
-				free(pdata->pids);
-				return ;
-			}
-		}
-		else if (!fork_and_exec_child(cmd, i, pdata, head))
-			break ;
-		i++;
-		cmd = cmd->next;
-	}
-	close_and_wait(pdata);
-	clean_heredocs(head);
-	free(pdata->pids);
-}*/
 
 void	execute_cmds(t_cmd *cmd, t_global_data *data)
 {
