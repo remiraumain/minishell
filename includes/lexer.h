@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:02:58 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/12 10:09:38 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:55:47 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,12 @@ char			*replace_var(char *token, int start, int varname_len,
 char			*read_word_and_expand(const char *input, int *index,
 					t_global_data *data);
 t_token_type	check_redir(const char *input, int *index);
+
+// UTILS2.C
+
+char    *add_unquoted_chunk(const char *input, int *index,
+	t_global_data *data, char *word);
+
+
 
 #endif
