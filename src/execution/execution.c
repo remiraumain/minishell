@@ -6,12 +6,13 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/09 13:16:22 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/10 09:51:39 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//test decoupage
 static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 {
 	char 	**env;
@@ -65,9 +66,13 @@ static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata, t_cmd *head
 	return (1);
 }
 
-//test
-static void execution(t_cmd *cmd, t_pid_data *pdata, t_global_data *data, int i, t_cmd	*head)
+
+// test 
+static int execution_loop(t_cmd *cmd, t_pid_data *pdata, t_global_data *data, t_cmd	*head)
 {
+	int i;
+
+	i = 0;
 	while (cmd)
 	{
 		// if (!cmd->argv || !cmd->argv[0] || cmd->argv[0][0] == '\0')
@@ -83,7 +88,7 @@ static void execution(t_cmd *cmd, t_pid_data *pdata, t_global_data *data, int i,
 				exec_builtin_parent(cmd, pdata, data, head);
 				clean_heredocs(head);
 				free(pdata->pids);
-				return ;
+				return (0);
 			}
 		}
 		else if (!fork_and_exec_child(cmd, i, pdata, head))
@@ -91,29 +96,27 @@ static void execution(t_cmd *cmd, t_pid_data *pdata, t_global_data *data, int i,
 		i++;
 		cmd = cmd->next;
 	}
+	return (1);	
 }
 
-//test
 static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 {
 	t_cmd	*head;
-	int		i;
-
+	
 	head = cmd;
 	pdata->pids = malloc(sizeof(pid_t) * pdata->nb_cmd);
 	if (!pdata->pids)
 		return ;
 	ft_bzero(pdata->pids, sizeof(pid_t) * pdata->nb_cmd);
-	i = 0;
-	execution(cmd, pdata, data, i, head);
+	if (execution_loop(cmd, pdata, data, head) == 0)
+		return ;
 	close_and_wait(pdata);
 	clean_heredocs(head);
 	free(pdata->pids);
 }
 
 
-
-/* 
+/*
 static void	process_cmds(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 {
 	t_cmd	*head;
