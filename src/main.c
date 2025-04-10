@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:40:01 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/08 15:44:37 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:51:24 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,55 @@
 
 int	g_sig = 0;
 
+// test
+
+static int check_pipe_error(t_token *tokens, t_global_data *data)
+{
+    t_token *current;
+    int is_first;
+	
+	current = tokens;
+	is_first = 1;
+    while (current)
+    {
+        if ((is_first && current->type == TK_PIPE) || (!current->next && current->type == TK_PIPE))
+        {
+            ft_putstr_fd("bash: syntax error near unexpected token '|'\n", 2);
+            data->status = 2;
+            return (0); 
+        }
+        is_first = 0;
+        current = current->next;
+    }
+    return (1);
+}
+
+static void process_input(char *input, t_global_data *data)
+{
+    t_token *tokens;
+    t_cmd *cmds;
+
+    if (*input)
+        add_history(input);
+    tokens = lexer(input, data);
+    if (!tokens)
+        return ;
+    if (!check_pipe_error(tokens, data))
+    {
+        free_token_list(tokens);
+        return ;
+    }
+    cmds = parse_line(tokens);
+    free_token_list(tokens);
+    if (!cmds)
+        return ;
+    execute_cmds(cmds, data);
+    free_cmd_list(cmds);
+}
+
+
+
+/*
 static void	process_input(char *input, t_global_data *data)
 {
 	t_token	*tokens;
@@ -46,7 +95,7 @@ static void	process_input(char *input, t_global_data *data)
 		return ;
 	execute_cmds(cmds, data);
 	free_cmd_list(cmds);
-}
+}*/
 
 
 int	main(int argc, char **argv, char **envp)
