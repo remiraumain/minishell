@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:52:41 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/03 17:16:02 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/10 10:42:01 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,51 +65,6 @@ void	free_cmd_list(t_cmd *head)
 	}
 }
 
-int	add_redir(t_cmd *cmd, t_redir_type type, char *filename, int index)
-{
-	t_redir	*new_redir;
-	t_redir	*tail;
-
-	new_redir = malloc(sizeof(t_redir));
-	if (!new_redir)
-		return (0);
-	new_redir->index = index;
-	new_redir->type = type;
-	if (type == REDIR_HEREDOC || type == REDIR_HEREDOC_Q)
-	{
-		new_redir->delimeter = ft_strdup(filename);
-		if (!new_redir->delimeter)
-		{
-			free(new_redir);
-			return (0);
-		}
-		new_redir->filename = create_heredoc_filename(cmd->index, index);
-	}
-	else
-	{
-		new_redir->delimeter = NULL;
-		new_redir->filename = ft_strdup(filename);
-	}
-	if (!new_redir->filename)
-	{
-		if (type == REDIR_HEREDOC || type == REDIR_HEREDOC_Q)
-			free(new_redir->delimeter);
-		free(new_redir);
-		return (0);
-	}
-	new_redir->next = NULL;
-	if (!cmd->redir)
-		cmd->redir = new_redir;
-	else
-	{
-		tail = cmd->redir;
-		while (tail->next)
-			tail = tail->next;
-		tail->next = new_redir;
-	}
-	return (1);
-}
-
 int	add_current_argv(char **new_argv, int index, const char *word)
 {
 	new_argv[index] = ft_strdup(word);
@@ -126,3 +81,4 @@ int	add_current_argv(char **new_argv, int index, const char *word)
 	new_argv[index + 1] = NULL;
 	return (1);
 }
+
