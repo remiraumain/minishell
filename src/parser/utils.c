@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:52:41 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/10 10:42:01 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:17:25 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,3 @@ int	add_current_argv(char **new_argv, int index, const char *word)
 	new_argv[index + 1] = NULL;
 	return (1);
 }
-

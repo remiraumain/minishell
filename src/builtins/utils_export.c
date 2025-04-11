@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:33:00 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/08 15:50:33 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:19:55 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int	is_var_exist(char *argv, t_global_data *data)
 		len = ft_strlen(argv);
 	while (tmp)
 	{
-		if (ft_strncmp(argv, tmp->name, len) == 0 && ft_strlen(tmp->name) == len)
+		if (ft_strncmp(argv, tmp->name, len) == 0
+			&& ft_strlen(tmp->name) == len)
 			return (0);
 		tmp = tmp->next;
 	}

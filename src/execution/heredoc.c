@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:49:26 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 11:01:03 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:22:56 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ static void	readline_loop(t_redir *redir, int fd, t_global_data *data)
 		input = readline("> ");
 		if (!input)
 		{
-			printf("warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", data->line_count, redir->delimeter);
+			printf("warning: here-document at line %d delimited by end-of-file "
+				"(wanted `%s')\n", data->line_count, redir->delimeter);
 			break ;
 		}
 		if (ft_strncmp(input, redir->delimeter, INT_MAX) == 0 || g_sig)

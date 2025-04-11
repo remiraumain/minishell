@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:48:53 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 10:59:15 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:19:35 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	path_error(t_cmd *cmd, t_cmd *head, t_pid_data *pdata, char **env);
 void	print_message(t_cmd *cmd, char *message);
 void	exit_and_clean(t_cmd *head, t_pid_data *pdata, char **env, int status);
 void	prepare_execution(t_cmd *cmd, int index, t_pid_data *pdata,
-	t_cmd *head);
+			t_cmd *head);
 
 //	REDIRECTION
 int		apply_redirections(t_cmd *cmd, int cmd_i);

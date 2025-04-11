@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:50:16 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/05 10:05:58 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:18:29 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*get_var_value(t_envp *envp, char *str)
 void	update_old_pwd(t_envp *envp, const char *old_pwd)
 {
 	t_envp	*var;
-	
+
 	if (old_pwd == NULL)
 		old_pwd = get_var_value(envp, "PWD");
 	var = envp;
@@ -48,7 +48,7 @@ void	update_old_pwd(t_envp *envp, const char *old_pwd)
 void	update_pwd(t_envp *envp, const char *new_pwd)
 {
 	t_envp	*var;
-	
+
 	var = envp;
 	while (var)
 	{

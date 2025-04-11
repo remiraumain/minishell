@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:10:52 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/05 10:48:45 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:17:41 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	is_builtin_parent(t_cmd *cmd)
 		return (1);
 	return (0);
 }
-
 
 void	exec_builtin_child(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
 {
