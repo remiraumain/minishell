@@ -6,39 +6,11 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 09:46:09 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/04 09:56:10 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:32:04 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	add_argv(t_cmd *cmd, const char *word)
-{
-	int		count;
-	char	**new_argv;
-	int		i;
-
-	count = 0;
-	if (cmd->argv)
-	{
-		while (cmd->argv[count])
-			count++;
-	}
-	new_argv = malloc(sizeof(char *) * (count + 2));
-	if (!new_argv)
-		return (0);
-	i = 0;
-	while (i < count)
-	{
-		new_argv[i] = cmd->argv[i];
-		i++;
-	}
-	if (!add_current_argv(new_argv, i, word))
-		return (0);
-	free(cmd->argv);
-	cmd->argv = new_argv;
-	return (1);
-}
 
 static int	check_and_add_redir(t_cmd *cmd, t_token **current, int *index)
 {

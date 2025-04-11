@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 11:01:32 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 12:08:18 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata,
 		perror("heredoc");
 		return (0);
 	}
-	if (g_sig && ft_strncmp(cmd->argv[0], "echo", 5) != 0)
+	if (g_sig && cmd->argv && ft_strncmp(cmd->argv[0], "echo", 5) != 0)
 		return (0);
 	pid = fork();
 	if (pid < 0)

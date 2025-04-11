@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:25:41 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/10 11:24:02 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:31:39 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,49 +85,30 @@ int	add_redir(t_cmd *cmd, t_redir_type type, char *filename, int index)
 	return (1);
 }
 
-/*
-// version de base
-int	add_redir(t_cmd *cmd, t_redir_type type, char *filename, int index)
+int	add_argv(t_cmd *cmd, const char *word)
 {
-	t_redir	*new_redir;
-	t_redir	*tail;
+	int		count;
+	char	**new_argv;
+	int		i;
 
-	new_redir = malloc(sizeof(t_redir));
-	if (!new_redir)
+	count = 0;
+	if (cmd->argv)
+	{
+		while (cmd->argv[count])
+			count++;
+	}
+	new_argv = malloc(sizeof(char *) * (count + 2));
+	if (!new_argv)
 		return (0);
-	new_redir->index = index;
-	new_redir->type = type;
-	if (type == REDIR_HEREDOC || type == REDIR_HEREDOC_Q)
+	i = 0;
+	while (i < count)
 	{
-		new_redir->delimeter = ft_strdup(filename);
-		if (!new_redir->delimeter)
-		{
-			free(new_redir);
-			return (0);
-		}
-		new_redir->filename = create_heredoc_filename(cmd->index, index);
+		new_argv[i] = cmd->argv[i];
+		i++;
 	}
-	else
-	{
-		new_redir->delimeter = NULL;
-		new_redir->filename = ft_strdup(filename);
-	}
-	if (!new_redir->filename)
-	{
-		if (type == REDIR_HEREDOC || type == REDIR_HEREDOC_Q)
-			free(new_redir->delimeter);
-		free(new_redir);
+	if (!add_current_argv(new_argv, i, word))
 		return (0);
-	}
-	new_redir->next = NULL;
-	if (!cmd->redir)
-		cmd->redir = new_redir;
-	else
-	{
-		tail = cmd->redir;
-		while (tail->next)
-			tail = tail->next;
-		tail->next = new_redir;
-	}
+	free(cmd->argv);
+	cmd->argv = new_argv;
 	return (1);
-}*/
+}
