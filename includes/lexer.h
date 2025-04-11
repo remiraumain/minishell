@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:02:58 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/10 14:55:47 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 09:17:11 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ void			free_token_list(t_token *head);
 
 //	EXPANDER
 void			expand_word(char **word, t_global_data *data);
+
+// INIT
+void	process_input(char *input, t_global_data *data);
+t_global_data *init_global_data(char **envp);
+int clean_exit(t_global_data *data);
+void	handle_signal(t_global_data *data);
+
 
 //	VARS
 char			*get_env_value(char *varname, char **envp);
