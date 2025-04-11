@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/10 16:42:18 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 09:42:35 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 	path = get_command_path(cmd->argv[0], pdata->gdata->envp);
 	if (!path)
 		path_error(cmd, head, pdata, env);
+	if (is_directory(path))
+	{
+		ft_putstr_fd(cmd->argv[0], 2);
+		ft_putstr_fd(": Is a directory\n", 2);
+		exit_clean_child(pdata, head, env, path, 126);
+	}
+	if (access(path, X_OK) != 0)
+	{
+    	ft_putstr_fd(cmd->argv[0], 2);
+    	ft_putstr_fd(": Permission denied\n", 2);
+    	exit_clean_child(pdata, head, env, path, 126);
+	}
 	execve(path, cmd->argv, env);
 	clear_env_array(env);
 	free(path);
