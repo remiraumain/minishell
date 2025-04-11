@@ -6,10 +6,9 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:33:29 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 09:46:14 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 10:04:00 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -46,9 +45,9 @@ char	*get_command_path(char *cmd, t_envp *envp)
 	found = search_in_paths(paths, cmd);
 	free_split(paths);
 	if (!found)
-    {
-        if (ft_strchr(cmd, '/') && access(cmd, F_OK) == 0)
-            found = ft_strdup(cmd);
-    }
+	{
+		if (ft_strchr(cmd, '/') && access(cmd, F_OK) == 0)
+			found = ft_strdup(cmd);
+	}
 	return (found);
 }

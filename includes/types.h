@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:20:03 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/08 13:17:51 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 09:56:44 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,32 @@
 
 # include "minishell.h"
 
-#define INT_MAX 2147483647
-#define INT_MIN -2147483648
+# define INT_MAX 2147483647
+# define INT_MIN -2147483648
 
 //	GLOBAL
-extern int	g_sig;
+extern int			g_sig;
 
 typedef struct s_envp
 {
-    char			*name;
-    char			*value;
-    int				pos;  // rang de la variable
-    struct s_envp	*next;   
-}	t_envp;
+	char			*name;
+	char			*value;
+	int				pos; // rang de la variable
+	struct s_envp	*next;
+}					t_envp;
 
 typedef struct s_global_data
 {
 	struct s_envp	*envp;
 	int				status;
 	int				line_count;
-}	t_global_data;
+}					t_global_data;
 
 typedef enum e_bool
 {
 	TRUE,
 	FALSE
-}	t_bool;
+}					t_bool;
 
 //	TOKENS
 
@@ -54,14 +54,14 @@ typedef enum e_token_type
 	TK_HEREDOC,
 	TK_HEREDOC_QUOTES,
 	TK_EOF
-}	t_token_type;
+}					t_token_type;
 
 typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
 	struct s_token	*next;
-}	t_token;
+}					t_token;
 
 //	CMD
 
@@ -72,7 +72,7 @@ typedef enum e_redir_type
 	REDIR_OUT_APPEND,
 	REDIR_HEREDOC,
 	REDIR_HEREDOC_Q
-}	t_redir_type;
+}					t_redir_type;
 
 typedef struct s_redir
 {
@@ -81,7 +81,7 @@ typedef struct s_redir
 	char			*filename;
 	char			*delimeter;
 	struct s_redir	*next;
-}	t_redir;
+}					t_redir;
 
 typedef struct s_cmd
 {
@@ -89,7 +89,7 @@ typedef struct s_cmd
 	char			**argv;
 	t_redir			*redir;
 	struct s_cmd	*next;
-}	t_cmd;
+}					t_cmd;
 
 //	PIPES
 
@@ -99,6 +99,6 @@ typedef struct s_pid_data
 	int				nb_cmd;
 	int				**pipefd;
 	pid_t			*pids;
-}	t_pid_data;
+}					t_pid_data;
 
 #endif

@@ -6,11 +6,9 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:32:33 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/10 16:40:24 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 09:51:20 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #ifndef STRING_H // utils_h ?
 # define STRING_H

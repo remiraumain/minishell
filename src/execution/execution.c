@@ -6,50 +6,54 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 09:42:35 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 10:08:33 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //test decoupage
-static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
+static void    execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 {
-	char 	**env;
-	char	*path;
+    char     **env;
+    char    *path;
 
-	pdata->gdata->status = 0;
-	dup_and_close(pdata, index, cmd);
-	if (!cmd->argv)
-		exit_clean_child(pdata, head, NULL, NULL, 0);
-	if (!apply_redirections(cmd, index))
-		exit_clean_child(pdata, head, NULL, NULL, EXIT_FAILURE);
-	if (is_builtin_child(cmd) == 1)
-	{
-		exec_builtin_child_and_free(cmd, pdata, head);
-		exit(0); // should be status exit code
-	}
-	env = convert_env(pdata->gdata->envp);
-	path = get_command_path(cmd->argv[0], pdata->gdata->envp);
-	if (!path)
-		path_error(cmd, head, pdata, env);
-	if (is_directory(path))
-	{
-		ft_putstr_fd(cmd->argv[0], 2);
-		ft_putstr_fd(": Is a directory\n", 2);
-		exit_clean_child(pdata, head, env, path, 126);
-	}
-	if (access(path, X_OK) != 0)
-	{
-    	ft_putstr_fd(cmd->argv[0], 2);
-    	ft_putstr_fd(": Permission denied\n", 2);
-    	exit_clean_child(pdata, head, env, path, 126);
-	}
-	execve(path, cmd->argv, env);
-	clear_env_array(env);
-	free(path);
-	ft_putstr_fd(cmd->argv[0], 2);
-	exit(EXIT_FAILURE);	
+    pdata->gdata->status = 0;
+    dup_and_close(pdata, index, cmd);
+    if (!cmd->argv)
+        exit_clean_child(pdata, head, 0);
+    if (!apply_redirections(cmd, index))
+        exit_clean_child(pdata, head, EXIT_FAILURE);
+    if (is_builtin_child(cmd) == 1)
+    {
+        exec_builtin_child_and_free(cmd, pdata, head);
+        exit(0);
+    }
+    env = convert_env(pdata->gdata->envp);
+    path = get_command_path(cmd->argv[0], pdata->gdata->envp);
+    if (!path)
+        path_error(cmd, head, pdata, env);
+    if (is_directory(path))
+    {
+        ft_putstr_fd(cmd->argv[0], 2);
+        ft_putstr_fd(": Is a directory\n", 2);
+        clear_env_array(env);
+        free(path);
+        exit_clean_child(pdata, head, 126);
+    }
+    if (access(path, X_OK) != 0)
+    {
+        ft_putstr_fd(cmd->argv[0], 2);
+        ft_putstr_fd(": Permission denied\n", 2);
+        clear_env_array(env);
+        free(path);
+        exit_clean_child(pdata, head, 126);
+    }
+    execve(path, cmd->argv, env);
+    clear_env_array(env);
+    free(path);
+    ft_putstr_fd(cmd->argv[0], 2);
+    exit(EXIT_FAILURE);    
 }
 
 static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata, t_cmd *head)
