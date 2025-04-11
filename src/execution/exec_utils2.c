@@ -6,21 +6,19 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:12:12 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 10:26:52 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 10:49:01 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//test, a voir char **env??
-
-static void    print_message(t_cmd *cmd, char *message)
+void    print_message(t_cmd *cmd, char *message)
 {
     ft_putstr_fd(cmd->argv[0], 2);
     ft_putstr_fd(message, 2);
 }
 
-static void    exit_and_clean(t_cmd *head, t_pid_data *pdata, char **env, int status)
+void    exit_and_clean(t_cmd *head, t_pid_data *pdata, char **env, int status)
 {
     clear_env_array(env);
     exit_clean_child(pdata, head, status);

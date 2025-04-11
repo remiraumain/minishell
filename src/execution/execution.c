@@ -6,13 +6,63 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 10:23:16 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 10:48:32 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //test decoupage
+
+
+static void prepare_execution(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
+{
+    pdata->gdata->status = 0;
+    dup_and_close(pdata, index, cmd);
+    if (!cmd->argv)
+        exit_clean_child(pdata, head, 0);
+    if (!apply_redirections(cmd, index))
+        exit_clean_child(pdata, head, EXIT_FAILURE);
+    if (is_builtin_child(cmd))
+    {
+        exec_builtin_child_and_free(cmd, pdata, head);
+        exit(0);
+    }
+}
+
+
+static void    execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
+{
+    char     **env;
+    char    *path;
+
+    prepare_execution(cmd, index, pdata, head);
+    env = convert_env(pdata->gdata->envp);
+    path = get_command_path(cmd->argv[0], pdata->gdata->envp);
+    if (!path)
+        path_error(cmd, head, pdata, env);
+    if (is_directory(path))
+    {
+        print_message(cmd, ": Is a directory\n");
+        free(path);
+        exit_and_clean(head, pdata, env, 126);
+    }
+    if (access(path, X_OK) != 0)
+    {
+        print_message(cmd, ": Permission denied\n");
+        free(path);
+        exit_and_clean(head, pdata, env, 126);
+    }
+    execve(path, cmd->argv, env);
+    clear_env_array(env);
+    free(path);
+    ft_putstr_fd(cmd->argv[0], 2);
+    exit(EXIT_FAILURE);
+}
+
+
+
+/*
 static void    execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 {
     char     **env;
@@ -54,7 +104,7 @@ static void    execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *he
     free(path);
     ft_putstr_fd(cmd->argv[0], 2);
     exit(EXIT_FAILURE);    
-}
+}*/
 
 static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata, t_cmd *head)
 {
