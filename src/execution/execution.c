@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 10:08:33 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 10:23:16 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata, t_cmd *head
 	return (1);
 }
 
-
-// test 
 static int execution_loop(t_cmd *cmd, t_pid_data *pdata, t_global_data *data, t_cmd	*head)
 {
 	int i;
