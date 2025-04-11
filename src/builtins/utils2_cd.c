@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 10:04:55 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/05 10:37:53 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:06:43 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	print_error(char *argv)
 		ft_putstr_fd(": permission denied \n", 2);
 		return (1);
 	}
-	if (chdir(argv) == -1)// cd Makefile message d erreur ici 
+	if (chdir(argv) == -1)
 	{
 		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(argv, 2);
@@ -38,8 +38,8 @@ int	print_error(char *argv)
 	return (0);
 }
 
-void free_path_pwd(char *path, char *pwd)
+void	free_path_pwd(char *path, char *pwd)
 {
-    free(path);
-    free(pwd);
+	free(path);
+	free(pwd);
 }

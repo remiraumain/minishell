@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:43:49 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/04 10:53:49 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:02:52 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*get_varname(char *token, int start, int *len)
 
 	*len = 1;
 	if (!token[start + 1])
-        return (ft_strdup("$"));
+		return (ft_strdup("$"));
 	if (token[start + 1] == '?')
 	{
 		varname = ft_strdup("?");
@@ -55,30 +55,29 @@ static char	*get_var_value(char *varname, t_global_data *data)
 	return (envp->value);
 }
 
-
-char *expand_var(char *token, int *index, t_global_data *data)
+char	*expand_var(char *token, int *index, t_global_data *data)
 {
-    char *varname;
-    char *value;
-    char *expanded;
-    int len = 0;
+	char	*varname;
+	char	*value;
+	char	*expanded;
+	int		len;
 
-    varname = get_varname(token, *index, &len);
-    if (!varname)
-        return (token);
-    if (ft_strcmp(varname, "$") == 0)
-        value = ft_strdup("$");
-    else
-        value = get_var_value(varname, data);
-    expanded = replace_var(token, *index, len, value);
-
-    if (varname[0] == '?' && value)
-        free(value);
-    free(varname);
-    if (!expanded)
-        return (token);
-    *index += ft_strlen(expanded);// 4 avril modif ici *index += ft_strlen(value)
-    return (expanded);
+	len = 0;
+	varname = get_varname(token, *index, &len);
+	if (!varname)
+		return (token);
+	if (ft_strcmp(varname, "$") == 0)
+		value = ft_strdup("$");
+	else
+		value = get_var_value(varname, data);
+	expanded = replace_var(token, *index, len, value);
+	if (varname[0] == '?' && value)
+		free(value);
+	free(varname);
+	if (!expanded)
+		return (token);
+	*index += ft_strlen(expanded);
+	return (expanded);
 }
 
 void	expand_word(char **word, t_global_data *data)
@@ -89,12 +88,13 @@ void	expand_word(char **word, t_global_data *data)
 	i = 0;
 	while ((*word)[i])
 	{
-		if ((*word)[i] == '$' && (*word)[i + 1] && !is_whitespace((*word)[i + 1]))
+		if ((*word)[i] == '$' && (*word)[i + 1] && !is_whitespace((*word)[i
+				+ 1]))
 		{
 			tmp = expand_var(*word, &i, data);
 			free(*word);
 			*word = tmp;
-			return (expand_word(word, data));// 4 avril modif ici
+			return (expand_word(word, data));
 		}
 		else
 			i++;

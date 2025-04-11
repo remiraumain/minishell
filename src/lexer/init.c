@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:08:07 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 09:32:33 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:03:30 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,40 +57,38 @@ void	process_input(char *input, t_global_data *data)
 	free_cmd_list(cmds);
 }
 
-
-t_global_data *init_global_data(char **envp)
+t_global_data	*init_global_data(char **envp)
 {
-    t_global_data *data;
-	
+	t_global_data	*data;
+
 	data = malloc(sizeof(t_global_data));
-    if (!data)
-        return (NULL);
-    data->envp = init_env(envp);
-    if (!data->envp)
-    {
-        free(data);
-        return (NULL);
-    }
-    data->status = 0;
-    data->line_count = 1;
-    return (data);
+	if (!data)
+		return (NULL);
+	data->envp = init_env(envp);
+	if (!data->envp)
+	{
+		free(data);
+		return (NULL);
+	}
+	data->status = 0;
+	data->line_count = 1;
+	return (data);
 }
 
-
-int clean_exit(t_global_data *data)
+int	clean_exit(t_global_data *data)
 {
-    clear_env(data->envp);
-    free(data);
-    rl_clear_history();
-    printf("exit\n");
-    return (0);
+	clear_env(data->envp);
+	free(data);
+	rl_clear_history();
+	printf("exit\n");
+	return (0);
 }
 
 void	handle_signal(t_global_data *data)
 {
-    if (g_sig)
-    {
-        data->status = 130;
-        g_sig = 0;
-    }
+	if (g_sig)
+	{
+		data->status = 130;
+		g_sig = 0;
+	}
 }

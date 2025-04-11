@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:49:26 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 10:00:38 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:01:03 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ char	*create_heredoc_filename(int cmd_i, int redir_i)
 static void	readline_loop(t_redir *redir, int fd, t_global_data *data)
 {
 	char	*input;
+
 	set_heredoc_signals();
 	while (1)
 	{

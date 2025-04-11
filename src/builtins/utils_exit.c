@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:51:51 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/09 10:08:13 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:06:05 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_numeric(char *str)
 {
 	int	i;
 	int	sign;
-	
+
 	i = 0;
 	sign = 0;
 	while (is_whitespace(str[i]))
@@ -49,7 +49,8 @@ void	print_error_message(char *str)
 	ft_putstr_fd(": numeric argument required\n", 2);
 }
 
-void	cleanup(t_global_data *data, t_pid_data *pdata, t_cmd *head)// voir execute_child
+void	cleanup(t_global_data *data, t_pid_data *pdata, t_cmd *head)
+		// voir execute_child
 {
 	free(pdata->pids);
 	cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);

@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 13:54:39 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 10:42:34 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 10:56:04 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,17 @@ int	is_directory(const char *path)
 	return (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode));
 }
 
-void exit_clean_child(t_pid_data *pdata,t_cmd *head, int status)
+void	exit_clean_child(t_pid_data *pdata, t_cmd *head, int status)
 {
-    if (pdata)
-    {
-        free(pdata->pids);
-        cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
-        clear_env(pdata->gdata->envp);
-        free(pdata->gdata);
-        free(pdata);
-    }
-    free_cmd_list(head);
+	if (pdata)
+	{
+		free(pdata->pids);
+		cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
+		clear_env(pdata->gdata->envp);
+		free(pdata->gdata);
+		free(pdata);
+	}
+	free_cmd_list(head);
 	exit(status);
 }
 

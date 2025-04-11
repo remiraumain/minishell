@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:48:53 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 10:49:22 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 10:59:15 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,18 @@ void	execute_cmds(t_cmd *cmd, t_global_data *data);
 // EXEC_UTILS1.c
 void	close_and_wait(t_pid_data *pdata);
 int		is_directory(const char *path);
-//void	exit_clean_child(t_pid_data *pdata, t_cmd *head, char **env, char *path,
+// void	exit_clean_child(t_pid_data *pdata, t_cmd *head, char **env, char *path,
 //			int status);
-void exit_clean_child(t_pid_data *pdata, t_cmd *head, int status);
+void	exit_clean_child(t_pid_data *pdata, t_cmd *head, int status);
 void	dup_and_close(t_pid_data *pdata, int index, t_cmd *cmd);
 void	exec_builtin_child_and_free(t_cmd *cmd, t_pid_data *pdata, t_cmd *head);
 
 // EXEC_UTILS2.c
 void	path_error(t_cmd *cmd, t_cmd *head, t_pid_data *pdata, char **env);
-void    print_message(t_cmd *cmd, char *message);
-void    exit_and_clean(t_cmd *head, t_pid_data *pdata, char **env, int status);
-
+void	print_message(t_cmd *cmd, char *message);
+void	exit_and_clean(t_cmd *head, t_pid_data *pdata, char **env, int status);
+void	prepare_execution(t_cmd *cmd, int index, t_pid_data *pdata,
+	t_cmd *head);
 
 //	REDIRECTION
 int		apply_redirections(t_cmd *cmd, int cmd_i);
