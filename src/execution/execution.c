@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 12:08:18 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:32:54 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	execute_child(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 	char	**env;
 	char	*path;
 
+	
+	set_child_signals();
 	prepare_execution(cmd, index, pdata, head);
 	env = convert_env(pdata->gdata->envp);
 	path = get_command_path(cmd->argv[0], pdata->gdata->envp);
@@ -61,7 +63,6 @@ static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata,
 		perror("fork");
 		return (0);
 	}
-	set_child_signals();
 	if (pid == 0)
 		execute_child(cmd, i, pdata, head);
 	pdata->pids[i] = pid;

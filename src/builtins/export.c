@@ -6,13 +6,13 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 09:45:55 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/04 15:57:45 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:26:39 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	add_var_in_env(char *str, t_envp *envp)
+void	add_var_in_env(char *str, t_envp *envp)
 {
 	t_envp	*last;
 	t_envp	*new;
@@ -49,7 +49,8 @@ static void	update_value(t_global_data *data, char *argv)
 	var = data->envp;
 	while (var)
 	{
-		if (ft_strncmp(argv, var->name, len) == 0)
+		if (ft_strncmp(argv, var->name, len) == 0 
+			&& len == ft_strlen(var->name))
 		{
 			free(var->value);
 			if (val)
@@ -92,10 +93,13 @@ static void	print_sorted_env(t_envp *var)
 	ft_sort_params(var);
 	while (var)
 	{
-		printf("declare -x %s", var->name);
-		if (var->value)
+		if (ft_strcmp(var->name, "_") != 0)
+		{	
+			printf("declare -x %s", var->name);
+			if (var->value)
 			printf("=\"%s\"", var->value);
-		printf("\n");
+			printf("\n");
+		}
 		var = var->next;
 	}
 }
@@ -127,3 +131,4 @@ int	exec_export(t_cmd *cmd, t_global_data *data)
 		data->status = export_with_args(cmd, data);
 	return (data->status);
 }
+

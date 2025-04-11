@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:51:51 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 11:06:05 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:27:55 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	print_error_message(char *str)
 }
 
 void	cleanup(t_global_data *data, t_pid_data *pdata, t_cmd *head)
-		// voir execute_child
 {
 	free(pdata->pids);
 	cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);

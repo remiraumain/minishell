@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 13:54:39 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 10:56:04 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 12:34:40 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	close_and_wait(t_pid_data *pdata)
 			pdata->gdata->status = 128 + WTERMSIG(status);
 		i++;
 	}
+	if (pdata->gdata->status == 131)
+		ft_putstr_fd("Quit\n" ,1);
 }
 
 int	is_directory(const char *path)

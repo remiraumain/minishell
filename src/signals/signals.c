@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:12:25 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 09:58:42 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:43:28 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-static void	handle_sigint_child(int sig)
-{
-	g_sig = sig;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-}
+// static void	handle_sigint_child(int sig)
+// {
+// 	g_sig = sig;
+// 	write(STDOUT_FILENO, "\n", 1);
+// 	rl_on_new_line();
+// 	rl_replace_line("", 0);
+// }
 
 static void	handle_sigint_heredoc(int sig)
 {
@@ -46,7 +46,9 @@ void	set_parent_signals(void)
 
 void	set_child_signals(void)
 {
-	signal(SIGINT, handle_sigint_child);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGPIPE, SIG_IGN);
 }
 
 void	set_heredoc_signals(void)

@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:32:33 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 11:15:03 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:16:37 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ t_envp	*search_var(t_envp *envp, char *str);
 t_envp	*init_var(char *envp, int pos);
 t_envp	*init_env(char **envp);
 char	**convert_env(t_envp *envp);
+void 	set_minishlvl(t_envp *envp);
 
 #endif
