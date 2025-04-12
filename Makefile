@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+         #
+#    By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/15 14:42:57 by rraumain          #+#    #+#              #
-#    Updated: 2025/04/11 09:12:39 by nolecler         ###   ########.fr        #
+#    Updated: 2025/04/12 13:46:41 by rraumain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
-LEXER_SRC = $(addprefix lexer/, lexer.c token.c parse.c utils.c utils2.c expander.c vars.c init.c)
+LEXER_SRC = $(addprefix lexer/, lexer.c token.c parse.c utils.c utils2.c expander.c vars.c init.c quotes.c)
 PARSER_SRC = $(addprefix parser/, parser.c utils.c utils2.c)
 EXEC_SRC = $(addprefix execution/, execution.c exec_utils1.c exec_utils2.c redirection.c path.c path_utils.c utils.c heredoc.c)
 BUILTIN_SRC = $(addprefix builtins/, builtin_control.c echo.c utils_cd.c utils2_cd.c cd.c pwd.c env.c exit.c unset.c export.c utils_export.c utils_exit.c) 
