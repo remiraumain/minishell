@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 23:40:41 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/12 10:13:21 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:02:16 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ int	parse_redirect(t_token **head, int *index, char *input)
 	return (1);
 }
 
-int	parse_word(t_token **head, int *index, char *input, t_global_data *data)
+int	parse_word(t_token **head, int *index, char *input)
 {
 	t_token	*new_token;
 	char	*word;
 
-	word = read_word_and_expand(input, index, data);
+	word = read_word(input, index);
 	if (!word)
 		return (0);
 	new_token = create_token(TK_WORD, word);

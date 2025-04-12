@@ -3,100 +3,96 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:43:49 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 11:02:52 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:10:30 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_varname(char *token, int start, int *len)
+static void	handle_var(char **buf, char *input, int *i, t_global_data *data)
 {
-	int		i;
-	char	*varname;
-
-	*len = 1;
-	if (!token[start + 1])
-		return (ft_strdup("$"));
-	if (token[start + 1] == '?')
-	{
-		varname = ft_strdup("?");
-		if (!varname)
-			return (NULL);
-		*len = 2;
-		return (varname);
-	}
-	i = start + 1;
-	while (token[i] && (ft_isalnum(token[i]) || token[i] == '_'))
-		i++;
-	*len = (i - start);
-	varname = ft_substr(token, start + 1, *len - 1);
-	return (varname);
-}
-
-static char	*get_var_value(char *varname, t_global_data *data)
-{
-	t_envp	*envp;
+	char	*name;
 	char	*value;
-
-	if (!varname || !data->envp)
-		return (NULL);
-	if (varname[0] == '?' && varname[1] == '\0')
-	{
-		value = ft_itoa(data->status);
-		return (value);
-	}
-	envp = NULL;
-	envp = search_var(data->envp, varname);
-	if (!envp)
-		return ("");
-	return (envp->value);
-}
-
-char	*expand_var(char *token, int *index, t_global_data *data)
-{
-	char	*varname;
-	char	*value;
-	char	*expanded;
-	int		len;
-
-	len = 0;
-	varname = get_varname(token, *index, &len);
-	if (!varname)
-		return (token);
-	if (ft_strcmp(varname, "$") == 0)
-		value = ft_strdup("$");
-	else
-		value = get_var_value(varname, data);
-	expanded = replace_var(token, *index, len, value);
-	if (varname[0] == '?' && value)
-		free(value);
-	free(varname);
-	if (!expanded)
-		return (token);
-	*index += ft_strlen(expanded);
-	return (expanded);
-}
-
-void	expand_word(char **word, t_global_data *data)
-{
 	char	*tmp;
+
+	name = get_varname(input, i);
+	if (!name)
+		return ;
+	value = get_var_value(name, data);
+	if (!value)
+		value = ft_strdup("");
+	tmp = ft_strjoin(*buf, value);
+	free(*buf);
+	*buf = tmp;
+	free(value);
+	free(name);
+}
+
+static int	process_single_quote_block(const char *line, int i, char **expanded)
+{
+	i++;
+	while (line[i] && line[i] != '\2')
+	{
+		copy_char(expanded, line[i]);
+		i++;
+	}
+	if (line[i] == '\2')
+		i++;
+	return (i);
+}
+
+static int	process_double_quote_block(const char *line, int i, char **expanded,
+	t_global_data *data)
+{
+	i++;
+	while (line[i] && line[i] != '\4')
+	{
+		if (line[i] == '$')
+			handle_var(expanded, (char *)line, &i, data);
+		else
+		{
+			copy_char(expanded, line[i]);
+			i++;
+		}
+	}
+	if (line[i] == '\4')
+		i++;
+	return (i);
+}
+
+static int	process_unquoted_block(const char *line, int i, char **expanded,
+	t_global_data *data)
+{
+	if (line[i] == '$' && (ft_isalpha(line[i + 1]) || line[i + 1] == '_'))
+		handle_var(expanded, (char *)line, &i, data);
+	else
+	{
+		copy_char(expanded, line[i]);
+		i++;
+	}
+	return (i);
+}
+
+char	*expand_line(char *line, t_global_data *data)
+{
 	int		i;
+	char	*expanded;
 
 	i = 0;
-	while ((*word)[i])
+	expanded = ft_strdup("");
+	if (!expanded)
+		return (NULL);
+	while (line && line[i])
 	{
-		if ((*word)[i] == '$' && (*word)[i + 1] && !is_whitespace((*word)[i
-				+ 1]))
-		{
-			tmp = expand_var(*word, &i, data);
-			free(*word);
-			*word = tmp;
-			return (expand_word(word, data));
-		}
+		if (line[i] == '\1')
+			i = process_single_quote_block(line, i, &expanded);
+		else if (line[i] == '\3')
+			i = process_double_quote_block(line, i, &expanded, data);
 		else
-			i++;
+			i = process_unquoted_block(line, i, &expanded, data);
 	}
+	return (expanded);
 }

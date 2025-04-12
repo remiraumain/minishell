@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:58:02 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/03 17:12:16 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:15:43 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,30 @@ static int	new_token(t_token **head, int *index)
 
 static int	parse(t_token **head, char *input, int *index, t_global_data *data)
 {
-	int	status;
+	char	*word;
+	char	*expanded;
+	t_token	*new_tkn;
 
 	if (input[*index] == '|')
-		status = new_token(head, index);
+		return (new_token(head, index));
 	else if (input[*index] == '<' || input[*index] == '>')
-		status = parse_redirect(head, index, input);
+		return (parse_redirect(head, index, input));
 	else
-		status = parse_word(head, index, input, data);
-	return (status);
+	{
+		word = read_word(input, index);
+		if (!word)
+			return (0);
+		expanded = expand_line(word, data);
+		free(word);
+		new_tkn = create_token(TK_WORD, expanded);
+		if (!new_tkn)
+		{
+			free(expanded);
+			return (0);
+		}
+		add_token(head, new_tkn);
+		return (1);
+	}
 }
 
 t_token	*lexer(char *input, t_global_data *data)
@@ -44,13 +59,13 @@ t_token	*lexer(char *input, t_global_data *data)
 
 	head = NULL;
 	index = 0;
-	while (input[index] != '\0')
+	while (input[index])
 	{
-		while (input[index] != '\0' && is_whitespace(input[index]))
-			index = index + 1;
-		if (input[index] == '\0')
+		while (input[index] && is_whitespace(input[index]))
+			index++;
+		if (!input[index])
 			return (head);
-		if (parse(&head, input, &index, data) == 0)
+		if (!parse(&head, input, &index, data))
 		{
 			free_token_list(head);
 			return (NULL);

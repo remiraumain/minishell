@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:49:26 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 15:23:47 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:04:06 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void	readline_loop(t_redir *redir, int fd, t_global_data *data)
 			break ;
 		}
 		if (redir->type == REDIR_HEREDOC)
-			expand_word(&input, data);
+			expand_line(input, data);
 		// add_history(input); // History deactivated because it was annoying
 		ft_putendl_fd(input, fd);
 		free(input);

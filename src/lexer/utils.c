@@ -3,80 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:38:20 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/10 15:11:01 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:16:26 by rraumain         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/15 20:38:20 by rraumain          #+#    #+#             */
+/*   Updated: 2025/04/12 12:58:52 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*read_quoted(const char *input, int *index, char quote)
+char	*read_word(const char *input, int *index)
 {
-	int		start;
-	int		i;
-	char	*word;
-
-	i = *index + 1;
-	start = i;
-	while (input[i] && input[i] != quote)
-		i++;
-	if (!input[i])
-	{
-		perror("Bad input");
-		return (NULL);
-	}
-	word = ft_substr(input, start, i - start);
-	if (!word)
-		return (NULL);
-	*index = i + 1;
-	return (word);
-}
-
-static char	*add_quoted_chunk(const char *input, int *index,
-		t_global_data *data, char *word)
-{
-	char	quote;
-	char	*substring;
-	char	*chunk;
-
-	quote = input[*index];
-	substring = read_quoted(input, index, quote);
-	if (!substring)
-	{
-		free(word);
-		return (NULL);
-	}
-	if (quote == '"')
-		expand_word(&substring, data);
-	chunk = ft_strjoin(word, substring);
-	free(substring);
-	free(word);
-	return (chunk);
-}
-
-char	*read_word_and_expand(const char *input, int *index,
-		t_global_data *data)
-{
-	char	*word;
+	char	*str;
 	char	*tmp;
+	char	*old_str;
 
-	word = ft_strdup("");
-	if (!word)
+	str = ft_strdup("");
+	if (!str)
 		return (NULL);
-	while (input[*index] != '\0' && !is_whitespace(input[*index])
-		&& input[*index] != '|' && input[*index] != '<' && input[*index] != '>')
+	while (input[*index] && !is_whitespace(input[*index])
+		&& !is_inset(input[*index], "|<>"))
 	{
-		if (input[*index] == '\'' || input[*index] == '"')
-			tmp = add_quoted_chunk(input, index, data, word);
+		if (input[*index] == '\'' || input[*index] == '\"')
+			tmp = process_quoted_word(input, index);
 		else
-			tmp = add_unquoted_chunk(input, index, data, word);
+			tmp = process_unquoted_text(input, index);
 		if (!tmp)
+		{
+			free(str);
 			return (NULL);
-		word = tmp;
+		}
+		old_str = str;
+		str = ft_strjoin(str, tmp);
+		free(old_str);
+		free(tmp);
 	}
-	return (word);
+	return (str);
 }
 
 t_token_type	check_redir(const char *input, int *index)
@@ -85,22 +59,22 @@ t_token_type	check_redir(const char *input, int *index)
 	{
 		if (input[*index + 1] == '<')
 		{
-			*index = *index + 2;
-			if (input[*index + 1] == '"' || input[*index + 1] == '\'')
+			*index += 2;
+			if (input[*index + 1] == '\"' || input[*index + 1] == '\'')
 				return (TK_HEREDOC_QUOTES);
 			return (TK_HEREDOC);
 		}
-		*index = *index + 1;
+		*index += 1;
 		return (TK_REDIR_IN);
 	}
-	else if (input[*index] == '>')
+	if (input[*index] == '>')
 	{
 		if (input[*index + 1] == '>')
 		{
-			*index = *index + 2;
+			*index += 2;
 			return (TK_REDIR_APPEND);
 		}
-		*index = *index + 1;
+		*index += 1;
 		return (TK_REDIR_OUT);
 	}
 	return (TK_EOF);

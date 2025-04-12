@@ -3,47 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:34:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/03 17:14:28 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:13:41 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env_value(char *varname, char **envp)
+char	*get_varname(char *input, int *i)
 {
-	int	i;
-	int	len;
+	int		j;
+	char	*name;
 
-	i = 0;
-	len = ft_strlen(varname);
-	while (envp[i])
+	(*i)++;
+	if (input[*i] == '?')
 	{
-		if (ft_strncmp(envp[i], varname, len) == 0 && envp[i][len] == '=')
-			return (envp[i] + len + 1);
-		i++;
+		(*i)++;
+		return (ft_strdup("?"));
 	}
-	return (NULL);
+	j = *i;
+	while (input[j] && (ft_isalnum(input[j]) || input[j] == '_'))
+		j++;
+	name = ft_substr(input, *i, j - *i);
+	*i = j;
+	return (name);
 }
 
-char	*replace_var(char *token, int start, int varname_len, char *value)
+char	*get_var_value(char *varname, t_global_data *data)
 {
-	char	*expanded;
-	int		value_len;
-	int		after;
+	t_envp	*env_node;
+	char	*dup_val;
 
-	if (!token)
+	if (!varname || !data)
 		return (NULL);
-	after = ft_strlen(&token[start + varname_len]);
-	value_len = ft_strlen(value);
-	expanded = malloc(start + value_len + after + 1);
-	if (!expanded)
-		return (NULL);
-	ft_memcpy(expanded, token, start);
-	ft_memcpy(&expanded[start], value, value_len);
-	ft_memcpy(&expanded[start + value_len], &token[start + varname_len], after);
-	expanded[start + value_len + after] = '\0';
-	return (expanded);
+	if (ft_strcmp(varname, "?") == 0)
+		return (ft_itoa(data->status));
+	env_node = search_var(data->envp, varname);
+	if (!env_node || !env_node->value)
+		return (ft_strdup(""));
+	dup_val = ft_strdup(env_node->value);
+	return (dup_val);
 }
