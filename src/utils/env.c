@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:33:06 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 15:46:11 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:30:46 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,19 +117,19 @@ char	**convert_env(t_envp *envp)
 
 void	set_minishlvl(t_envp *envp)
 {
-    t_envp *minishlvl;
+	t_envp	*minishlvl;
 	int		lvl;
-	
+
 	minishlvl = search_var(envp, "SHLVL");
-    if (minishlvl == NULL)
+	if (minishlvl == NULL)
 	{
-        add_var_in_env("SHLVL=1", envp);
+		add_var_in_env("SHLVL=1", envp);
 	}
-	else 
+	else
 	{
-        lvl = ft_atoi(minishlvl->value);
+		lvl = ft_atoi(minishlvl->value);
 		lvl++;
 		free(minishlvl->value);
 		minishlvl->value = ft_itoa(lvl);
-    }
+	}
 }

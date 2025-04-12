@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 09:45:55 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 16:26:39 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:34:03 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	update_value(t_global_data *data, char *argv)
 	var = data->envp;
 	while (var)
 	{
-		if (ft_strncmp(argv, var->name, len) == 0 
+		if (ft_strncmp(argv, var->name, len) == 0
 			&& len == ft_strlen(var->name))
 		{
 			free(var->value);
@@ -94,10 +94,10 @@ static void	print_sorted_env(t_envp *var)
 	while (var)
 	{
 		if (ft_strcmp(var->name, "_") != 0)
-		{	
+		{
 			printf("declare -x %s", var->name);
 			if (var->value)
-			printf("=\"%s\"", var->value);
+				printf("=\"%s\"", var->value);
 			printf("\n");
 		}
 		var = var->next;
@@ -131,4 +131,3 @@ int	exec_export(t_cmd *cmd, t_global_data *data)
 		data->status = export_with_args(cmd, data);
 	return (data->status);
 }
-

@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:49:26 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/12 12:04:06 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:33:07 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static void	readline_loop(t_redir *redir, int fd, t_global_data *data)
 		}
 		if (redir->type == REDIR_HEREDOC)
 			expand_line(input, data);
-		// add_history(input); // History deactivated because it was annoying
 		ft_putendl_fd(input, fd);
 		free(input);
 		data->line_count++;

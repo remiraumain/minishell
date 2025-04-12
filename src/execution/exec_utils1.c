@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 13:54:39 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 12:34:40 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:32:49 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	close_and_wait(t_pid_data *pdata)
 		i++;
 	}
 	if (pdata->gdata->status == 131)
-		ft_putstr_fd("Quit\n" ,1);
+		ft_putstr_fd("Quit\n", 1);
 }
 
 int	is_directory(const char *path)
