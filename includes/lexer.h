@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:02:58 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 09:53:44 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:00:43 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ t_token			*lexer(char *input, t_global_data *data);
 
 //	PARSE
 int				parse_redirect(t_token **head, int *index, char *input);
-int				parse_word(t_token **head, int *index, char *input,
-					t_global_data *data);
+int				parse_word(t_token **head, int *index, char *input);
 
 //	TOKENS
 t_token			*create_token(t_token_type type, char *value);
@@ -28,7 +27,7 @@ void			add_token(t_token **head, t_token *new_token);
 void			free_token_list(t_token *head);
 
 //	EXPANDER
-void			expand_word(char **word, t_global_data *data);
+char			*expand_line(char *input, t_global_data *data);
 
 // INIT
 void			process_input(char *input, t_global_data *data);
@@ -37,17 +36,21 @@ int				clean_exit(t_global_data *data);
 void			handle_signal(t_global_data *data);
 
 //	VARS
-char			*get_env_value(char *varname, char **envp);
-char			*replace_var(char *token, int start, int varname_len,
-					char *value);
+char			*get_varname(char *input, int *i);
+char			*get_var_value(char *varname, t_global_data *data);
+
+//	QUOTES
+char			*process_quoted_word(const char *input, int *index);
+char			*process_unquoted_text(const char *input, int *index);
 
 //	UTILS
-char			*read_word_and_expand(const char *input, int *index,
-					t_global_data *data);
+char			*read_word(const char *input, int *index);
 t_token_type	check_redir(const char *input, int *index);
 
 // UTILS2.C
-char			*add_unquoted_chunk(const char *input, int *index,
-					t_global_data *data, char *word);
+int				is_stop_char(char c);
+int				is_inset(char c, char *set);
+void			copy_char(char **buffer, char c);
+
 
 #endif
