@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:12:25 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/11 15:43:28 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:54:41 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,6 @@ static void	handle_sigint(int sig)
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
-
-// static void	handle_sigint_child(int sig)
-// {
-// 	g_sig = sig;
-// 	write(STDOUT_FILENO, "\n", 1);
-// 	rl_on_new_line();
-// 	rl_replace_line("", 0);
-// }
 
 static void	handle_sigint_heredoc(int sig)
 {
