@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:02:58 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/12 14:00:43 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:51:52 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ char			*process_unquoted_text(const char *input, int *index);
 char			*read_word(const char *input, int *index);
 t_token_type	check_redir(const char *input, int *index);
 
-// UTILS2.C
+//	UTILS2
 int				is_stop_char(char c);
 int				is_inset(char c, char *set);
 void			copy_char(char **buffer, char c);
-
 
 #endif

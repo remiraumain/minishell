@@ -3,35 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   utils_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 14:50:16 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 11:18:29 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/12 14:41:45 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_var_value(t_envp *envp, char *str)
-{
-	t_envp	*var;
-
-	var = envp;
-	while (var)
-	{
-		if (!ft_strcmp(var->name, str))
-			return (var->value);
-		var = var->next;
-	}
-	return (NULL);
-}
-
 void	update_old_pwd(t_envp *envp, const char *old_pwd)
 {
 	t_envp	*var;
+	t_envp	*pwd;
 
 	if (old_pwd == NULL)
-		old_pwd = get_var_value(envp, "PWD");
+	{
+		pwd = search_var(envp, "PWD");
+		if (pwd)
+			old_pwd = pwd->value;
+	}
 	var = envp;
 	while (var)
 	{
