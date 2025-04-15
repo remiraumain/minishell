@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:39 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/12 14:31:55 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:27:27 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int	fork_and_exec_child(t_cmd *cmd, int i, t_pid_data *pdata,
 		set_child_signals();
 		execute_child(cmd, i, pdata, head);
 	}
+	signal(SIGINT, handle_sigint_no_redisplay);
 	pdata->pids[i] = pid;
 	return (1);
 }

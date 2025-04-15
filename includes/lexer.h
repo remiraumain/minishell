@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:02:58 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/12 14:51:52 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:47:01 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ t_token_type	check_redir(const char *input, int *index);
 int				is_stop_char(char c);
 int				is_inset(char c, char *set);
 void			copy_char(char **buffer, char c);
+t_token			*tokenlast(t_token *token);
 
 #endif

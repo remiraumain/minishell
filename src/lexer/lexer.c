@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:58:02 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/12 14:15:43 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:10:56 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,19 @@ static int	parse(t_token **head, char *input, int *index, t_global_data *data)
 		word = read_word(input, index);
 		if (!word)
 			return (0);
-		expanded = expand_line(word, data);
-		free(word);
-		new_tkn = create_token(TK_WORD, expanded);
+		if (tokenlast(*head) && (tokenlast(*head)->type == TK_HEREDOC
+			|| tokenlast(*head)->type == TK_HEREDOC_QUOTES))
+			new_tkn = create_token(TK_WORD, word);
+		else
+		{
+			expanded = expand_line(word, data);
+			new_tkn = create_token(TK_WORD, expanded);
+			free(word);
+		}
 		if (!new_tkn)
 		{
-			free(expanded);
+			if (expanded)
+				free(expanded);
 			return (0);
 		}
 		add_token(head, new_tkn);

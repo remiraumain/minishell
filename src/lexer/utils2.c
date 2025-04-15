@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:46:32 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/12 14:13:13 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:09:08 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,11 @@ void	copy_char(char **buffer, char c)
 	new_buf[len + 1] = '\0';
 	free(*buffer);
 	*buffer = new_buf;
+}
+
+t_token	*tokenlast(t_token *token)
+{
+	while (token && token->next)
+		token = token->next;
+	return (token);
 }
