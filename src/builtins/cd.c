@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 09:05:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/07 09:36:28 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:38:53 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ static int	cd_dot(t_cmd *cmd, t_global_data *sdata, char *pwd)
 	if (chdir("..") == -1)
 	{
 		ft_putstr_fd("cd ", 2);
-		ft_putstr_fd(cmd->argv[1], 2);
-		ft_putstr_fd(": not a directory\n", 2);
+		print_message(cmd, ": not a directory\n");
 		free(pwd);
 		return (1);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 13:54:39 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/12 14:32:49 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/15 12:07:32 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	dup_and_close(t_pid_data *pdata, int index, t_cmd *cmd)
 
 void	exec_builtin_child_and_free(t_cmd *cmd, t_pid_data *pdata, t_cmd *head)
 {
-	exec_builtin_child(cmd, pdata, pdata->gdata);
+	exec_builtin_child(cmd, pdata->gdata);
 	free(pdata->pids);
 	cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
 	clear_env(pdata->gdata->envp);

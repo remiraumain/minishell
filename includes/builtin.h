@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 13:15:03 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/15 12:05:06 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 /* builtin_control.c */
 int		is_builtin_child(t_cmd *cmd);
-void	exec_builtin_child(t_cmd *cmd, t_pid_data *pdata, t_global_data *data);
+void	exec_builtin_child(t_cmd *cmd, t_global_data *data);
 int		has_child_process(t_cmd *head);
 int		is_builtin_parent(t_cmd *cmd);
 void	exec_builtin_parent(t_cmd *cmd, t_pid_data *pdata, t_global_data *data,
@@ -38,11 +38,11 @@ int		exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata,
 			t_cmd *head);
 
 /* export.c*/
-void	add_var_in_env(char *str, t_envp *envp);
+
 int		exec_export(t_cmd *cmd, t_global_data *data);
 
 /* pwd.c */
-int		exec_pwd(t_cmd *cmd, t_pid_data *pdata);
+int		exec_pwd(t_cmd *cmd);
 
 /* unset.c */
 int		exec_unset(t_cmd *cmd, t_global_data *data);
@@ -68,7 +68,10 @@ void	cleanup(t_global_data *data, t_pid_data *pdata, t_cmd *head);
 
 /* utils_export.c*/
 void	ft_sort_params(t_envp *env);
-int		is_var_valid(char *str);
 int		is_var_exist(char *argv, t_global_data *data);
+
+/* utils2_export.c */
+int		is_var_valid(char *str);
+void	add_var_in_env(char *str, t_envp *envp);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:20:03 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/12 14:52:22 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/15 12:02:33 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 # include "minishell.h"
 
-# define INT_MAX 2147483647
-# define INT_MIN -2147483648
-
 //	GLOBAL
 extern int			g_sig;
 
@@ -25,7 +22,6 @@ typedef struct s_envp
 {
 	char			*name;
 	char			*value;
-	int				pos; // rang de la variable
 	struct s_envp	*next;
 }					t_envp;
 
@@ -35,12 +31,6 @@ typedef struct s_global_data
 	int				status;
 	int				line_count;
 }					t_global_data;
-
-typedef enum e_bool
-{
-	TRUE,
-	FALSE
-}					t_bool;
 
 //	TOKENS
 

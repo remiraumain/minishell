@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:10:52 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 11:17:41 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/15 12:04:52 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ int	is_builtin_parent(t_cmd *cmd)
 	return (0);
 }
 
-void	exec_builtin_child(t_cmd *cmd, t_pid_data *pdata, t_global_data *data)
+void	exec_builtin_child(t_cmd *cmd, t_global_data *data)
 {
 	if (!cmd || !cmd->argv || !cmd->argv[0])
 		return ;
 	if (!ft_strcmp(cmd->argv[0], "echo"))
 		data->status = exec_echo(cmd);
 	if (!ft_strcmp(cmd->argv[0], "pwd"))
-		data->status = exec_pwd(cmd, pdata);
+		data->status = exec_pwd(cmd);
 	if (!ft_strcmp(cmd->argv[0], "env"))
 		data->status = exec_env(cmd, data);
 }

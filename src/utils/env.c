@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:33:06 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/12 14:30:46 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:50:34 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_envp	*init_var(char *envp, int pos)
+t_envp	*init_var(char *envp)
 {
 	t_envp	*new;
 	char	*val;
@@ -21,7 +21,6 @@ t_envp	*init_var(char *envp, int pos)
 	if (!new)
 		return (NULL);
 	val = ft_strchr(envp, '=');
-	new->pos = pos;
 	new->name = ft_strndup(envp, val - envp);
 	if (!new->name)
 	{
@@ -47,7 +46,7 @@ t_envp	*init_env(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		new = init_var(envp[i], i);
+		new = init_var(envp[i]);
 		if (!new)
 		{
 			clear_env(head);

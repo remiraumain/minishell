@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:13:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/12 14:35:11 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:05:35 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ static int	is_valid_n_option(char *s)
 			return (0);
 		i++;
 	}
-	return (i > 1);
+	if (i > 1)
+		return (1);
+	else
+		return (0);
 }
 
 int	exec_echo(t_cmd *cmd)

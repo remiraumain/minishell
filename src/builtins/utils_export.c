@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:33:00 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 16:09:04 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/15 10:48:33 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,6 @@ void	ft_sort_params(t_envp *env)
 		}
 		i = i->next;
 	}
-}
-
-int	is_var_valid(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str[i] == '=' || (str[i] >= '0' && str[i] <= '9'))
-		return (1);
-	else
-	{
-		while (str[i] && str[i] != '=')
-		{
-			if (!(ft_isalnum(str[i]) || str[i] == '_'))
-				return (1);
-			i++;
-		}
-	}
-	return (0);
 }
 
 int	is_var_exist(char *argv, t_global_data *data)
