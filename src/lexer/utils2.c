@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:46:32 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/15 16:09:08 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:53:06 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,25 @@ t_token	*tokenlast(t_token *token)
 	while (token && token->next)
 		token = token->next;
 	return (token);
+}
+
+char	*trim_whitespace(char *str)
+{
+	char	*res;
+	size_t	i;
+	int		is_first;
+
+	res = NULL;
+	i = 0;
+	is_first = 1;
+	while (str[i])
+	{
+		if (ft_isalnum(str[i]) || (!is_first && is_whitespace(str[i]) && ft_isalnum(str[i + 1])))
+		{
+			copy_char(&res, str[i]);
+			is_first = 0;
+		}
+		i++;
+	}
+	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:43:49 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/12 14:50:45 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:12:22 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,17 @@ static int	process_double_quote_block(const char *line, int i, char **expanded,
 static int	process_unquoted_block(const char *line, int i, char **expanded,
 	t_global_data *data)
 {
+	char	*res;
+
+	res = NULL;
 	if (line[i] == '$' && (ft_isalpha(line[i + 1]) || line[i + 1] == '_'
 			|| line[i + 1] == '?'))
+	{
 		handle_var(expanded, (char *)line, &i, data);
+		res = trim_whitespace(*expanded);
+		free(*expanded);
+		*expanded = res;
+	}
 	else
 	{
 		copy_char(expanded, line[i]);
