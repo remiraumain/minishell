@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:38:20 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/12 14:21:45 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:37:02 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_token_type	check_redir(const char *input, int *index)
 		if (input[*index + 1] == '<')
 		{
 			*index += 2;
-			if (input[*index + 1] == '\"' || input[*index + 1] == '\'')
+			if (input[*index] == '\"' || input[*index] == '\'')
 				return (TK_HEREDOC_QUOTES);
 			return (TK_HEREDOC);
 		}

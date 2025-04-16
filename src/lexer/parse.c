@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 23:40:41 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/16 15:47:54 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/16 17:24:45 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,24 @@ int	parse_redirect(t_token **head, int *index, char *input)
 	return (1);
 }
 
+static t_token	*create_token_heredoc(char *word)
+{
+	int		i;
+	char	*varname;
+	t_token	*token;
+
+	if (!word)
+		return (NULL);
+	i = 0;
+	varname = get_varname(ft_strchr(word, '$'), &i);
+	free(word);
+	if (!varname)
+		return (NULL);
+	token = create_token(TK_WORD, ft_strjoin("$", varname));
+	free(varname);
+	return (token);
+}
+
 int	parse_word(t_token **head, char *input, int *index, t_global_data *data)
 {
 	char	*word;
@@ -36,7 +54,7 @@ int	parse_word(t_token **head, char *input, int *index, t_global_data *data)
 		return (0);
 	if (tokenlast(*head) && (tokenlast(*head)->type == TK_HEREDOC
 			|| tokenlast(*head)->type == TK_HEREDOC_QUOTES))
-		new_tkn = create_token(TK_WORD, word);
+		new_tkn = create_token_heredoc(word);
 	else
 	{
 		expanded = expand_line(word, data);

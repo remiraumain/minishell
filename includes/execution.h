@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:48:53 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/15 12:33:40 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/16 17:25:28 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,8 @@ void	dup_fd(t_pid_data *pdata, int index, t_cmd *cmd);
 int		set_heredoc(t_redir *redir, t_global_data *data);
 void	clean_heredocs(t_cmd *cmd);
 char	*create_heredoc_filename(int cmd_i, int redir_i);
+
+//	HEREDOC_UTILS
+void	putendl_fd_heredoc(char *input, int fd, t_global_data *data);
 
 #endif

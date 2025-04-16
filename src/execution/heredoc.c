@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:49:26 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/12 14:55:03 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/16 17:21:03 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ static void	readline_loop(t_redir *redir, int fd, t_global_data *data)
 			break ;
 		}
 		if (redir->type == REDIR_HEREDOC)
-			expand_line(input, data);
-		ft_putendl_fd(input, fd);
+			putendl_fd_heredoc(input, fd, data);
+		else
+			ft_putendl_fd(input, fd);
 		free(input);
 		data->line_count++;
 	}
