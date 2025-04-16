@@ -6,7 +6,7 @@
 /*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:46:32 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/16 12:53:06 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:49:53 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_token	*tokenlast(t_token *token)
 	return (token);
 }
 
-char	*trim_whitespace(char *str)
+void	trim_whitespace(char **str)
 {
 	char	*res;
 	size_t	i;
@@ -81,14 +81,19 @@ char	*trim_whitespace(char *str)
 	res = NULL;
 	i = 0;
 	is_first = 1;
-	while (str[i])
+	while ((*str)[i])
 	{
-		if (ft_isalnum(str[i]) || (!is_first && is_whitespace(str[i]) && ft_isalnum(str[i + 1])))
+		if (!is_whitespace((*str)[i])
+			|| (!is_first && is_whitespace((*str)[i])
+			&& !is_whitespace((*str)[i + 1])))
 		{
-			copy_char(&res, str[i]);
+			copy_char(&res, (*str)[i]);
 			is_first = 0;
 		}
 		i++;
 	}
-	return (res);
+	if (!res)
+		return ;
+	free(*str);
+	*str = res;
 }

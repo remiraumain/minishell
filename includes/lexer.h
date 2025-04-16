@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:02:58 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/15 15:47:01 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:51:46 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_token			*lexer(char *input, t_global_data *data);
 
 //	PARSE
 int				parse_redirect(t_token **head, int *index, char *input);
-int				parse_word(t_token **head, int *index, char *input);
+int				parse_word(t_token **head, char *input, int *index,
+					t_global_data *data);
 
 //	TOKENS
 t_token			*create_token(t_token_type type, char *value);
@@ -52,5 +53,6 @@ int				is_stop_char(char c);
 int				is_inset(char c, char *set);
 void			copy_char(char **buffer, char c);
 t_token			*tokenlast(t_token *token);
+void			trim_whitespace(char **str);
 
 #endif
