@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:38:01 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/16 15:40:06 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:36:58 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,13 @@ void	handle_sigint_heredoc(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	ioctl(0, TIOCSTI, "\n");
+}
+
+void	handle_signal(t_global_data *data)
+{
+	if (g_sig)
+	{
+		data->status = 130;
+		g_sig = 0;
+	}
 }

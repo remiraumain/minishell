@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:02:58 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/16 15:51:46 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/18 14:59:16 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char			*expand_line(char *input, t_global_data *data);
 void			process_input(char *input, t_global_data *data);
 t_global_data	*init_global_data(char **envp);
 int				clean_exit(t_global_data *data);
-void			handle_signal(t_global_data *data);
 
 //	VARS
 char			*get_varname(char *input, int *i);

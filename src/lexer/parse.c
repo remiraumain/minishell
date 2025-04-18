@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 23:40:41 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/18 12:43:37 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:40:39 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,18 @@ int	parse_redirect(t_token **head, int *index, char *input)
 	return (1);
 }
 
-static int	is_quotes_space(char c)
+static int	is_quotes(char c)
 {
 	if (c == '\01'
 		|| c == '\02'
 		|| c == '\03'
 		|| c == '\04'
-		|| is_whitespace(c))
+	)
 		return (1);
 	return (0);
 }
 
-static void	clean_quotes_space(char **word)
+static void	clean_quotes(char **word)
 {
 	size_t	i;
 	char	*res;
@@ -45,7 +45,7 @@ static void	clean_quotes_space(char **word)
 	i = 0;
 	while ((*word)[i])
 	{
-		if (!is_quotes_space((*word)[i]))
+		if (!is_quotes((*word)[i]))
 			copy_char(&res, (*word)[i]);
 		i++;
 	}
@@ -62,7 +62,7 @@ static t_token	*create_token_heredoc(char *word)
 	i = 0;
 	if (!word)
 		return (NULL);
-	while (word[i] && is_quotes_space(word[i]))
+	while (word[i] && is_quotes(word[i]))
 		i++;
 	if (word[i] == '$')
 	{
@@ -74,7 +74,7 @@ static t_token	*create_token_heredoc(char *word)
 		free(varname);
 		return (token);
 	}
-	clean_quotes_space(&word);
+	clean_quotes(&word);
 	token = create_token(TK_WORD, word);
 	return (token);
 }

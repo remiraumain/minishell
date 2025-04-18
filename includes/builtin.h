@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:42:58 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/15 12:05:06 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:23:06 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,14 @@ int		exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata,
 			t_cmd *head);
 
 /* export.c*/
-
+void	update_value(t_global_data *data, char *argv);
 int		exec_export(t_cmd *cmd, t_global_data *data);
 
 /* pwd.c */
 int		exec_pwd(t_cmd *cmd);
 
 /* unset.c */
+void	free_one_env(t_envp *current);
 int		exec_unset(t_cmd *cmd, t_global_data *data);
 
 /* utils_cd.c*/

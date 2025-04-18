@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:38:20 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/18 12:00:34 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:43:15 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ t_token_type	check_redir(const char *input, int *index)
 			*index += 2;
 			while (is_whitespace(input[*index]))
 				*index += 1;
+			// check if quotes at the end
+			// if quote at beginning then do not check whitespace
 			if (input[*index] == '\"' || input[*index] == '\'')
 				return (TK_HEREDOC_QUOTES);
 			return (TK_HEREDOC);

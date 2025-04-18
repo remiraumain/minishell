@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:04:44 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/15 12:02:55 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:58:34 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static long long	ft_atoll_convert(char *str, int *sign)
 	return (stock);
 }
 
-static long long	ft_atoll(char *str)
+static long long	ft_atoll(char *str, t_global_data *data, t_pid_data *pdata,
+	t_cmd *head)
 {
 	unsigned long long	stock;
 	int					sign;
@@ -50,6 +51,7 @@ static long long	ft_atoll(char *str)
 		if (stock > (unsigned long long)LLONG_MAX + 1)
 		{
 			print_error_message(str);
+			cleanup(data, pdata, head);
 			exit(2);
 		}
 	}
@@ -58,6 +60,7 @@ static long long	ft_atoll(char *str)
 		if (stock > LLONG_MAX)
 		{
 			print_error_message(str);
+			cleanup(data, pdata, head);
 			exit(2);
 		}
 	}
@@ -82,7 +85,7 @@ int	exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head)
 	{
 		if (!is_numeric(cmd->argv[1]))
 			exit_invalid_numeric(cmd->argv[1], data, pdata, head);
-		value = ft_atoll(cmd->argv[1]);
+		value = ft_atoll(cmd->argv[1], data, pdata, head);
 		if (value == -1)
 			exit_invalid_numeric(cmd->argv[1], data, pdata, head);
 		data->status = (int)value;

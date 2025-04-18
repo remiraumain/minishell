@@ -6,13 +6,13 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 09:45:55 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/15 11:26:27 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/18 14:55:32 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	update_value(t_global_data *data, char *argv)
+void	update_value(t_global_data *data, char *argv)
 {
 	t_envp	*var;
 	size_t	len;

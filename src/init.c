@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:08:07 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 11:03:30 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:53:48 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ void	process_input(char *input, t_global_data *data)
 	free_token_list(tokens);
 	if (!cmds)
 		return ;
+	reset_underscore(data);
+	if (cmds->argv && count_cmds(cmds) == 1)
+		update_underscore(cmds, data);
 	execute_cmds(cmds, data);
 	free_cmd_list(cmds);
 }
@@ -82,13 +85,4 @@ int	clean_exit(t_global_data *data)
 	rl_clear_history();
 	printf("exit\n");
 	return (0);
-}
-
-void	handle_signal(t_global_data *data)
-{
-	if (g_sig)
-	{
-		data->status = 130;
-		g_sig = 0;
-	}
 }

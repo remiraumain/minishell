@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:51:51 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 16:27:55 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:52:46 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,13 @@ void	print_error_message(char *str)
 
 void	cleanup(t_global_data *data, t_pid_data *pdata, t_cmd *head)
 {
-	free(pdata->pids);
-	cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
-	clear_env(pdata->gdata->envp);
-	free(pdata);
+	if (pdata && pdata->pids)
+		free(pdata->pids);
+	if (pdata && pdata->pipefd)
+		cleanup_pipes(pdata->pipefd, pdata->nb_cmd - 1);
+	if (pdata)
+		free(pdata);
+	clear_env(data->envp);
 	free(data);
 	free_cmd_list(head);
 }

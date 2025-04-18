@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.h                                          :+:      :+:    :+:   */
+/*   underscore.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/28 16:26:56 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/18 14:59:29 by nolecler         ###   ########.fr       */
+/*   Created: 2025/04/18 16:34:23 by nolecler          #+#    #+#             */
+/*   Updated: 2025/04/18 16:35:39 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNALS_H
-# define SIGNALS_H
+#ifndef UNDERSCORE_H
+# define UNDERSCORE_H
 
-//	SET
-void	set_parent_signals(void);
-void	set_heredoc_signals(void);
-void	set_child_signals(void);
+# include "minishell.h"
 
-//	HANDLER
-void	handle_sigint_no_redisplay(int sig);
-void	handle_sigint(int sig);
-void	handle_sigint_heredoc(int sig);
-void	handle_signal(t_global_data *data);
+void	reset_underscore(t_global_data *data);
+void	update_underscore(t_cmd *cmds, t_global_data *data);
 
 #endif

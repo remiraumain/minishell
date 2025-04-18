@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 08:51:33 by rraumain          #+#    #+#             */
-/*   Updated: 2025/04/15 12:02:43 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:36:12 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "types.h"
 # include "signals.h"
 # include "utils.h"
+# include "underscore.h"
 # include "builtin.h"
 # include "lexer.h"
 # include "parser.h"
