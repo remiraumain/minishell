@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:34:31 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/12 14:13:41 by rraumain         ###   ########.fr       */
+/*   Updated: 2025/04/18 12:43:05 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*get_varname(char *input, int *i)
 	int		j;
 	char	*name;
 
+	if (!input)
+		return (NULL);
 	(*i)++;
 	if (input[*i] == '?')
 	{
