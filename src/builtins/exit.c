@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:04:44 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/18 16:58:34 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:00:13 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ int	exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head)
 		if (!is_numeric(cmd->argv[1]))
 			exit_invalid_numeric(cmd->argv[1], data, pdata, head);
 		value = ft_atoll(cmd->argv[1], data, pdata, head);
-		if (value == -1)
-			exit_invalid_numeric(cmd->argv[1], data, pdata, head);
 		data->status = (int)value;
 	}
 	status = data->status;
