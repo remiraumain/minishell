@@ -3,21 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rraumain <rraumain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:12:12 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/11 10:59:56 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/21 13:32:42 by rraumain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	create_empty_redirout(t_cmd *cmd)
+{
+	t_redir	*current;
+	int		fd;
+
+	current = cmd->redir;
+	while (current)
+	{
+		fd = -1;
+		if (current->type == REDIR_OUT || current->type == REDIR_OUT_APPEND)
+		{
+			fd = open(current->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (fd >= 0)
+				close(fd);
+		}
+		current = current->next;
+	}
+}
 
 void	prepare_execution(t_cmd *cmd, int index, t_pid_data *pdata, t_cmd *head)
 {
 	pdata->gdata->status = 0;
 	dup_and_close(pdata, index, cmd);
 	if (!cmd->argv)
+	{
+		create_empty_redirout(cmd);
 		exit_clean_child(pdata, head, 0);
+	}
 	if (!apply_redirections(cmd, index))
 		exit_clean_child(pdata, head, EXIT_FAILURE);
 	if (is_builtin_child(cmd))
