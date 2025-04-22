@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 10:24:46 by rraumain          #+#    #+#             */
-/*   Updated: 2025/03/26 10:41:38 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:09:21 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	cleanup_pipes(int **pipefd, int count)
 	while (count > 0)
 	{
 		count--;
+		close(pipefd[count][0]);
+		close(pipefd[count][1]);
 		free(pipefd[count]);
 	}
 	free(pipefd);

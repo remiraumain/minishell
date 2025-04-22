@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:04:44 by nolecler          #+#    #+#             */
-/*   Updated: 2025/04/21 11:00:13 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:02:04 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ int	exec_exit(t_cmd *cmd, t_global_data *data, t_pid_data *pdata, t_cmd *head)
 	status = data->status;
 	cleanup(data, pdata, head);
 	ft_putstr_fd("exit\n", 1);
+	
 	exit(status);
 }
